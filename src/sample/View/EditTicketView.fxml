@@ -176,7 +176,7 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </padding>
             </GridPane>
-            <TitledPane text="Комментарий">
+            <TitledPane expanded="false" text="Комментарий">
                <content>
                   <TextArea maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                      <padding>

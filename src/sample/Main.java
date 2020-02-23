@@ -14,6 +14,8 @@ public class Main extends Application {
         launch(args);
     }
 
+    /**Комментарий из другой ветки*/
+
     @Override
     public void start(Stage primaryStage) {
         try {
