@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+
+<SplitPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <items>
+      <TableView fx:id="tableTickets" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" tableMenuButtonVisible="true">
+        <columns>
+          <TableColumn fx:id="idTicket" maxWidth="1.7976931348623157E308" text="№" />
+          <TableColumn fx:id="phoneNumber" maxWidth="1.7976931348623157E308" prefWidth="110.0" resizable="false" text="Телефон" />
+            <TableColumn fx:id="fullName" prefWidth="200.0" text="ФИО" />
+            <TableColumn fx:id="dateCreateTicket" prefWidth="90.0" resizable="false" text="Дата приема" />
+            <TableColumn fx:id="statusTicket" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" text="Статус" />
+        </columns>
+      </TableView>
+   </items>
+</SplitPane>
