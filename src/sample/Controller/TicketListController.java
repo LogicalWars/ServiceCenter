@@ -13,6 +13,7 @@ import sample.Model.Tickets;
 import java.sql.SQLException;
 
 public class TicketListController {
+    private int idRow;
     @FXML
     private TableView<Tickets> tableTickets;
     @FXML
@@ -44,15 +45,13 @@ public class TicketListController {
                 if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
                     int selectIndex = row.getIndex();
                     Tickets selectTickets = (Tickets)tableTickets.getItems().get(selectIndex);
-                    System.out.println(selectTickets.getIdTicket());
+                    idRow = selectTickets.getIdTicket();
+                    System.out.println(idRow);
                 }
             });
             return row ;
         });
-
         tableTickets.setItems(dataTickets.getTicketsData());
     }
-
-
-
+    public int getIdRow() {return idRow;}
 }

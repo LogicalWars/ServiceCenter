@@ -3,6 +3,7 @@ package sample.Model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import sample.Controller.NewTicketController;
+import sample.Controller.TicketListController;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -78,14 +79,20 @@ public class DataTickets {
     }
 
     public void changeTiketRead() throws SQLException {
+        TicketListController ticketListController = new TicketListController();
+
         DBProcessor dbProcessor = new DBProcessor();
         Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
-        String query = "";
+        String query = "" +
+                "SELECT table_test.*" +
+                "FROM table_test " +
+                "ORDER BY `table_test`.`idTicket`="+ticketListController.getIdRow()+";";
         Statement stmt = conn.createStatement();
         ResultSet res = stmt.executeQuery(query);
             int id = res.getInt("idTicket");
             String p = res.getString("phoneNumber");
-            String name = res.getString("fullName");
-            String status = res.getString("status");
+            String n = res.getString("fullName");
+            String s = res.getString("status");
+
     }
 }
