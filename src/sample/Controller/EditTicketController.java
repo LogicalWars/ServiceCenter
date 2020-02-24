@@ -7,6 +7,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 public class EditTicketController {
+
     @FXML
     public Label idTicket;
     @FXML

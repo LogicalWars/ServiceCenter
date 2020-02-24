@@ -44,6 +44,8 @@ public class MainMenuController {
             loader.setController(new TicketListController());
             Parent newPane = loader.load();
             paneMainContent.setCenter(newPane);
+            TicketListController ticketListController = loader.getController();
+            ticketListController.setMainMenuController(this);
 
         }catch (IOException e) {
             e.printStackTrace();
@@ -57,7 +59,6 @@ public class MainMenuController {
             loader.setController(new EditTicketController());
             Parent newPane = loader.load();
             paneMainContent.setCenter(newPane);
-
         }catch (IOException e) {
             e.printStackTrace();
         }

@@ -13,6 +13,12 @@ import sample.Model.Tickets;
 import java.sql.SQLException;
 
 public class TicketListController {
+
+    private MainMenuController mainMenuController;
+    public void setMainMenuController(MainMenuController mainMenuController){
+        this.mainMenuController = mainMenuController;
+    }
+
     private int idRow;
     @FXML
     private TableView<Tickets> tableTickets;
@@ -47,6 +53,7 @@ public class TicketListController {
                     Tickets selectTickets = (Tickets)tableTickets.getItems().get(selectIndex);
                     idRow = selectTickets.getIdTicket();
                     System.out.println(idRow);
+                    mainMenuController.editTicket();
                 }
             });
             return row ;
