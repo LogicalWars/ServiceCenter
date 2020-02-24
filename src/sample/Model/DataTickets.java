@@ -2,6 +2,7 @@ package sample.Model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import sample.Controller.EditTicketController;
 import sample.Controller.NewTicketController;
 import sample.Controller.TicketListController;
 
@@ -20,6 +21,14 @@ public class DataTickets {
     public ObservableList<Tickets> getTicketsData() {
         return ticketsData;
     }
+    EditTicket editTicket;
+
+    public void setIdRow(int idRow) {
+        this.idRow = idRow;
+    }
+
+    private int idRow;
+
 
     public void dataTicketsRead() {
         try {
@@ -78,21 +87,20 @@ public class DataTickets {
         }
     }
 
-    public void changeTiketRead() throws SQLException {
-        TicketListController ticketListController = new TicketListController();
-
+    public void editTicketRead() throws SQLException {
         DBProcessor dbProcessor = new DBProcessor();
         Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
         String query = "" +
                 "SELECT table_test.*" +
                 "FROM table_test " +
-                "ORDER BY `table_test`.`idTicket`="+ticketListController.getIdRow()+";";
+                "WHERE `idTicket`="+ idRow +";";
         Statement stmt = conn.createStatement();
         ResultSet res = stmt.executeQuery(query);
-            int id = res.getInt("idTicket");
-            String p = res.getString("phoneNumber");
-            String n = res.getString("fullName");
-            String s = res.getString("status");
+        if(res.next()){
+           int p = res.getInt("phoneNumber");
+           String n = res.getString("fullName");
+
+        }
 
     }
 }

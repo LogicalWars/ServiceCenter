@@ -5,6 +5,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import sample.Model.EditTicket;
 
 public class EditTicketController {
 
@@ -19,9 +20,13 @@ public class EditTicketController {
     @FXML
     private TextField model;
 
+
+    public EditTicketController(){}
     public void initialize() {
-        TicketListController t = new TicketListController();
-        System.out.println(t.getIdRow());
+
+//        EditTicket editTicket = null;
+//        phone.setText(String.valueOf(editTicket.getPhoneNumber()));
+
     }
 
 }
