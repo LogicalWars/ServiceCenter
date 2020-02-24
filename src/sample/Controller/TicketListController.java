@@ -10,6 +10,8 @@ import org.w3c.dom.ls.LSOutput;
 import sample.Model.DataTickets;
 import sample.Model.Tickets;
 
+import java.sql.SQLException;
+
 public class TicketListController {
     @FXML
     private TableView<Tickets> tableTickets;
@@ -26,7 +28,7 @@ public class TicketListController {
 
 
     @FXML
-    private void initialize(){
+    private void initialize() {
         DataTickets dataTickets = new DataTickets();
         dataTickets.dataTicketsRead();
 

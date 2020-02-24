@@ -4,7 +4,6 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Tickets {
-
     private SimpleIntegerProperty idTicket;             //№ заявки
     private SimpleStringProperty phoneNumber;           //Номер телефона
     private SimpleStringProperty fullName;              //ФИО

@@ -43,7 +43,7 @@
                                     <Insets right="10.0" />
                                  </HBox.margin>
                               </Label>
-                              <Label layoutX="10.0" layoutY="10.0" text="10">
+                              <Label fx:id="idTicket" layoutX="10.0" layoutY="10.0">
                                  <HBox.margin>
                                     <Insets right="10.0" />
                                  </HBox.margin>
@@ -65,7 +65,7 @@
                                     <Insets left="10.0" right="10.0" />
                                  </HBox.margin>
                               </Label>
-                              <TextField HBox.hgrow="ALWAYS">
+                              <TextField fx:id="phone" HBox.hgrow="ALWAYS">
                                  <HBox.margin>
                                     <Insets />
                                  </HBox.margin>
@@ -79,7 +79,7 @@
                                     <Insets left="10.0" right="10.0" />
                                  </HBox.margin>
                               </Label>
-                              <TextField HBox.hgrow="ALWAYS" />
+                              <TextField fx:id="fullName" HBox.hgrow="ALWAYS" />
                            </children>
                         </HBox>
                         <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="140.0" GridPane.rowIndex="3">

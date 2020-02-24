@@ -80,18 +80,12 @@ public class DataTickets {
     public void changeTiketRead() throws SQLException {
         DBProcessor dbProcessor = new DBProcessor();
         Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
-        String query = "" +
-                "SELECT table_test.*" +
-                "FROM table_test " +
-                " " +
-                "ORDER BY `table_test`.`idTicket`;";
+        String query = "";
         Statement stmt = conn.createStatement();
         ResultSet res = stmt.executeQuery(query);
             int id = res.getInt("idTicket");
             String p = res.getString("phoneNumber");
             String name = res.getString("fullName");
             String status = res.getString("status");
-
-
     }
 }
