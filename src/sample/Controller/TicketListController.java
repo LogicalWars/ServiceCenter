@@ -49,9 +49,10 @@ public class TicketListController {
                     System.out.println(idRow);
                 }
             });
+
             return row ;
         });
         tableTickets.setItems(dataTickets.getTicketsData());
     }
-    public int getIdRow() {return idRow;}
+    public int getIdRow(){return idRow;}
 }
