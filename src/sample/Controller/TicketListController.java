@@ -19,7 +19,9 @@ public class TicketListController {
         this.mainMenuController = mainMenuController;
     }
 
-    private int idRow;
+//    private int idRow;
+//    public int getIdRow() {return idRow;}
+
     @FXML
     private TableView<Tickets> tableTickets;
     @FXML
@@ -51,14 +53,18 @@ public class TicketListController {
                 if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
                     int selectIndex = row.getIndex();
                     Tickets selectTickets = (Tickets)tableTickets.getItems().get(selectIndex);
-                    idRow = selectTickets.getIdTicket();
-                    System.out.println(idRow);
+                    dataTickets.setIdRow(selectTickets.getIdTicket());
+                    System.out.println(selectTickets.getIdTicket());
                     mainMenuController.editTicket();
+                    try {
+                        dataTickets.editTicketRead();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
                 }
             });
             return row ;
         });
         tableTickets.setItems(dataTickets.getTicketsData());
     }
-    public int getIdRow() {return idRow;}
 }

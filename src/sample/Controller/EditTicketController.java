@@ -21,7 +21,7 @@ public class EditTicketController {
 
     public void initialize() {
         TicketListController t = new TicketListController();
-        System.out.println(t.getIdRow());
+        //System.out.println(t.getIdRow());
     }
 
 }
