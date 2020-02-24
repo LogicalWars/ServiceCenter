@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 
@@ -36,6 +37,8 @@ public class DataTickets {
                 String name = res.getString("fullName");
                 Date date1 = res.getDate("dateCreateTicket");
                 String date2 = String.valueOf(date1);
+//                SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy");
+//                String date = sdf.format(date1);
                 String status = res.getString("status");
                 ticketsData.add(new Tickets(id, p, name, date2, status));
             }
@@ -72,5 +75,23 @@ public class DataTickets {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public void changeTiketRead() throws SQLException {
+        DBProcessor dbProcessor = new DBProcessor();
+        Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
+        String query = "" +
+                "SELECT table_test.*" +
+                "FROM table_test " +
+                " " +
+                "ORDER BY `table_test`.`idTicket`;";
+        Statement stmt = conn.createStatement();
+        ResultSet res = stmt.executeQuery(query);
+            int id = res.getInt("idTicket");
+            String p = res.getString("phoneNumber");
+            String name = res.getString("fullName");
+            String status = res.getString("status");
+
+
     }
 }
