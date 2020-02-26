@@ -88,18 +88,11 @@ public class DataTickets {
     public void editTicketRead() throws SQLException {
         TicketListController ticketListController = new TicketListController();
         System.out.println(idRow);
-//        DBProcessor dbProcessor = new DBProcessor();
-//        Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
-//        String query = "" +
-//                "SELECT table_test.*" +
-//                "FROM table_test " +
-//                "ORDER BY `table_test`.`idTicket`="+ IdRow +";";
-//        Statement stmt = conn.createStatement();
-//        ResultSet res = stmt.executeQuery(query);
-//            int id = res.getInt("idTicket");
-//            String p = res.getString("phoneNumber");
-//            String n = res.getString("fullName");
-//            String s = res.getString("status");
-
+        DBProcessor dbProcessor = new DBProcessor();
+        Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
+        String query = "SELECT `idTicket` FROM `table_test` WHERE `idTicket` = " + idRow;
+        Statement stmt = conn.createStatement();
+        ResultSet res = stmt.executeQuery(query);
+            int id = res.getInt("idTicket");
     }
 }
