@@ -19,9 +19,6 @@ public class TicketListController {
         this.mainMenuController = mainMenuController;
     }
 
-//    private int idRow;
-//    public int getIdRow() {return idRow;}
-
     @FXML
     private TableView<Tickets> tableTickets;
     @FXML
