@@ -2,6 +2,7 @@ package sample.Model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import sample.Controller.EditTicketController;
 import sample.Controller.NewTicketController;
 import sample.Controller.TicketListController;
 
@@ -23,6 +24,10 @@ public class DataTickets {
 
     public void setIdRow(int idRow) {
         this.idRow = idRow;
+    }
+
+    public int getIdRow() {
+        return idRow;
     }
 
     private int idRow;
@@ -58,12 +63,12 @@ public class DataTickets {
 
     }
 
-    public void createNewTicketWrite(String textPhone, String textFullName, String textDevice, String textModel, String textDefect, String textNode, String textCondition) {
+    public void createNewTicketWrite(String textPhone, String textFullName, String textDevice, String textModel, String textDefect, String textNode, String textCondition, String textMark) {
         try {
             LocalDate date = LocalDate.now();
             DBProcessor dbProcessor = new DBProcessor();
             Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
-            String create = "INSERT INTO `table_test` (`phoneNumber`, `fullName`,`device`,`model`,`defect`,`note`,`condition`,`dateCreateTicket`, `status_id`) " +
+            String create = "INSERT INTO `table_test` (`phoneNumber`, `fullName`,`device`,`model`,`defect`,`note`,`condition`,`dateCreateTicket`, `mark`, `status_id`) " +
                     "VALUES ('" + textPhone + "'," +
                     " '" + textFullName + "'," +
                     " '" + textDevice + "'," +
@@ -72,6 +77,7 @@ public class DataTickets {
                     " '" + textNode + "'," +
                     " '" + textCondition + "'," +
                     " '" + date + "'," +
+                    " '" + textMark + "'," +
                     " '" + 1 + "')";
             try (Statement stmt = conn.createStatement()) {
                 stmt.execute(create);
@@ -85,14 +91,15 @@ public class DataTickets {
         }
     }
 
-    public void editTicketRead() throws SQLException {
-        TicketListController ticketListController = new TicketListController();
-        System.out.println(idRow);
+    public void editTicketRead(int id) throws SQLException {
         DBProcessor dbProcessor = new DBProcessor();
         Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
-        String query = "SELECT `idTicket` FROM `table_test` WHERE `idTicket` = " + idRow;
+        String query = "SELECT `idTicket` FROM `table_test` WHERE `idTicket` = " + id;
         Statement stmt = conn.createStatement();
         ResultSet res = stmt.executeQuery(query);
-            int id = res.getInt("idTicket");
+        while (res.next()) {
+            int idTicket = res.getInt("idTicket");
+        }
     }
+
 }

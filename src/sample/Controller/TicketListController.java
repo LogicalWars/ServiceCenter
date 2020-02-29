@@ -1,12 +1,8 @@
 package sample.Controller;
 
-import javafx.beans.value.ChangeListener;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
-import org.w3c.dom.ls.LSOutput;
 import sample.Model.DataTickets;
 import sample.Model.Tickets;
 
@@ -14,8 +10,10 @@ import java.sql.SQLException;
 
 public class TicketListController {
 
+    public static int idRow;
     private MainMenuController mainMenuController;
-    public void setMainMenuController(MainMenuController mainMenuController){
+
+    public void setMainMenuController(MainMenuController mainMenuController) {
         this.mainMenuController = mainMenuController;
     }
 
@@ -32,36 +30,33 @@ public class TicketListController {
     @FXML
     private TableColumn<Tickets, String> statusTicket;
 
+    DataTickets dataTickets = new DataTickets();
 
     @FXML
     private void initialize() {
-        DataTickets dataTickets = new DataTickets();
+
         dataTickets.dataTicketsRead();
 
-        idTicket.setCellValueFactory            (new PropertyValueFactory<Tickets, Integer>("idTicket"));
-        phoneNumber.setCellValueFactory         (new PropertyValueFactory<Tickets, String>("phoneNumber"));
-        fullName.setCellValueFactory            (new PropertyValueFactory<Tickets, String>("fullName"));
-        dateCreateTicket.setCellValueFactory    (new PropertyValueFactory<Tickets, String>("dateCreateTicket"));
-        statusTicket.setCellValueFactory        (new PropertyValueFactory<Tickets, String>("statusTicket"));
+        idTicket.setCellValueFactory(new PropertyValueFactory<>("idTicket"));
+        phoneNumber.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
+        fullName.setCellValueFactory(new PropertyValueFactory<>("fullName"));
+        dateCreateTicket.setCellValueFactory(new PropertyValueFactory<>("dateCreateTicket"));
+        statusTicket.setCellValueFactory(new PropertyValueFactory<>("statusTicket"));
 
-        tableTickets.setRowFactory( tv -> {
+        tableTickets.setRowFactory(tv -> {
             TableRow<Tickets> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
-                if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
+                if (event.getClickCount() == 2 && (!row.isEmpty())) {
                     int selectIndex = row.getIndex();
-                    Tickets selectTickets = (Tickets)tableTickets.getItems().get(selectIndex);
-                    dataTickets.setIdRow(selectTickets.getIdTicket());
-                    System.out.println(selectTickets.getIdTicket());
+                    Tickets selectTickets = tableTickets.getItems().get(selectIndex);
+                    idRow = selectTickets.getIdTicket();
                     mainMenuController.editTicket();
-                    try {
-                        dataTickets.editTicketRead();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
                 }
             });
-            return row ;
+
+            return row;
         });
         tableTickets.setItems(dataTickets.getTicketsData());
     }
+
 }

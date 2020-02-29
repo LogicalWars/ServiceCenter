@@ -5,8 +5,17 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import sample.Model.DataTickets;
+import sample.Model.EditTicket;
+
+import java.sql.SQLException;
 
 public class EditTicketController {
+
+    private MainMenuController mainMenuController;
+    public void setMainMenuController(MainMenuController mainMenuController){
+        this.mainMenuController = mainMenuController;
+    }
 
     @FXML
     public Label idTicket;
@@ -19,9 +28,18 @@ public class EditTicketController {
     @FXML
     private TextField model;
 
+
+
     public void initialize() {
-        TicketListController t = new TicketListController();
-        //System.out.println(t.getIdRow());
+        try {
+            new DataTickets().editTicketRead(TicketListController.idRow);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        idTicket.setText(String.valueOf(111111111));
+        phone.setText("89888787342");
+
+
     }
 
 }

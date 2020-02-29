@@ -23,12 +23,12 @@
                <children>
                   <GridPane hgap="10.0" vgap="10.0" VBox.vgrow="ALWAYS">
                      <columnConstraints>
-                        <ColumnConstraints hgrow="ALWAYS" />
-                        <ColumnConstraints hgrow="ALWAYS" />
+                        <ColumnConstraints hgrow="ALWAYS" minWidth="-Infinity" />
+                        <ColumnConstraints hgrow="ALWAYS" minWidth="-Infinity" />
                      </columnConstraints>
                      <rowConstraints>
                         <RowConstraints fillHeight="false" />
-                        <RowConstraints fillHeight="false" />
+                        <RowConstraints />
                         <RowConstraints fillHeight="false" />
                         <RowConstraints fillHeight="false" />
                         <RowConstraints fillHeight="false" />
@@ -60,7 +60,7 @@
                         </HBox>
                         <HBox alignment="CENTER_LEFT" GridPane.rowIndex="1">
                            <children>
-                              <Label prefWidth="100.0" text="Телефон">
+                              <Label minWidth="-Infinity" prefWidth="100.0" text="Телефон">
                                  <HBox.margin>
                                     <Insets left="10.0" right="10.0" />
                                  </HBox.margin>
@@ -74,7 +74,7 @@
                         </HBox>
                         <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="65.0" GridPane.rowIndex="2">
                            <children>
-                              <Label prefWidth="100.0" text="ФИО">
+                              <Label minWidth="-Infinity" prefWidth="100.0" text="ФИО">
                                  <HBox.margin>
                                     <Insets left="10.0" right="10.0" />
                                  </HBox.margin>
@@ -84,7 +84,7 @@
                         </HBox>
                         <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="140.0" GridPane.rowIndex="3">
                            <children>
-                              <Label prefHeight="17.0" prefWidth="100.0" text="Цена ремонта">
+                              <Label minWidth="-Infinity" prefHeight="17.0" prefWidth="100.0" text="Цена ремонта">
                                  <HBox.margin>
                                     <Insets left="10.0" right="10.0" />
                                  </HBox.margin>
@@ -94,7 +94,7 @@
                         </HBox>
                         <HBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="145.0" GridPane.rowIndex="4">
                            <children>
-                              <Label prefHeight="17.0" prefWidth="100.0" text="Запчасть">
+                              <Label minWidth="-Infinity" prefHeight="17.0" prefWidth="100.0" text="Запчасть">
                                  <HBox.margin>
                                     <Insets left="10.0" right="10.0" />
                                  </HBox.margin>
@@ -126,7 +126,7 @@
                         </HBox>
                         <HBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="180.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <children>
-                              <Label prefWidth="100.0" text="Устройство">
+                              <Label minWidth="-Infinity" prefWidth="100.0" text="Устройство">
                                  <HBox.margin>
                                     <Insets left="10.0" right="10.0" />
                                  </HBox.margin>
@@ -136,7 +136,7 @@
                         </HBox>
                         <HBox alignment="CENTER_LEFT" layoutX="280.0" layoutY="75.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <children>
-                              <Label prefWidth="100.0" text="Модель">
+                              <Label minWidth="-Infinity" prefWidth="100.0" text="Модель">
                                  <HBox.margin>
                                     <Insets left="10.0" right="10.0" />
                                  </HBox.margin>
@@ -144,34 +144,14 @@
                               <TextField HBox.hgrow="ALWAYS" />
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER_LEFT" layoutX="280.0" layoutY="110.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                        <HBox alignment="CENTER_LEFT" layoutX="350.0" layoutY="110.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <children>
-                              <Label prefWidth="100.0" text="Дефект">
+                              <Label minWidth="-Infinity" prefWidth="100.0" text="Марка">
                                  <HBox.margin>
                                     <Insets left="10.0" right="10.0" />
                                  </HBox.margin>
                               </Label>
-                              <TextArea maxHeight="1.7976931348623157E308" minHeight="-Infinity" prefHeight="70.0" HBox.hgrow="ALWAYS" />
-                           </children>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" layoutX="280.0" layoutY="145.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                           <children>
-                              <Label prefWidth="100.0" text="Состояние">
-                                 <HBox.margin>
-                                    <Insets left="10.0" right="10.0" />
-                                 </HBox.margin>
-                              </Label>
-                              <TextArea maxHeight="1.7976931348623157E308" minHeight="-Infinity" prefHeight="70.0" HBox.hgrow="ALWAYS" />
-                           </children>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" layoutX="280.0" layoutY="180.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
-                           <children>
-                              <Label prefWidth="100.0" text="Примечание">
-                                 <HBox.margin>
-                                    <Insets left="10.0" right="10.0" />
-                                 </HBox.margin>
-                              </Label>
-                              <TextArea maxHeight="1.7976931348623157E308" minHeight="-Infinity" prefHeight="70.0" HBox.hgrow="ALWAYS" />
+                              <TextField HBox.hgrow="ALWAYS" />
                            </children>
                         </HBox>
                      </children>
@@ -179,6 +159,49 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </padding>
                   </GridPane>
+                  <HBox fillHeight="false">
+                     <children>
+                        <Label minWidth="-Infinity" prefWidth="100.0" text="Дефект" HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets left="10.0" right="10.0" />
+                           </HBox.margin>
+                        </Label>
+                        <TextArea maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="70.0" wrapText="true" HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </TextArea>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <Label minWidth="-Infinity" prefWidth="100.0" text="Примечание">
+                           <HBox.margin>
+                              <Insets left="10.0" right="10.0" />
+                           </HBox.margin>
+                        </Label>
+                        <TextArea maxHeight="1.7976931348623157E308" minHeight="-Infinity" prefHeight="70.0" HBox.hgrow="ALWAYS" />
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <Label minWidth="-Infinity" prefWidth="100.0" text="Состояние">
+                           <HBox.margin>
+                              <Insets left="10.0" right="10.0" />
+                           </HBox.margin>
+                        </Label>
+                        <TextArea maxHeight="1.7976931348623157E308" minHeight="-Infinity" prefHeight="70.0" HBox.hgrow="ALWAYS" />
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </HBox>
                   <TitledPane alignment="TOP_LEFT" nodeOrientation="LEFT_TO_RIGHT" text="Комментарий">
                      <content>
                         <TextArea maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
@@ -207,6 +230,9 @@
                      </VBox.margin>
                   </HBox>
                </children>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
             </VBox>
          </content>
       </ScrollPane>

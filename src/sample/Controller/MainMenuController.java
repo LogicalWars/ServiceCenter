@@ -52,6 +52,8 @@ public class MainMenuController {
         }
     }
 
+
+
     @FXML
     public void editTicket () {
         try {
@@ -59,6 +61,8 @@ public class MainMenuController {
             loader.setController(new EditTicketController());
             Parent newPane = loader.load();
             paneMainContent.setCenter(newPane);
+            EditTicketController editTicketController = loader.getController();
+            editTicketController.setMainMenuController(this);
         }catch (IOException e) {
             e.printStackTrace();
         }
