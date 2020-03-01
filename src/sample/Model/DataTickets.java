@@ -22,16 +22,61 @@ public class DataTickets {
         return ticketsData;
     }
 
-    public void setIdRow(int idRow) {
-        this.idRow = idRow;
+    private int idTicket;
+    private String phoneNumber;
+    private String fullName;
+    private String dateCreateTicket;
+    private String statusTicket;
+    private String deviceTicket;
+    private String defectTicket;
+    private String modelTicket;
+    private String markTicket;
+    private String noteTicket;
+    private String conditionTicket;
+
+    public int getIdTicket() {
+        return idTicket;
     }
 
-    public int getIdRow() {
-        return idRow;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    private int idRow;
+    public String getFullName() {
+        return fullName;
+    }
 
+    public String getDateCreateTicket() {
+        return dateCreateTicket;
+    }
+
+    public String getStatusTicket() {
+        return statusTicket;
+    }
+
+    public String getDeviceTicket() {
+        return deviceTicket;
+    }
+
+    public String getDefectTicket() {
+        return defectTicket;
+    }
+
+    public String getModelTicket() {
+        return modelTicket;
+    }
+
+    public String getMarkTicket() {
+        return markTicket;
+    }
+
+    public String getNoteTicket() {
+        return noteTicket;
+    }
+
+    public String getConditionTicket() {
+        return conditionTicket;
+    }
 
     public void dataTicketsRead() {
         try {
@@ -94,11 +139,26 @@ public class DataTickets {
     public void editTicketRead(int id) throws SQLException {
         DBProcessor dbProcessor = new DBProcessor();
         Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
-        String query = "SELECT `idTicket` FROM `table_test` WHERE `idTicket` = " + id;
+        String query =  "SELECT table_test.*, status.`status` as `status` " +
+                        "FROM table_test " +
+                        "INNER JOIN status ON (table_test.`status_id` = status.`idStatus`) " +
+                        "WHERE table_test.`idTicket` =" + id;
         Statement stmt = conn.createStatement();
         ResultSet res = stmt.executeQuery(query);
         while (res.next()) {
-            int idTicket = res.getInt("idTicket");
+            idTicket = res.getInt("idTicket");
+            phoneNumber = res.getString("phoneNumber");
+            fullName = res.getString("fullName");
+            Date date = res.getDate("dateCreateTicket");
+            dateCreateTicket = String.valueOf(date);
+            statusTicket = res.getString("status");
+            deviceTicket = res.getString("device");
+            defectTicket = res.getString("defect");
+            modelTicket = res.getString("model");
+            markTicket = res.getString("mark");
+            noteTicket = res.getString("note");
+            conditionTicket = res.getString("condition");
+
         }
     }
 
