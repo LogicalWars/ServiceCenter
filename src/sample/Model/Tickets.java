@@ -3,6 +3,8 @@ package sample.Model;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
+import java.util.Date;
+
 public class Tickets {
     private SimpleIntegerProperty idTicket;             //№ заявки
     private SimpleStringProperty phoneNumber;           //Номер телефона
@@ -17,7 +19,7 @@ public class Tickets {
         this.dateCreateTicket = new SimpleStringProperty(dateCreateTicket);
         this.statusTicket = new SimpleStringProperty(statusTicket);
     }
-    public Tickets(){}
+    public Tickets(int id, String p, String name, Date date1, String status){}
 
     public int getIdTicket(){return idTicket.get();}
     public void setIdTicket(int value){idTicket.set(value);}

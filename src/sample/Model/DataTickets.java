@@ -11,7 +11,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 public class DataTickets {
@@ -46,6 +47,9 @@ public class DataTickets {
     private String noteTicket;
     private String conditionTicket;
     private String idStatusTicket;
+    private int year;
+    private int month;
+    private int day;
 
     public String getIdStatusTicket() {
         return idStatusTicket;
@@ -110,12 +114,13 @@ public class DataTickets {
                 int id = res.getInt("idTicket");
                 String p = res.getString("phoneNumber");
                 String name = res.getString("fullName");
-                Date date1 = res.getDate("dateCreateTicket");
-                String date2 = String.valueOf(date1);
-//                SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy");
-//                String date = sdf.format(date1);
+                LocalDate date1 = LocalDate.parse(res.getString("dateCreateTicket"));
+                year = date1.getYear();
+                month = date1.getMonthValue();
+                day = date1.getDayOfMonth();
+                String date0 = day+"."+month+"."+year;
                 String status = res.getString("status");
-                ticketsData.add(new Tickets(id, p, name, date2, status));
+                ticketsData.add(new Tickets(id, p, name, date0, status));
             }
             stmt.close();
             conn.close();
@@ -166,8 +171,11 @@ public class DataTickets {
             idTicket = res.getInt("idTicket");
             phoneNumber = res.getString("phoneNumber");
             fullName = res.getString("fullName");
-            Date date = res.getDate("dateCreateTicket");
-            dateCreateTicket = String.valueOf(date);
+            LocalDate date = LocalDate.parse(res.getString("dateCreateTicket"));
+            year = date.getYear();
+            month = date.getMonthValue();
+            day = date.getDayOfMonth();
+            dateCreateTicket = day+"."+month+"."+year;
             statusTicket = res.getString("status");
             deviceTicket = res.getString("device");
             defectTicket = res.getString("defect");
@@ -228,7 +236,7 @@ public class DataTickets {
 
     public void ticketLogsWrite(int idTicket){
         try {
-            LocalDate date = LocalDate.now();
+            LocalDateTime date = LocalDateTime.now();
             DBProcessor dbProcessor = new DBProcessor();
             Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
             String create = "INSERT INTO `ticketLogs` (`date`, `idTicket`) " +
@@ -258,9 +266,17 @@ public class DataTickets {
             ResultSet res = stmt.executeQuery(query);
             int idLog = 1;
             while (res.next()) {
-                Date date = res.getDate("date");
-                String date1 = String.valueOf(date);
-                ticketLogs.add(new TicketLogs(idLog, date1));
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                String i = res.getString("date");
+                LocalDateTime date1 = LocalDateTime.parse(i,formatter);
+                int hours = date1.getHour();
+                int minutes = date1.getMinute();
+                int second = date1.getSecond();
+                year = date1.getYear();
+                month = date1.getMonthValue();
+                day = date1.getDayOfMonth();
+                String dateTime = day+"."+month+"."+year +" "+ hours+":"+minutes+":"+second;
+                ticketLogs.add(new TicketLogs(idLog, dateTime));
                 idLog++;
             }
             stmt.close();
