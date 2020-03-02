@@ -1,5 +1,7 @@
 package sample.Controller;
 
+import javafx.beans.value.ObservableValue;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -101,7 +103,7 @@ public class EditTicketController {
         defect.textProperty().addListener((observable,oldValue,newValue) ->check());
         note.textProperty().addListener((observable,oldValue,newValue) ->check());
         condition.textProperty().addListener((observable,oldValue,newValue) ->check());
-
+        statusUpload.valueProperty().addListener((observable,oldValue,newValue) ->check());
     }
 
     private void check(){
@@ -113,7 +115,10 @@ public class EditTicketController {
         int markC = dataTickets.getMarkTicket().compareTo(mark.getText());
         int defectC = dataTickets.getDefectTicket().compareTo(defect.getText());
         int noteC = dataTickets.getNoteTicket().compareTo(note.getText());
-        if(phoneC==0&&conditionC==0&&fullNameC==0&&deviceC==0&&modelC==0&&markC==0&&defectC==0&&noteC==0)
+        String statusD = "null";
+        int statusC =statusD.compareTo(String.valueOf(statusUpload.getValue())) ;
+        System.out.println(statusC + " = status");
+        if(phoneC==0&&conditionC==0&&fullNameC==0&&deviceC==0&&modelC==0&&markC==0&&defectC==0&&noteC==0&&statusC==0)
         {saveButton.setDisable(true);}else{saveButton.setDisable(false);}
     }
 
