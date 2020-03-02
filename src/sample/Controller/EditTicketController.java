@@ -46,6 +46,8 @@ public class EditTicketController {
     @FXML
     private TextArea condition;
     @FXML
+    private Button saveButton;
+    @FXML
     private Label status;
     @FXML
     private Label date;
@@ -89,6 +91,30 @@ public class EditTicketController {
         statusUpload.setItems(dataTickets.getStatusUpload());
         tableLogs.setItems(dataTickets.getTicketLogs());
 
+        saveButton.setDisable(true);
+
+        phone.textProperty().addListener((observable,oldValue,newValue) -> check());
+        fullName.textProperty().addListener((observable,oldValue,newValue) ->check());
+        device.textProperty().addListener((observable,oldValue,newValue) ->check());
+        model.textProperty().addListener((observable,oldValue,newValue) ->check());
+        mark.textProperty().addListener((observable,oldValue,newValue) ->check());
+        defect.textProperty().addListener((observable,oldValue,newValue) ->check());
+        note.textProperty().addListener((observable,oldValue,newValue) ->check());
+        condition.textProperty().addListener((observable,oldValue,newValue) ->check());
+
+    }
+
+    private void check(){
+        int phoneC = dataTickets.getPhoneNumber().compareTo(phone.getText());
+        int conditionC = dataTickets.getConditionTicket().compareTo(condition.getText());
+        int fullNameC = dataTickets.getFullName().compareTo(fullName.getText());
+        int deviceC = dataTickets.getDeviceTicket().compareTo(device.getText());
+        int modelC = dataTickets.getModelTicket().compareTo(model.getText());
+        int markC = dataTickets.getMarkTicket().compareTo(mark.getText());
+        int defectC = dataTickets.getDefectTicket().compareTo(defect.getText());
+        int noteC = dataTickets.getNoteTicket().compareTo(note.getText());
+        if(phoneC==0&&conditionC==0&&fullNameC==0&&deviceC==0&&modelC==0&&markC==0&&defectC==0&&noteC==0)
+        {saveButton.setDisable(true);}else{saveButton.setDisable(false);}
     }
 
     public void saveEditTicket(){

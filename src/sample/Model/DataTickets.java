@@ -256,11 +256,12 @@ public class DataTickets {
                     "WHERE table_test.`idTicket` =" + id;
             Statement stmt = conn.createStatement();
             ResultSet res = stmt.executeQuery(query);
+            int idLog = 1;
             while (res.next()) {
-                int idLog = res.getInt("id");
                 Date date = res.getDate("date");
                 String date1 = String.valueOf(date);
                 ticketLogs.add(new TicketLogs(idLog, date1));
+                idLog++;
             }
             stmt.close();
             conn.close();
