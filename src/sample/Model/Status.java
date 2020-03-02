@@ -12,4 +12,5 @@ public class Status {
     public Status (String status){
         this.status = status;
     }
+
 }

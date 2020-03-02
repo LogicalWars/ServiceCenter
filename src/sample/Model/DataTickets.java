@@ -28,6 +28,12 @@ public class DataTickets {
         return statusUpload;
     }
 
+    private ObservableList<TicketLogs> ticketLogs = FXCollections.observableArrayList();
+
+    public ObservableList<TicketLogs> getTicketLogs() {
+        return ticketLogs;
+    }
+
     private int idTicket;
     private String phoneNumber;
     private String fullName;
@@ -39,6 +45,11 @@ public class DataTickets {
     private String markTicket;
     private String noteTicket;
     private String conditionTicket;
+    private String idStatusTicket;
+
+    public String getIdStatusTicket() {
+        return idStatusTicket;
+    }
 
     public int getIdTicket() {
         return idTicket;
@@ -164,6 +175,7 @@ public class DataTickets {
             markTicket = res.getString("mark");
             noteTicket = res.getString("note");
             conditionTicket = res.getString("condition");
+            idStatusTicket = res.getString("status_id");
 
         }
     }
@@ -177,7 +189,7 @@ public class DataTickets {
             ResultSet res = stmt.executeQuery(query);
             while (res.next()) {
                 String status = res.getString("status");
-                statusUpload.add(new Status(status.toString()));
+                statusUpload.add(new Status(status));
             }
             stmt.close();
             conn.close();
@@ -208,6 +220,49 @@ public class DataTickets {
                 System.out.println(e);
                 e.getErrorCode();
             }
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void ticketLogsWrite(int idTicket){
+        try {
+            LocalDate date = LocalDate.now();
+            DBProcessor dbProcessor = new DBProcessor();
+            Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
+            String create = "INSERT INTO `ticketLogs` (`date`, `idTicket`) " +
+                    "VALUES ('" + date + "'," +
+                    " '" + idTicket + "')";
+            try (Statement stmt = conn.createStatement()) {
+                stmt.execute(create);
+            } catch (SQLException e) {
+                System.out.println(e);
+                e.getErrorCode();
+            }
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void ticketLogsRead(int id){
+        try {
+            DBProcessor dbProcessor = new DBProcessor();
+            Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
+            String query = "SELECT ticketLogs.* " +
+                    "FROM ticketLogs " +
+                    "INNER JOIN table_test ON (ticketLogs.`idTicket` = table_test.`idTicket`) " +
+                    "WHERE table_test.`idTicket` =" + id;
+            Statement stmt = conn.createStatement();
+            ResultSet res = stmt.executeQuery(query);
+            while (res.next()) {
+                int idLog = res.getInt("id");
+                Date date = res.getDate("date");
+                String date1 = String.valueOf(date);
+                ticketLogs.add(new TicketLogs(idLog, date1));
+            }
+            stmt.close();
             conn.close();
         } catch (SQLException e) {
             e.printStackTrace();

@@ -6,6 +6,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
@@ -244,6 +246,14 @@
             </VBox>
          </content>
       </ScrollPane>
-      <SplitPane />
+      <SplitPane>
+         <items>
+            <TableView fx:id="tableLogs" prefHeight="200.0" prefWidth="200.0">
+              <columns>
+                <TableColumn fx:id="numberLog" prefWidth="75.0" text="№" />
+                <TableColumn fx:id="dateLog" prefWidth="75.0" text="Дата" />
+              </columns>
+            </TableView>
+         </items></SplitPane>
   </items>
 </SplitPane>
