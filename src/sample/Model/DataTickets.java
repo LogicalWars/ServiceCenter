@@ -168,6 +168,8 @@ public class DataTickets {
         }
     }
 
+    String status;
+
     public void statusUploadRead(){
         try {
             DBProcessor dbProcessor = new DBProcessor();
@@ -176,8 +178,8 @@ public class DataTickets {
             Statement stmt = conn.createStatement();
             ResultSet res = stmt.executeQuery(query);
             while (res.next()) {
-                String status = res.getString("status");
-                statusUpload.add(new Status(status));
+                status = res.getString("status");
+                statusUpload.add(new Status(status.toString()));
             }
             stmt.close();
             conn.close();
