@@ -168,8 +168,6 @@ public class DataTickets {
         }
     }
 
-    String status;
-
     public void statusUploadRead(){
         try {
             DBProcessor dbProcessor = new DBProcessor();
@@ -178,10 +176,38 @@ public class DataTickets {
             Statement stmt = conn.createStatement();
             ResultSet res = stmt.executeQuery(query);
             while (res.next()) {
-                status = res.getString("status");
+                String status = res.getString("status");
                 statusUpload.add(new Status(status.toString()));
             }
             stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void saveEditTicketWrite(int id, int status, String phone, String fullName, String device, String model, String mark, String defect, String note, String condition){
+        try {
+//            LocalDate date = LocalDate.now();
+            DBProcessor dbProcessor = new DBProcessor();
+            Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
+            String update = "UPDATE table_test " +
+                    "SET `phoneNumber` = "+ phone +", " +
+                    "`status_id` = "+ status +", " +
+                    "`fullName` = '"+ fullName +"', " +
+                    "`device` ='"+ device +"' , " +
+                    "`model` = '"+ model +"', " +
+                    "`mark` = '"+ mark +"', " +
+                    "`defect` = '"+ defect +"', " +
+                    "`note` = '"+ note +"', " +
+                    "`condition` = '"+ condition + "'" +
+                    "WHERE `idTicket` = "+ id;
+            try (Statement stmt = conn.createStatement()) {
+                stmt.execute(update);
+            } catch (SQLException e) {
+                System.out.println(e);
+                e.getErrorCode();
+            }
             conn.close();
         } catch (SQLException e) {
             e.printStackTrace();

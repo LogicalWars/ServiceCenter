@@ -78,4 +78,10 @@ public class EditTicketController {
 
         statusUpload.setItems(dataTickets.getStatusUpload());
     }
+
+    public void saveEditTicket(){
+        dataTickets.saveEditTicketWrite(dataTickets.getIdTicket(), statusUpload.getSelectionModel().getSelectedIndex()+1, phone.getText(), fullName.getText(), device.getText(), model.getText(),
+                mark.getText(), defect.getText(), note.getText(), condition.getText());
+        mainMenuController.ticketList();
+    }
 }
