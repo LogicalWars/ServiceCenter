@@ -22,6 +22,12 @@ public class DataTickets {
         return ticketsData;
     }
 
+    private ObservableList<Status> statusUpload = FXCollections.observableArrayList();
+
+    public ObservableList<Status> getStatusUpload() {
+        return statusUpload;
+    }
+
     private int idTicket;
     private String phoneNumber;
     private String fullName;
@@ -159,6 +165,24 @@ public class DataTickets {
             noteTicket = res.getString("note");
             conditionTicket = res.getString("condition");
 
+        }
+    }
+
+    public void statusUploadRead(){
+        try {
+            DBProcessor dbProcessor = new DBProcessor();
+            Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
+            String query = "SELECT * FROM `status`";
+            Statement stmt = conn.createStatement();
+            ResultSet res = stmt.executeQuery(query);
+            while (res.next()) {
+                String status = res.getString("status");
+                statusUpload.add(new Status(status));
+            }
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 

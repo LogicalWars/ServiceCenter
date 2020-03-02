@@ -2,11 +2,13 @@ package sample.Controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import sample.Model.DataTickets;
 import sample.Model.EditTicket;
+import sample.Model.Status;
 
 import java.sql.SQLException;
 
@@ -44,15 +46,24 @@ public class EditTicketController {
     private TextArea note;
     @FXML
     private TextArea condition;
+    @FXML
+    private Label status;
+    @FXML
+    private Label date;
+    @FXML
+    private ComboBox<Status> statusUpload;
 
+    DataTickets dataTickets = new DataTickets();
 
     public void initialize() {
-        DataTickets dataTickets = new DataTickets();
+
         try {
             dataTickets.editTicketRead(TicketListController.idRow);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        dataTickets.statusUploadRead();
+
         idTicket.setText(String.valueOf(dataTickets.getIdTicket()));
         phone.setText(dataTickets.getPhoneNumber());
         fullName.setText(dataTickets.getFullName());
@@ -62,5 +73,9 @@ public class EditTicketController {
         defect.setText(dataTickets.getDefectTicket());
         note.setText(dataTickets.getNoteTicket());
         condition.setText(dataTickets.getConditionTicket());
+        status.setText(dataTickets.getStatusTicket());
+        date.setText(dataTickets.getDateCreateTicket());
+
+        statusUpload.setItems(dataTickets.getStatusUpload());
     }
 }
