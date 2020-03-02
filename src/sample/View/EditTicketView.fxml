@@ -6,12 +6,15 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
@@ -36,7 +39,7 @@
                         <RowConstraints fillHeight="false" />
                      </rowConstraints>
                      <children>
-                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="82.0" GridPane.columnSpan="2">
+                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="82.0">
                            <children>
                               <Label text="№ Заявки">
                                  <HBox.margin>
@@ -89,7 +92,7 @@
                                     <Insets left="10.0" right="10.0" />
                                  </HBox.margin>
                               </Label>
-                              <TextField HBox.hgrow="ALWAYS" />
+                              <TextField fx:id="repairPrice" HBox.hgrow="ALWAYS" />
                            </children>
                         </HBox>
                         <HBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="145.0" GridPane.rowIndex="4">
@@ -99,7 +102,7 @@
                                     <Insets left="10.0" right="10.0" />
                                  </HBox.margin>
                               </Label>
-                              <TextField HBox.hgrow="ALWAYS" />
+                              <TextField fx:id="sparePart" HBox.hgrow="ALWAYS" />
                            </children>
                         </HBox>
                         <HBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="180.0" GridPane.rowIndex="5">
@@ -109,7 +112,7 @@
                                     <Insets left="10.0" right="10.0" />
                                  </HBox.margin>
                               </Label>
-                              <Label prefHeight="17.0" prefWidth="100.0" />
+                              <Label fx:id="sparePrice" prefHeight="17.0" prefWidth="100.0" />
                               <Label prefHeight="17.0" prefWidth="100.0" text="руб." />
                            </children>
                         </HBox>
@@ -120,7 +123,7 @@
                                     <Insets left="10.0" right="10.0" />
                                  </HBox.margin>
                               </Label>
-                              <Label prefHeight="17.0" prefWidth="100.0" />
+                              <Label fx:id="totalPrice" prefHeight="17.0" prefWidth="100.0" />
                               <Label prefHeight="17.0" prefWidth="100.0" text="руб." />
                            </children>
                         </HBox>
@@ -131,7 +134,7 @@
                                     <Insets left="10.0" right="10.0" />
                                  </HBox.margin>
                               </Label>
-                              <TextField HBox.hgrow="ALWAYS" />
+                              <TextField fx:id="device" HBox.hgrow="ALWAYS" />
                            </children>
                         </HBox>
                         <HBox alignment="CENTER_LEFT" layoutX="280.0" layoutY="75.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
@@ -141,7 +144,7 @@
                                     <Insets left="10.0" right="10.0" />
                                  </HBox.margin>
                               </Label>
-                              <TextField HBox.hgrow="ALWAYS" />
+                              <TextField fx:id="model" HBox.hgrow="ALWAYS" />
                            </children>
                         </HBox>
                         <HBox alignment="CENTER_LEFT" layoutX="350.0" layoutY="110.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
@@ -151,7 +154,14 @@
                                     <Insets left="10.0" right="10.0" />
                                  </HBox.margin>
                               </Label>
-                              <TextField HBox.hgrow="ALWAYS" />
+                              <TextField fx:id="mark" HBox.hgrow="ALWAYS" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="TOP_RIGHT" GridPane.columnIndex="1">
+                           <children>
+                              <Label fx:id="date" />
+                              <Pane HBox.hgrow="ALWAYS" />
+                              <Label fx:id="status" />
                            </children>
                         </HBox>
                      </children>
@@ -166,7 +176,7 @@
                               <Insets left="10.0" right="10.0" />
                            </HBox.margin>
                         </Label>
-                        <TextArea maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="70.0" wrapText="true" HBox.hgrow="ALWAYS">
+                        <TextArea fx:id="defect" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="70.0" wrapText="true" HBox.hgrow="ALWAYS">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin>
@@ -183,7 +193,7 @@
                               <Insets left="10.0" right="10.0" />
                            </HBox.margin>
                         </Label>
-                        <TextArea maxHeight="1.7976931348623157E308" minHeight="-Infinity" prefHeight="70.0" HBox.hgrow="ALWAYS" />
+                        <TextArea fx:id="note" maxHeight="1.7976931348623157E308" minHeight="-Infinity" prefHeight="70.0" HBox.hgrow="ALWAYS" />
                      </children>
                      <VBox.margin>
                         <Insets bottom="10.0" />
@@ -196,7 +206,7 @@
                               <Insets left="10.0" right="10.0" />
                            </HBox.margin>
                         </Label>
-                        <TextArea maxHeight="1.7976931348623157E308" minHeight="-Infinity" prefHeight="70.0" HBox.hgrow="ALWAYS" />
+                        <TextArea fx:id="condition" maxHeight="1.7976931348623157E308" minHeight="-Infinity" prefHeight="70.0" HBox.hgrow="ALWAYS" />
                      </children>
                      <VBox.margin>
                         <Insets bottom="10.0" />
@@ -218,12 +228,12 @@
                               <Insets bottom="5.0" right="10.0" />
                            </HBox.margin>
                         </Label>
-                        <ComboBox prefWidth="150.0">
+                        <ComboBox fx:id="statusUpload" prefWidth="150.0">
                            <HBox.margin>
                               <Insets right="100.0" />
                            </HBox.margin>
                         </ComboBox>
-                        <Button mnemonicParsing="false" text="Сохранить" />
+                        <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveEditTicket" text="Сохранить" />
                      </children>
                      <VBox.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -236,6 +246,14 @@
             </VBox>
          </content>
       </ScrollPane>
-      <SplitPane prefHeight="160.0" prefWidth="200.0" />
+      <SplitPane>
+         <items>
+            <TableView fx:id="tableLogs" prefHeight="200.0" prefWidth="200.0">
+              <columns>
+                <TableColumn fx:id="numberLog" prefWidth="75.0" text="№" />
+                <TableColumn fx:id="dateLog" prefWidth="75.0" text="Дата" />
+              </columns>
+            </TableView>
+         </items></SplitPane>
   </items>
 </SplitPane>

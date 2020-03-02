@@ -38,7 +38,7 @@
                               <Insets />
                            </HBox.margin>
                         </Label>
-                        <TextField maxWidth="150.0" minWidth="150.0" prefWidth="150.0" HBox.hgrow="ALWAYS">
+                        <TextField fx:id="textPhone" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" HBox.hgrow="ALWAYS">
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>
@@ -48,7 +48,7 @@
                   <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
                      <children>
                         <Label minWidth="-Infinity" prefWidth="100.0" text="ФИО" />
-                        <TextField maxWidth="1.7976931348623157E308" minWidth="200.0" HBox.hgrow="ALWAYS">
+                        <TextField fx:id="textFullName" maxWidth="1.7976931348623157E308" minWidth="200.0" HBox.hgrow="ALWAYS">
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>
@@ -58,7 +58,7 @@
                   <HBox alignment="CENTER_LEFT" layoutX="230.0" layoutY="20.0" GridPane.rowIndex="1">
                      <children>
                         <Label minWidth="-Infinity" prefWidth="100.0" text="Устройство" />
-                        <TextField maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                        <TextField fx:id="textDevice" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>
@@ -68,7 +68,7 @@
                   <HBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="60.0" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <children>
                         <Label minWidth="-Infinity" prefWidth="100.0" text="Модель" />
-                        <TextField maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                        <TextField fx:id="textModel" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>
@@ -77,18 +77,8 @@
                   </HBox>
                   <HBox alignment="CENTER_LEFT" layoutX="230.0" layoutY="60.0" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2">
                      <children>
-                        <Label minWidth="-Infinity" prefWidth="100.0" text="Модель" />
-                        <TextField maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
-                           <HBox.margin>
-                              <Insets left="10.0" />
-                           </HBox.margin>
-                        </TextField>
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER_LEFT" layoutX="289.0" layoutY="130.0" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                     <children>
                         <Label minWidth="-Infinity" prefWidth="100.0" text="Марка" />
-                        <TextField maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                        <TextField fx:id="textMark" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>
@@ -105,8 +95,8 @@
             </GridPane>
             <HBox>
                <children>
-                  <Label minWidth="-Infinity" prefWidth="100.0" text="Примечание" />
-                  <TextArea maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefHeight="100.0" HBox.hgrow="ALWAYS" />
+                  <Label minWidth="-Infinity" prefWidth="100.0" text="Дефект" />
+                  <TextArea fx:id="textDefect" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefHeight="100.0" HBox.hgrow="ALWAYS" />
                </children>
                <VBox.margin>
                   <Insets bottom="10.0" />
@@ -115,7 +105,7 @@
             <HBox>
                <children>
                   <Label minWidth="-Infinity" prefWidth="100.0" text="Состояние" />
-                  <TextArea maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefHeight="100.0" HBox.hgrow="ALWAYS">
+                  <TextArea fx:id="textCondition" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefHeight="100.0" HBox.hgrow="ALWAYS">
                      <HBox.margin>
                         <Insets bottom="10.0" />
                      </HBox.margin>
@@ -124,8 +114,8 @@
             </HBox>
             <HBox>
                <children>
-                  <Label minWidth="-Infinity" prefWidth="100.0" text="Дефект" />
-                  <TextArea maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefHeight="100.0" HBox.hgrow="ALWAYS" />
+                  <Label minWidth="-Infinity" prefWidth="100.0" text="Примечание" />
+                  <TextArea fx:id="textNote" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefHeight="100.0" HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
          </children>
