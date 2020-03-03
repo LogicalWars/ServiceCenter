@@ -117,7 +117,6 @@ public class EditTicketController {
         int noteC = dataTickets.getNoteTicket().compareTo(note.getText());
         String statusD = "null";
         int statusC =statusD.compareTo(String.valueOf(statusUpload.getValue())) ;
-        System.out.println(statusC + " = status");
         if(phoneC==0&&conditionC==0&&fullNameC==0&&deviceC==0&&modelC==0&&markC==0&&defectC==0&&noteC==0&&statusC==0)
         {saveButton.setDisable(true);}else{saveButton.setDisable(false);}
     }
