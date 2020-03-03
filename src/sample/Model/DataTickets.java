@@ -6,13 +6,16 @@ import sample.Controller.EditTicketController;
 import sample.Controller.NewTicketController;
 import sample.Controller.TicketListController;
 
+import javax.swing.text.DateFormatter;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.Date;
 
 public class DataTickets {
@@ -115,12 +118,9 @@ public class DataTickets {
                 String p = res.getString("phoneNumber");
                 String name = res.getString("fullName");
                 LocalDate date1 = LocalDate.parse(res.getString("dateCreateTicket"));
-                year = date1.getYear();
-                month = date1.getMonthValue();
-                day = date1.getDayOfMonth();
-                String date0 = day+"."+month+"."+year;
+                DateTimeFormatter shortDateTime = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
                 String status = res.getString("status");
-                ticketsData.add(new Tickets(id, p, name, date0, status));
+                ticketsData.add(new Tickets(id, p, name, shortDateTime.format(date1), status));
             }
             stmt.close();
             conn.close();
@@ -172,10 +172,8 @@ public class DataTickets {
             phoneNumber = res.getString("phoneNumber");
             fullName = res.getString("fullName");
             LocalDate date = LocalDate.parse(res.getString("dateCreateTicket"));
-            year = date.getYear();
-            month = date.getMonthValue();
-            day = date.getDayOfMonth();
-            dateCreateTicket = day+"."+month+"."+year;
+            DateTimeFormatter shortDateTime = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
+            dateCreateTicket = shortDateTime.format(date);
             statusTicket = res.getString("status");
             deviceTicket = res.getString("device");
             defectTicket = res.getString("defect");
@@ -234,14 +232,16 @@ public class DataTickets {
         }
     }
 
-    public void ticketLogsWrite(int idTicket){
+    public void ticketLogsWrite(int idTicket, String phoneNumberOld, String phoneNumberNew){
         try {
             LocalDateTime date = LocalDateTime.now();
             DBProcessor dbProcessor = new DBProcessor();
             Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
-            String create = "INSERT INTO `ticketLogs` (`date`, `idTicket`) " +
+            String create = "INSERT INTO `ticketLogs` (`date`, `idTicket`, `phoneNumberOld`, `phoneNumberNew`) " +
                     "VALUES ('" + date + "'," +
-                    " '" + idTicket + "')";
+                    "'" + idTicket + "'," +
+                    " '"+ phoneNumberOld +"'," +
+                    " '"+ phoneNumberNew +"')";
             try (Statement stmt = conn.createStatement()) {
                 stmt.execute(create);
             } catch (SQLException e) {
@@ -269,14 +269,8 @@ public class DataTickets {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
                 String i = res.getString("date");
                 LocalDateTime date1 = LocalDateTime.parse(i,formatter);
-                int hours = date1.getHour();
-                int minutes = date1.getMinute();
-                int second = date1.getSecond();
-                year = date1.getYear();
-                month = date1.getMonthValue();
-                day = date1.getDayOfMonth();
-                String dateTime = day+"."+month+"."+year +" "+ hours+":"+minutes+":"+second;
-                ticketLogs.add(new TicketLogs(idLog, dateTime));
+                DateTimeFormatter fr = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
+                ticketLogs.add(new TicketLogs(idLog, date1.format(fr)));
                 idLog++;
             }
             stmt.close();

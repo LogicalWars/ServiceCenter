@@ -130,6 +130,6 @@ public class EditTicketController {
                 mark.getText(), defect.getText(), note.getText(), condition.getText());
         }
         mainMenuController.ticketList();
-        dataTickets.ticketLogsWrite(dataTickets.getIdTicket());
+        dataTickets.ticketLogsWrite(dataTickets.getIdTicket(), dataTickets.getPhoneNumber(), phone.getText());
     }
 }
