@@ -38,6 +38,12 @@ public class DataTickets {
         return ticketLogs;
     }
 
+    private ObservableList<TicketLogs> ticketLogsData = FXCollections.observableArrayList();
+
+    public ObservableList<TicketLogs> getTicketLogsData() {
+        return ticketLogsData;
+    }
+
     private int idTicket;
     private String phoneNumber;
     private String fullName;
@@ -271,6 +277,9 @@ public class DataTickets {
                 LocalDateTime date1 = LocalDateTime.parse(i,formatter);
                 DateTimeFormatter fr = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
                 ticketLogs.add(new TicketLogs(idLog, date1.format(fr)));
+                String phoneOld = res.getString("phoneNumberOld");
+                String phoneNew = res.getString("phoneNumberNew");
+                ticketLogsData.add(new TicketLogs(phoneOld, phoneNew));
                 idLog++;
             }
             stmt.close();

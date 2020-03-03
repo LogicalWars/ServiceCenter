@@ -7,10 +7,17 @@ public class TicketLogs {
 
     private SimpleIntegerProperty idLog;
     private SimpleStringProperty dateLog;
+    private String phoneNumberOld;
+    private String phoneNumberNew;
 
     public TicketLogs (int idLog, String dateLog){
         this.idLog = new SimpleIntegerProperty(idLog);
         this.dateLog = new SimpleStringProperty(dateLog);
+    }
+
+    public TicketLogs (String phoneNumberOld, String phoneNumberNew){
+        this.phoneNumberOld = phoneNumberOld;
+        this. phoneNumberNew = phoneNumberNew;
     }
 
     public TicketLogs (int idLog){
