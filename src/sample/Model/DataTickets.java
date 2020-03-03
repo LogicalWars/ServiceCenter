@@ -270,17 +270,18 @@ public class DataTickets {
                     "WHERE table_test.`idTicket` =" + id;
             Statement stmt = conn.createStatement();
             ResultSet res = stmt.executeQuery(query);
-            int idLog = 1;
+            int idLogs = 1;
             while (res.next()) {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
                 String i = res.getString("date");
                 LocalDateTime date1 = LocalDateTime.parse(i,formatter);
                 DateTimeFormatter fr = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
-                ticketLogs.add(new TicketLogs(idLog, date1.format(fr)));
-                String phoneOld = res.getString("phoneNumberOld");
-                String phoneNew = res.getString("phoneNumberNew");
-                ticketLogsData.add(new TicketLogs(phoneOld, phoneNew));
-                idLog++;
+                int idLog = res.getInt("id");
+                ticketLogs.add(new TicketLogs(idLogs, date1.format(fr), idLog));
+                //String phoneOld = res.getString("phoneNumberOld");
+                //String phoneNew = res.getString("phoneNumberNew");
+                //ticketLogsData.add(new TicketLogs(phoneOld, phoneNew));
+                idLogs++;
             }
             stmt.close();
             conn.close();

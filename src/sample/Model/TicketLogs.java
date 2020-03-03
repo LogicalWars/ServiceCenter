@@ -7,12 +7,15 @@ public class TicketLogs {
 
     private SimpleIntegerProperty idLog;
     private SimpleStringProperty dateLog;
+
+    private int idLogFromDB;
     private String phoneNumberOld;
     private String phoneNumberNew;
 
-    public TicketLogs (int idLog, String dateLog){
+    public TicketLogs (int idLog, String dateLog, int idTicket){
         this.idLog = new SimpleIntegerProperty(idLog);
         this.dateLog = new SimpleStringProperty(dateLog);
+        this.idLogFromDB = idTicket;
     }
 
     public TicketLogs (String phoneNumberOld, String phoneNumberNew){
@@ -46,5 +49,9 @@ public class TicketLogs {
 
     public void setDateLog(String dateLog) {
         this.dateLog.set(dateLog);
+    }
+
+    public int getIdLogFromDB() {
+        return idLogFromDB;
     }
 }
