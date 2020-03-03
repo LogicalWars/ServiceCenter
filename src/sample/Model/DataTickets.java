@@ -232,14 +232,16 @@ public class DataTickets {
         }
     }
 
-    public void ticketLogsWrite(int idTicket){
+    public void ticketLogsWrite(int idTicket, String phoneNumberOld, String phoneNumberNew){
         try {
             LocalDateTime date = LocalDateTime.now();
             DBProcessor dbProcessor = new DBProcessor();
             Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
-            String create = "INSERT INTO `ticketLogs` (`date`, `idTicket`) " +
+            String create = "INSERT INTO `ticketLogs` (`date`, `idTicket`, `phoneNumberOld`, `phoneNumberNew`) " +
                     "VALUES ('" + date + "'," +
-                    " '" + idTicket + "')";
+                    "'" + idTicket + "'," +
+                    " '"+ phoneNumberOld +"'," +
+                    " '"+ phoneNumberNew +"')";
             try (Statement stmt = conn.createStatement()) {
                 stmt.execute(create);
             } catch (SQLException e) {
