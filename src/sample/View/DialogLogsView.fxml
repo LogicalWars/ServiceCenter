@@ -5,13 +5,14 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" >
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TableView layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0">
+      <TableView layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="410.0" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
         <columns>
           <TableColumn prefWidth="94.39999103546143" text="Пользователь" />
-          <TableColumn prefWidth="94.39999389648438" text="C2" />
+          <TableColumn prefWidth="94.39999389648438" text="Дата" />
+            <TableColumn prefWidth="111.20005798339844" text="Телефон до" />
+            <TableColumn prefWidth="111.20001220703125" text="Телефон после" />
         </columns>
       </TableView>
       <Button layoutX="354.0" layoutY="353.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="71.0" text="OK" />

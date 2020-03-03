@@ -6,4 +6,5 @@ public class DialogLogsController {
     public void setMainMenuController(MainMenuController mainMenuController) {
         this.mainMenuController = mainMenuController;
     }
+
 }
