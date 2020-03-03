@@ -3,8 +3,12 @@ package sample.Controller;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import sample.Model.DBProcessor;
 
 import java.io.IOException;
@@ -21,6 +25,7 @@ public class MainMenuController {
         ticketList();
         infoLeft.setText(new DBProcessor().resultConnection());
     }
+
 
     @FXML
     public void newTicket() {
@@ -66,6 +71,26 @@ public class MainMenuController {
         }catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    public void dialogLogs( ){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/DialogLogsView.fxml"));
+            loader.setController(new DialogLogsController());
+            Parent pane =  loader.load();
+            DialogLogsController dialogLogsController = loader.getController();
+            dialogLogsController.setMainMenuController(this);
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Окно логов");
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
+            Scene scene = new Scene(pane);
+            dialogStage.setScene(scene);
+            dialogStage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
 }

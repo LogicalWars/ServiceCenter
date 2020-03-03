@@ -3,14 +3,18 @@ package sample.Controller;
 import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import sample.Model.DataTickets;
-import sample.Model.EditTicket;
-import sample.Model.Status;
-import sample.Model.TicketLogs;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import sample.Model.*;
 
+import java.io.IOException;
 import java.sql.SQLException;
 
 public class EditTicketController {
@@ -104,6 +108,21 @@ public class EditTicketController {
         note.textProperty().addListener((observable,oldValue,newValue) ->check());
         condition.textProperty().addListener((observable,oldValue,newValue) ->check());
         statusUpload.valueProperty().addListener((observable,oldValue,newValue) ->check());
+
+        tableLogs.setRowFactory(tv -> {
+            TableRow<TicketLogs> row = new TableRow<>();
+            row.setOnMouseClicked(mouseEvent -> {
+                if(mouseEvent.getClickCount() == 2 && (!row.isEmpty())){
+                    int selectIndex = row.getIndex();
+                    System.out.println("selectIndex = "+selectIndex);
+                    mainMenuController.dialogLogs();
+                }
+            });
+            return row;
+        });
+
+
+
     }
 
     private void check(){
@@ -133,4 +152,5 @@ public class EditTicketController {
         mainMenuController.ticketList();
         dataTickets.ticketLogsWrite(dataTickets.getIdTicket());
     }
+
 }
