@@ -1,23 +1,20 @@
 package sample.Controller;
 
-import javafx.beans.value.ObservableValue;
-import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import sample.Model.*;
 
-import java.io.IOException;
 import java.sql.SQLException;
 
 public class EditTicketController {
+
+    public static int getIdLogs() {
+        return idLogs;
+    }
+
+    private static int idLogs;
+
 
     private MainMenuController mainMenuController;
 
@@ -114,7 +111,10 @@ public class EditTicketController {
             row.setOnMouseClicked(mouseEvent -> {
                 if(mouseEvent.getClickCount() == 2 && (!row.isEmpty())){
                     int selectIndex = row.getIndex();
+                    TicketLogs selectLog = tableLogs.getItems().get(selectIndex);
+                    idLogs = selectLog.getIdLogFromDB();
                     System.out.println("selectIndex = "+selectIndex);
+                    System.out.println(idLogs);
                     mainMenuController.dialogLogs();
                 }
             });
