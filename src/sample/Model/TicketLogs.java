@@ -5,27 +5,6 @@ import javafx.beans.property.SimpleStringProperty;
 
 public class TicketLogs {
 
-    private SimpleIntegerProperty idLog;
-    private SimpleStringProperty dateLog;
-
-    private int idLogFromDB;
-    private String phoneNumberOld;
-    private String phoneNumberNew;
-
-    public TicketLogs (int idLog, String dateLog, int idTicket){
-        this.idLog = new SimpleIntegerProperty(idLog);
-        this.dateLog = new SimpleStringProperty(dateLog);
-        this.idLogFromDB = idTicket;
-    }
-
-    public TicketLogs (String phoneNumberOld, String phoneNumberNew){
-        this.phoneNumberOld = phoneNumberOld;
-        this. phoneNumberNew = phoneNumberNew;
-    }
-
-    public TicketLogs (int idLog){
-        this.idLog = new SimpleIntegerProperty(idLog);
-    }
 
     public int getIdLog() {
         return idLog.get();
@@ -54,4 +33,54 @@ public class TicketLogs {
     public int getIdLogFromDB() {
         return idLogFromDB;
     }
+
+    public void setIdLogFromDB(int idLogFromDB) {
+        this.idLogFromDB = idLogFromDB;
+    }
+
+    public String getOldValue() {
+        return oldValue;
+    }
+
+    public void setOldValue(String oldValue) {
+        this.oldValue = oldValue;
+    }
+
+    public String getNewValue() {
+        return newValue;
+    }
+
+    public void setNewValue(String newValue) {
+        this.newValue = newValue;
+    }
+
+    public String getField() {
+        return field;
+    }
+
+    public void setField(String field) {
+        this.field = field;
+    }
+
+    private SimpleIntegerProperty idLog;
+    private SimpleStringProperty dateLog;
+
+    private int idLogFromDB;
+    private String oldValue;
+    private String newValue;
+    private String field;
+
+    public TicketLogs(int idLog, String dateLog, int idTicket) {
+        this.idLog = new SimpleIntegerProperty(idLog);
+        this.dateLog = new SimpleStringProperty(dateLog);
+        this.idLogFromDB = idTicket;
+    }
+
+    public TicketLogs(String field, String oldValue, String newValue) {
+        this.field = field;
+        this.oldValue = oldValue;
+        this.newValue = newValue;
+    }
+
+
 }

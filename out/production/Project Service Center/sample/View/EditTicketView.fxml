@@ -228,7 +228,7 @@
                               <Insets bottom="5.0" right="10.0" />
                            </HBox.margin>
                         </Label>
-                        <ComboBox fx:id="statusUpload" prefWidth="150.0">
+                        <ComboBox fx:id="statusComboBox" prefWidth="150.0">
                            <HBox.margin>
                               <Insets right="100.0" />
                            </HBox.margin>

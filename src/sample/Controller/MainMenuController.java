@@ -10,6 +10,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sample.Model.DBProcessor;
+import sample.Model.DataTickets;
 
 import java.io.IOException;
 
@@ -75,6 +76,7 @@ public class MainMenuController {
 
     @FXML
     public void dialogLogs( ){
+        DataTickets dataTickets = new DataTickets();
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/DialogLogsView.fxml"));
             loader.setController(new DialogLogsController());
@@ -82,7 +84,7 @@ public class MainMenuController {
             DialogLogsController dialogLogsController = loader.getController();
             dialogLogsController.setMainMenuController(this);
             Stage dialogStage = new Stage();
-            dialogStage.setTitle("Окно логов");
+            dialogStage.setTitle(dataTickets.getDateTimeLog(EditTicketController.idLogs));
             dialogStage.initModality(Modality.APPLICATION_MODAL);
             Scene scene = new Scene(pane);
             dialogStage.setScene(scene);
