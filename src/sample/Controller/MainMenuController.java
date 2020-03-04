@@ -22,7 +22,7 @@ public class MainMenuController {
     private Label infoLeft;
 
     @FXML
-    public void initialize () {
+    public void initialize() {
         ticketList();
         infoLeft.setText(new DBProcessor().resultConnection());
     }
@@ -44,7 +44,7 @@ public class MainMenuController {
     }
 
     @FXML
-    public void ticketList () {
+    public void ticketList() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/TicketListView.fxml"));
             loader.setController(new TicketListController());
@@ -53,15 +53,14 @@ public class MainMenuController {
             TicketListController ticketListController = loader.getController();
             ticketListController.setMainMenuController(this);
 
-        }catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
 
-
     @FXML
-    public void editTicket () {
+    public void editTicket() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/EditTicketView.fxml"));
             loader.setController(new EditTicketController());
@@ -69,18 +68,18 @@ public class MainMenuController {
             paneMainContent.setCenter(newPane);
             EditTicketController editTicketController = loader.getController();
             editTicketController.setMainMenuController(this);
-        }catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     @FXML
-    public void dialogLogs( ){
+    public void dialogLogs() {
         DataTickets dataTickets = new DataTickets();
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/DialogLogsView.fxml"));
             loader.setController(new DialogLogsController());
-            Parent pane =  loader.load();
+            Parent pane = loader.load();
             DialogLogsController dialogLogsController = loader.getController();
             dialogLogsController.setMainMenuController(this);
             Stage dialogStage = new Stage();

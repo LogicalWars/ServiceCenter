@@ -163,10 +163,10 @@ public class DataTickets {
     public void editTicketRead(int id) throws SQLException {
         DBProcessor dbProcessor = new DBProcessor();
         Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
-        String query =  "SELECT table_test.*, status.`status` as `status` " +
-                        "FROM table_test " +
-                        "INNER JOIN status ON (table_test.`status_id` = status.`idStatus`) " +
-                        "WHERE table_test.`idTicket` =" + id;
+        String query = "SELECT table_test.*, status.`status` as `status` " +
+                "FROM table_test " +
+                "INNER JOIN status ON (table_test.`status_id` = status.`idStatus`) " +
+                "WHERE table_test.`idTicket` =" + id;
         Statement stmt = conn.createStatement();
         ResultSet res = stmt.executeQuery(query);
         while (res.next()) {
@@ -188,7 +188,7 @@ public class DataTickets {
         }
     }
 
-    public void statusUploadRead(){
+    public void statusUploadRead() {
         try {
             DBProcessor dbProcessor = new DBProcessor();
             Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
@@ -206,22 +206,22 @@ public class DataTickets {
         }
     }
 
-    public void saveEditTicketWrite(int id, int status, String phone, String fullName, String device, String model, String mark, String defect, String note, String condition){
+    public void saveEditTicketWrite(int id, int status, String phone, String fullName, String device, String model, String mark, String defect, String note, String condition) {
         try {
 //            LocalDate date = LocalDate.now();
             DBProcessor dbProcessor = new DBProcessor();
             Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
             String update = "UPDATE table_test " +
-                    "SET `phoneNumber` = "+ phone +", " +
-                    "`status_id` = "+ status +", " +
-                    "`fullName` = '"+ fullName +"', " +
-                    "`device` ='"+ device +"' , " +
-                    "`model` = '"+ model +"', " +
-                    "`mark` = '"+ mark +"', " +
-                    "`defect` = '"+ defect +"', " +
-                    "`note` = '"+ note +"', " +
-                    "`condition` = '"+ condition + "'" +
-                    "WHERE `idTicket` = "+ id;
+                    "SET `phoneNumber` = " + phone + ", " +
+                    "`status_id` = " + status + ", " +
+                    "`fullName` = '" + fullName + "', " +
+                    "`device` ='" + device + "' , " +
+                    "`model` = '" + model + "', " +
+                    "`mark` = '" + mark + "', " +
+                    "`defect` = '" + defect + "', " +
+                    "`note` = '" + note + "', " +
+                    "`condition` = '" + condition + "'" +
+                    "WHERE `idTicket` = " + id;
             try (Statement stmt = conn.createStatement()) {
                 stmt.execute(update);
             } catch (SQLException e) {
@@ -252,7 +252,7 @@ public class DataTickets {
                                 String conditionOld,
                                 String conditionNew,
                                 String markOld,
-                                String markNew){
+                                String markNew) {
         try {
             LocalDateTime date = LocalDateTime.now();
             DBProcessor dbProcessor = new DBProcessor();
@@ -279,24 +279,24 @@ public class DataTickets {
                     " `markNew`)" +
                     "VALUES ('" + date + "'," +
                     "'" + idTicket + "'," +
-                    " '"+ phoneNumberOld +"'," +
-                    " '"+ phoneNumberNew +"'," +
-                    " '"+ fullNameOld +"'," +
-                    " '"+ fullNameNew +"'," +
-                    " '"+ statusOld +"'," +
-                    " '"+ statusNew +"'," +
-                    " '"+ deviceOld +"'," +
-                    " '"+ deviceNew +"'," +
-                    " '"+ modelOld +"'," +
-                    " '"+ modelNew +"'," +
-                    " '"+ defectOld +"'," +
-                    " '"+ defectNew +"'," +
-                    " '"+ noteOld +"'," +
-                    " '"+ noteNew +"'," +
-                    " '"+ conditionOld +"'," +
-                    " '"+ conditionNew +"'," +
-                    " '"+ markOld +"'," +
-                    " '"+ markNew +"')";
+                    " '" + phoneNumberOld + "'," +
+                    " '" + phoneNumberNew + "'," +
+                    " '" + fullNameOld + "'," +
+                    " '" + fullNameNew + "'," +
+                    " '" + statusOld + "'," +
+                    " '" + statusNew + "'," +
+                    " '" + deviceOld + "'," +
+                    " '" + deviceNew + "'," +
+                    " '" + modelOld + "'," +
+                    " '" + modelNew + "'," +
+                    " '" + defectOld + "'," +
+                    " '" + defectNew + "'," +
+                    " '" + noteOld + "'," +
+                    " '" + noteNew + "'," +
+                    " '" + conditionOld + "'," +
+                    " '" + conditionNew + "'," +
+                    " '" + markOld + "'," +
+                    " '" + markNew + "')";
             try (Statement stmt = conn.createStatement()) {
                 stmt.execute(create);
             } catch (SQLException e) {
@@ -309,21 +309,21 @@ public class DataTickets {
         }
     }
 
-    public void ticketLogsRead(int id){
+    public void ticketLogsRead(int id) {
         try {
             DBProcessor dbProcessor = new DBProcessor();
             Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
             String query = "SELECT ticketLogs.* " +
                     "FROM ticketLogs " +
                     "INNER JOIN table_test ON (ticketLogs.`idTicket` = table_test.`idTicket`) " +
-                    "WHERE table_test.`idTicket` = '"+ id +"' ORDER BY `id`";
+                    "WHERE table_test.`idTicket` = '" + id + "' ORDER BY `id`";
             Statement stmt = conn.createStatement();
             ResultSet res = stmt.executeQuery(query);
             int idLogs = 1;
             while (res.next()) {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
                 String i = res.getString("date");
-                LocalDateTime date1 = LocalDateTime.parse(i,formatter);
+                LocalDateTime date1 = LocalDateTime.parse(i, formatter);
                 DateTimeFormatter fr = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
                 int idLog = res.getInt("id");
                 ticketLogs.add(new TicketLogs(idLogs, date1.format(fr), idLog));
@@ -340,11 +340,12 @@ public class DataTickets {
     private ArrayList<String> oldValue = new ArrayList<>();
     private ArrayList<String> newValue = new ArrayList<>();
     private ObservableList<TicketLogs> ticketLogsData = FXCollections.observableArrayList();
+
     public ObservableList<TicketLogs> getTicketLogsData() {
         return ticketLogsData;
     }
 
-    public void logDataRead(int id){
+    public void logDataRead(int id) {
         try {
             DBProcessor dbProcessor = new DBProcessor();
             Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
@@ -374,54 +375,54 @@ public class DataTickets {
                 String markOld = res.getString("markOld");
                 String markNew = res.getString("markNew");
 
-                if(phoneNumberOld.compareTo(phoneNumberNew)!=0){
+                if (phoneNumberOld.compareTo(phoneNumberNew) != 0) {
                     oldValue.add(phoneNumberOld);
                     newValue.add(phoneNumberNew);
                     fieldsTicket.add("Телефон");
                 }
-                if(fullNameOld.compareTo(fullNameNew)!=0) {
+                if (fullNameOld.compareTo(fullNameNew) != 0) {
                     oldValue.add(fullNameOld);
                     newValue.add(fullNameNew);
                     fieldsTicket.add("ФИО");
                 }
-                if(statusOld.compareTo(statusNew)!=0) {
+                if (statusOld.compareTo(statusNew) != 0) {
                     oldValue.add(statusOld);
                     newValue.add(statusNew);
                     fieldsTicket.add("Статус");
                 }
-                if(deviceOld.compareTo(deviceNew)!=0) {
+                if (deviceOld.compareTo(deviceNew) != 0) {
                     oldValue.add(deviceOld);
                     newValue.add(deviceNew);
                     fieldsTicket.add("Устройство");
                 }
-                if(modelOld.compareTo(modelNew)!=0) {
+                if (modelOld.compareTo(modelNew) != 0) {
                     oldValue.add(modelOld);
                     newValue.add(modelNew);
                     fieldsTicket.add("Модель");
                 }
-                if(defectOld.compareTo(defectNew)!=0) {
+                if (defectOld.compareTo(defectNew) != 0) {
                     oldValue.add(defectOld);
                     newValue.add(defectNew);
                     fieldsTicket.add("Дефект");
                 }
-                if(noteOld.compareTo(noteNew)!=0) {
+                if (noteOld.compareTo(noteNew) != 0) {
                     oldValue.add(noteOld);
                     newValue.add(noteNew);
                     fieldsTicket.add("Примечание");
                 }
-                if(conditionOld.compareTo(conditionNew)!=0) {
+                if (conditionOld.compareTo(conditionNew) != 0) {
                     oldValue.add(conditionOld);
                     newValue.add(conditionNew);
                     fieldsTicket.add("Состояние");
                 }
-                if(markOld.compareTo(markNew)!=0) {
+                if (markOld.compareTo(markNew) != 0) {
                     oldValue.add(markOld);
                     newValue.add(markNew);
                     fieldsTicket.add("Марка");
                 }
             }
-            int i=0;
-            if(fieldsTicket.size()!=0) {
+            int i = 0;
+            if (fieldsTicket.size() != 0) {
                 while (i != fieldsTicket.size()) {
                     ticketLogsData.add(new TicketLogs(fieldsTicket.get(i), oldValue.get(i), newValue.get(i)));
                     i++;
@@ -435,7 +436,7 @@ public class DataTickets {
         }
     }
 
-    public String getDateTimeLog(int id){
+    public String getDateTimeLog(int id) {
         String dateTime = null;
         try {
             DBProcessor dbProcessor = new DBProcessor();
@@ -448,7 +449,7 @@ public class DataTickets {
             while (res.next()) {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
                 String i = res.getString("date");
-                LocalDateTime date1 = LocalDateTime.parse(i,formatter);
+                LocalDateTime date1 = LocalDateTime.parse(i, formatter);
                 DateTimeFormatter fr = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
                 dateTime = date1.format(fr);
             }
