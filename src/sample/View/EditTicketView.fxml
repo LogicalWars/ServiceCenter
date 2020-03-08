@@ -253,8 +253,8 @@
          <items>
             <TableView fx:id="tableLogs" prefHeight="200.0" prefWidth="200.0">
               <columns>
-                <TableColumn fx:id="numberLog" prefWidth="75.0" text="№" />
-                <TableColumn fx:id="dateLog" prefWidth="75.0" text="Дата" />
+                <TableColumn fx:id="numberLog" text="№" />
+                <TableColumn fx:id="dateLog" text="Дата" />
               </columns>
             </TableView>
          </items></SplitPane>

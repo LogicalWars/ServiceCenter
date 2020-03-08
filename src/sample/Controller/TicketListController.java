@@ -35,6 +35,7 @@ public class TicketListController {
     @FXML
     private void initialize() {
 
+
         dataTickets.dataTicketsRead();
 
         idTicket.setCellValueFactory(new PropertyValueFactory<>("idTicket"));

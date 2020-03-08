@@ -21,6 +21,8 @@ public class Main extends Application {
             loader.setController(new MainMenuController());
             primaryStage.setScene(new Scene(loader.load()));
             primaryStage.show();
+            primaryStage.setMinHeight(640);
+            primaryStage.setMinWidth(920);
         } catch (IOException e) {
             e.printStackTrace();
         }

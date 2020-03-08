@@ -8,11 +8,11 @@
    <items>
       <TableView fx:id="tableTickets" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" tableMenuButtonVisible="true">
         <columns>
-          <TableColumn fx:id="idTicket" maxWidth="1.7976931348623157E308" text="№" />
-          <TableColumn fx:id="phoneNumber" maxWidth="1.7976931348623157E308" prefWidth="110.0" resizable="false" text="Телефон" />
-            <TableColumn fx:id="fullName" prefWidth="200.0" text="ФИО" />
-            <TableColumn fx:id="dateCreateTicket" prefWidth="90.0" resizable="false" text="Дата приема" />
-            <TableColumn fx:id="statusTicket" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" text="Статус" />
+          <TableColumn fx:id="idTicket" text="№" />
+          <TableColumn fx:id="phoneNumber" text="Телефон" />
+            <TableColumn fx:id="fullName" text="ФИО" />
+            <TableColumn fx:id="dateCreateTicket" text="Дата приема" />
+            <TableColumn fx:id="statusTicket" text="Статус" />
         </columns>
       </TableView>
    </items>
