@@ -1,9 +1,10 @@
 package sample.Controller;
 
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.text.Text;
 import sample.Model.DataTickets;
 import sample.Model.TicketLogs;
 
@@ -38,7 +39,24 @@ public class DialogLogsController {
         field.setCellValueFactory(new PropertyValueFactory<>("field"));
         oldValue.setCellValueFactory(new PropertyValueFactory<>("oldValue"));
         newValue.setCellValueFactory(new PropertyValueFactory<>("newValue"));
-
+        oldValue.setCellFactory(param -> {
+            TableCell<TicketLogs,String> cell = new TableCell<>();
+            Text text = new Text();
+            cell.setGraphic(text);
+            cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
+            text.textProperty().bind(cell.itemProperty());
+            text.wrappingWidthProperty().bind(oldValue.widthProperty());
+            return  cell;
+        });
+        newValue.setCellFactory(param -> {
+            TableCell<TicketLogs,String> cell = new TableCell<>();
+            Text text = new Text();
+            cell.setGraphic(text);
+            cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
+            text.textProperty().bind(cell.itemProperty());
+            text.wrappingWidthProperty().bind(oldValue.widthProperty());
+            return  cell;
+        });
         tableLogData.setItems(dataTickets.getTicketLogsData());
     }
 

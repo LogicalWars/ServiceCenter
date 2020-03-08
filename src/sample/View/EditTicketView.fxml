@@ -160,7 +160,10 @@
                         <HBox alignment="TOP_RIGHT" GridPane.columnIndex="1">
                            <children>
                               <Label fx:id="date" />
-                              <Pane HBox.hgrow="ALWAYS" />
+                              <Pane HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label fx:id="dateClose" layoutX="17.0" />
+                                 </children></Pane>
                               <Label fx:id="status" />
                            </children>
                         </HBox>
@@ -214,7 +217,7 @@
                   </HBox>
                   <TitledPane alignment="TOP_LEFT" nodeOrientation="LEFT_TO_RIGHT" text="Комментарий">
                      <content>
-                        <TextArea maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                        <TextArea fx:id="comment" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                            <padding>
                               <Insets top="5.0" />
                            </padding>

@@ -2,22 +2,15 @@ package sample.Model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import sample.Controller.EditTicketController;
-import sample.Controller.NewTicketController;
-import sample.Controller.TicketListController;
 
-import javax.swing.text.DateFormatter;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class DataTickets {
 
@@ -44,6 +37,7 @@ public class DataTickets {
     private String phoneNumber;
     private String fullName;
     private String dateCreateTicket;
+    private String dateCloseTicket;
     private String statusTicket;
     private String deviceTicket;
     private String defectTicket;
@@ -52,9 +46,16 @@ public class DataTickets {
     private String noteTicket;
     private String conditionTicket;
     private String idStatusTicket;
-    private int year;
-    private int month;
-    private int day;
+    private String commentTicket;
+
+    public String getDateCloseTicket() {
+        return dateCloseTicket;
+    }
+    public void setDateCloseTicket(String dateCloseTicket){
+        this.dateCloseTicket = dateCloseTicket;
+    }
+
+    public String getCommentTicket() {return commentTicket;}
 
     public String getIdStatusTicket() {
         return idStatusTicket;
@@ -100,6 +101,7 @@ public class DataTickets {
         return noteTicket;
     }
 
+
     public String getConditionTicket() {
         return conditionTicket;
     }
@@ -137,7 +139,7 @@ public class DataTickets {
             LocalDate date = LocalDate.now();
             DBProcessor dbProcessor = new DBProcessor();
             Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
-            String create = "INSERT INTO `table_test` (`phoneNumber`, `fullName`,`device`,`model`,`defect`,`note`,`condition`,`dateCreateTicket`, `mark`, `status_id`) " +
+            String create = "INSERT INTO `table_test` (`phoneNumber`, `fullName`,`device`,`model`,`defect`,`note`,`condition`,`dateCreateTicket`, `mark`,`dateCloseTicket`, `status_id`) " +
                     "VALUES ('" + textPhone + "'," +
                     " '" + textFullName + "'," +
                     " '" + textDevice + "'," +
@@ -147,6 +149,7 @@ public class DataTickets {
                     " '" + textCondition + "'," +
                     " '" + date + "'," +
                     " '" + textMark + "'," +
+                    " '" + LocalDate.now() + "'," +
                     " '" + 1 + "')";
             try (Statement stmt = conn.createStatement()) {
                 stmt.execute(create);
@@ -184,7 +187,10 @@ public class DataTickets {
             noteTicket = res.getString("note");
             conditionTicket = res.getString("condition");
             idStatusTicket = res.getString("status_id");
-
+            commentTicket = res.getString("comment");
+            LocalDate dateClose = LocalDate.parse(res.getString("dateCloseTicket"));
+            DateTimeFormatter shortDateClose = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
+            if(statusTicket.equals("Выдан")) dateCloseTicket = shortDateClose.format(dateClose);
         }
     }
 
@@ -206,9 +212,9 @@ public class DataTickets {
         }
     }
 
-    public void saveEditTicketWrite(int id, int status, String phone, String fullName, String device, String model, String mark, String defect, String note, String condition) {
+    public void saveEditTicketWrite(int id, int status, String phone, String fullName, String device, String model, String mark, String defect, String note, String condition, String comment) {
         try {
-//            LocalDate date = LocalDate.now();
+            LocalDate date = LocalDate.now();
             DBProcessor dbProcessor = new DBProcessor();
             Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
             String update = "UPDATE table_test " +
@@ -220,7 +226,9 @@ public class DataTickets {
                     "`mark` = '" + mark + "', " +
                     "`defect` = '" + defect + "', " +
                     "`note` = '" + note + "', " +
-                    "`condition` = '" + condition + "'" +
+                    "`condition` = '" + condition + "'," +
+                    "`comment` = '" + comment + "'," +
+                    "`dateCloseTicket` = '" + LocalDate.now() + "'" +
                     "WHERE `idTicket` = " + id;
             try (Statement stmt = conn.createStatement()) {
                 stmt.execute(update);
@@ -252,7 +260,9 @@ public class DataTickets {
                                 String conditionOld,
                                 String conditionNew,
                                 String markOld,
-                                String markNew) {
+                                String markNew,
+                                String commentOld,
+                                String commentNew) {
         try {
             LocalDateTime date = LocalDateTime.now();
             DBProcessor dbProcessor = new DBProcessor();
@@ -276,7 +286,9 @@ public class DataTickets {
                     " `conditionOld`," +
                     " `conditionNew`," +
                     " `markOld`," +
-                    " `markNew`)" +
+                    " `markNew`," +
+                    " `commentOld`," +
+                    " `commentNew`)" +
                     "VALUES ('" + date + "'," +
                     "'" + idTicket + "'," +
                     " '" + phoneNumberOld + "'," +
@@ -296,7 +308,9 @@ public class DataTickets {
                     " '" + conditionOld + "'," +
                     " '" + conditionNew + "'," +
                     " '" + markOld + "'," +
-                    " '" + markNew + "')";
+                    " '" + markNew + "',"+
+                    " '" + commentOld + "'," +
+                    " '" + commentNew + "' )";
             try (Statement stmt = conn.createStatement()) {
                 stmt.execute(create);
             } catch (SQLException e) {
@@ -344,7 +358,13 @@ public class DataTickets {
     public ObservableList<TicketLogs> getTicketLogsData() {
         return ticketLogsData;
     }
-
+    private  void checkForLogs(String oldValueLog, String newValueLog, String textValueLog){
+        if (oldValueLog.compareTo(newValueLog) != 0) {
+            newValue.add(newValueLog);
+            oldValue.add(oldValueLog);
+            fieldsTicket.add(textValueLog);
+        }
+    }
     public void logDataRead(int id) {
         try {
             DBProcessor dbProcessor = new DBProcessor();
@@ -374,52 +394,19 @@ public class DataTickets {
                 String conditionNew = res.getString("conditionNew");
                 String markOld = res.getString("markOld");
                 String markNew = res.getString("markNew");
+                String commentOld = res.getString("commentOld");
+                String commentNew = res.getString("commentNew");
 
-                if (phoneNumberOld.compareTo(phoneNumberNew) != 0) {
-                    oldValue.add(phoneNumberOld);
-                    newValue.add(phoneNumberNew);
-                    fieldsTicket.add("Телефон");
-                }
-                if (fullNameOld.compareTo(fullNameNew) != 0) {
-                    oldValue.add(fullNameOld);
-                    newValue.add(fullNameNew);
-                    fieldsTicket.add("ФИО");
-                }
-                if (statusOld.compareTo(statusNew) != 0) {
-                    oldValue.add(statusOld);
-                    newValue.add(statusNew);
-                    fieldsTicket.add("Статус");
-                }
-                if (deviceOld.compareTo(deviceNew) != 0) {
-                    oldValue.add(deviceOld);
-                    newValue.add(deviceNew);
-                    fieldsTicket.add("Устройство");
-                }
-                if (modelOld.compareTo(modelNew) != 0) {
-                    oldValue.add(modelOld);
-                    newValue.add(modelNew);
-                    fieldsTicket.add("Модель");
-                }
-                if (defectOld.compareTo(defectNew) != 0) {
-                    oldValue.add(defectOld);
-                    newValue.add(defectNew);
-                    fieldsTicket.add("Дефект");
-                }
-                if (noteOld.compareTo(noteNew) != 0) {
-                    oldValue.add(noteOld);
-                    newValue.add(noteNew);
-                    fieldsTicket.add("Примечание");
-                }
-                if (conditionOld.compareTo(conditionNew) != 0) {
-                    oldValue.add(conditionOld);
-                    newValue.add(conditionNew);
-                    fieldsTicket.add("Состояние");
-                }
-                if (markOld.compareTo(markNew) != 0) {
-                    oldValue.add(markOld);
-                    newValue.add(markNew);
-                    fieldsTicket.add("Марка");
-                }
+                checkForLogs(phoneNumberOld,phoneNumberNew,"Телефон");
+                checkForLogs(fullNameOld,fullNameNew,"ФИО");
+                checkForLogs(statusOld,statusNew,"Статус");
+                checkForLogs(deviceOld,deviceNew,"Устройство");
+                checkForLogs(modelOld,modelNew,"Модель");
+                checkForLogs(defectOld,defectNew,"Дефект");
+                checkForLogs(noteOld,noteNew,"Примечание");
+                checkForLogs(conditionOld,conditionNew,"Состояние");
+                checkForLogs(markOld,markNew,"Марка");
+                checkForLogs(commentOld,commentNew,"Комментарий");
             }
             int i = 0;
             if (fieldsTicket.size() != 0) {
@@ -435,6 +422,7 @@ public class DataTickets {
             e.printStackTrace();
         }
     }
+
 
     public String getDateTimeLog(int id) {
         String dateTime = null;
