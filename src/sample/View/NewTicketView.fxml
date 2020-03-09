@@ -19,8 +19,8 @@
          <children>
             <GridPane hgap="10.0" vgap="10.0">
                <columnConstraints>
-                  <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" />
-                  <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" />
+                  <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" prefWidth="285.0" />
+                  <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" prefWidth="285.0" />
                </columnConstraints>
                <rowConstraints>
                   <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="ALWAYS" />
@@ -48,7 +48,7 @@
                   <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
                      <children>
                         <Label minWidth="-Infinity" prefWidth="100.0" text="ФИО" />
-                        <TextField fx:id="textFullName" maxWidth="1.7976931348623157E308" minWidth="200.0" HBox.hgrow="ALWAYS">
+                        <TextField fx:id="textFullName" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>
@@ -101,6 +101,9 @@
                <VBox.margin>
                   <Insets bottom="10.0" />
                </VBox.margin>
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
             </HBox>
             <HBox>
                <children>
@@ -111,12 +114,18 @@
                      </HBox.margin>
                   </TextArea>
                </children>
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
             </HBox>
             <HBox>
                <children>
                   <Label minWidth="-Infinity" prefWidth="100.0" text="Примечание" />
                   <TextArea fx:id="textNote" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefHeight="100.0" HBox.hgrow="ALWAYS" />
                </children>
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
             </HBox>
          </children>
          <padding>
