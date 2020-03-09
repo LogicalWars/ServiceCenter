@@ -173,20 +173,20 @@ public class DataTickets {
         ResultSet res = stmt.executeQuery(query);
         while (res.next()) {
             idTicket = res.getInt("idTicket");
-            phoneNumber = res.getString("phoneNumber");
-            fullName = res.getString("fullName");
+            phoneNumber = checkNull(res.getString("phoneNumber"));
+            fullName = checkNull(res.getString("fullName"));
             LocalDate date = LocalDate.parse(res.getString("dateCreateTicket"));
             DateTimeFormatter shortDateTime = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
-            dateCreateTicket = shortDateTime.format(date);
-            statusTicket = res.getString("status");
-            deviceTicket = res.getString("device");
-            defectTicket = res.getString("defect");
-            modelTicket = res.getString("model");
-            markTicket = res.getString("mark");
-            noteTicket = res.getString("note");
-            conditionTicket = res.getString("condition");
-            idStatusTicket = res.getString("status_id");
-            commentTicket = res.getString("comment");
+            dateCreateTicket = checkNull(shortDateTime.format(date));
+            statusTicket = checkNull(res.getString("status"));
+            deviceTicket = checkNull(res.getString("device"));
+            defectTicket = checkNull(res.getString("defect"));
+            modelTicket = checkNull(res.getString("model"));
+            markTicket = checkNull(res.getString("mark"));
+            noteTicket = checkNull(res.getString("note"));
+            conditionTicket = checkNull(res.getString("condition"));
+            idStatusTicket = checkNull(res.getString("status_id"));
+            commentTicket = checkNull(res.getString("comment"));
 
             if(statusTicket.equals("Выдан")) {
                 LocalDate dateClose = LocalDate.parse(res.getString("dateCloseTicket"));
@@ -204,7 +204,7 @@ public class DataTickets {
             Statement stmt = conn.createStatement();
             ResultSet res = stmt.executeQuery(query);
             while (res.next()) {
-                String status = res.getString("status");
+                String status = checkNull(res.getString("status"));
                 statusUpload.add(new Status(status));
             }
             stmt.close();
@@ -360,7 +360,7 @@ public class DataTickets {
     public ObservableList<TicketLogs> getTicketLogsData() {
         return ticketLogsData;
     }
-    private  void checkForLogs(String oldValueLog, String newValueLog, String textValueLog){
+    private void checkForLogs(String oldValueLog, String newValueLog, String textValueLog){
         if (oldValueLog.compareTo(newValueLog) != 0) {
             newValue.add(newValueLog);
             oldValue.add(oldValueLog);
@@ -378,26 +378,26 @@ public class DataTickets {
             Statement stmt = conn.createStatement();
             ResultSet res = stmt.executeQuery(query);
             while (res.next()) {
-                String phoneNumberOld = res.getString("phoneNumberOld");
-                String phoneNumberNew = res.getString("phoneNumberNew");
-                String fullNameOld = res.getString("fullNameOld");
-                String fullNameNew = res.getString("fullNameNew");
-                String statusOld = res.getString("statusOld");
-                String statusNew = res.getString("statusNew");
-                String deviceOld = res.getString("deviceOld");
-                String deviceNew = res.getString("deviceNew");
-                String modelOld = res.getString("modelOld");
-                String modelNew = res.getString("modelNew");
-                String defectOld = res.getString("defectOld");
-                String defectNew = res.getString("defectNew");
-                String noteOld = res.getString("noteOld");
-                String noteNew = res.getString("noteNew");
-                String conditionOld = res.getString("conditionOld");
-                String conditionNew = res.getString("conditionNew");
-                String markOld = res.getString("markOld");
-                String markNew = res.getString("markNew");
-                String commentOld = res.getString("commentOld");
-                String commentNew = res.getString("commentNew");
+                String phoneNumberOld = checkNull(res.getString("phoneNumberOld"));
+                String phoneNumberNew = checkNull(res.getString("phoneNumberNew"));
+                String fullNameOld = checkNull(res.getString("fullNameOld"));
+                String fullNameNew = checkNull(res.getString("fullNameNew"));
+                String statusOld = checkNull(res.getString("statusOld"));
+                String statusNew = checkNull(res.getString("statusNew"));
+                String deviceOld = checkNull(res.getString("deviceOld"));
+                String deviceNew = checkNull(res.getString("deviceNew"));
+                String modelOld = checkNull(res.getString("modelOld"));
+                String modelNew = checkNull(res.getString("modelNew"));
+                String defectOld = checkNull(res.getString("defectOld"));
+                String defectNew = checkNull(res.getString("defectNew"));
+                String noteOld = checkNull(res.getString("noteOld"));
+                String noteNew = checkNull(res.getString("noteNew"));
+                String conditionOld = checkNull(res.getString("conditionOld"));
+                String conditionNew = checkNull(res.getString("conditionNew"));
+                String markOld = checkNull(res.getString("markOld"));
+                String markNew = checkNull(res.getString("markNew"));
+                String commentOld = checkNull(res.getString("commentOld"));
+                String commentNew = checkNull(res.getString("commentNew"));
 
                 checkForLogs(phoneNumberOld,phoneNumberNew,"Телефон");
                 checkForLogs(fullNameOld,fullNameNew,"ФИО");
@@ -426,7 +426,7 @@ public class DataTickets {
     }
 
 
-    public String getDateTimeLog(int id) {
+    public String getDateTimeLogRead(int id) {
         String dateTime = null;
         try {
             DBProcessor dbProcessor = new DBProcessor();
@@ -449,6 +449,12 @@ public class DataTickets {
             e.printStackTrace();
         }
         return dateTime;
+    }
+
+    private String checkNull(String field){
+        if(field == null){
+            return "";
+        }else{return field;}
     }
 
 }

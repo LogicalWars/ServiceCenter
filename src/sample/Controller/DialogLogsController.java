@@ -46,7 +46,7 @@ public class DialogLogsController {
             cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
             text.textProperty().bind(cell.itemProperty());
             text.wrappingWidthProperty().bind(oldValue.widthProperty());
-            return  cell;
+            return cell;
         });
         newValue.setCellFactory(param -> {
             TableCell<TicketLogs,String> cell = new TableCell<>();
@@ -55,7 +55,7 @@ public class DialogLogsController {
             cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
             text.textProperty().bind(cell.itemProperty());
             text.wrappingWidthProperty().bind(oldValue.widthProperty());
-            return  cell;
+            return cell;
         });
         tableLogData.setItems(dataTickets.getTicketLogsData());
     }

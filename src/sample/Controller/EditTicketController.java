@@ -158,9 +158,10 @@ public class EditTicketController {
         int markC = dataTickets.getMarkTicket().compareTo(mark.getText());
         int defectC = dataTickets.getDefectTicket().compareTo(defect.getText());
         int noteC = dataTickets.getNoteTicket().compareTo(note.getText());
+        int commentC = dataTickets.getCommentTicket().compareTo(comment.getText());
         String statusD = "null";
         int statusC =statusD.compareTo(String.valueOf(statusComboBox.getValue())) ;
-        if(phoneC==0&&conditionC==0&&fullNameC==0&&deviceC==0&&modelC==0&&markC==0&&defectC==0&&noteC==0&&statusC==0)
+        if(phoneC==0&&conditionC==0&&fullNameC==0&&deviceC==0&&modelC==0&&markC==0&&defectC==0&&noteC==0&&statusC==0&&commentC==0)
         {saveButton.setDisable(true);}else{saveButton.setDisable(false);}
     }
 
@@ -180,7 +181,7 @@ public class EditTicketController {
                                     dataTickets.getFullName(),
                                     fullName.getText(),
                                     dataTickets.getStatusTicket(),
-                                    String.valueOf(status),
+                                    String.valueOf(statusComboBox.getValue()),
                                     dataTickets.getDeviceTicket(),
                                     device.getText(),
                                     dataTickets.getModelTicket(),
