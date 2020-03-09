@@ -139,7 +139,7 @@ public class DataTickets {
             LocalDate date = LocalDate.now();
             DBProcessor dbProcessor = new DBProcessor();
             Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
-            String create = "INSERT INTO `table_test` (`phoneNumber`, `fullName`,`device`,`model`,`defect`,`note`,`condition`,`dateCreateTicket`, `mark`,`dateCloseTicket`, `status_id`) " +
+            String create = "INSERT INTO `table_test` (`phoneNumber`, `fullName`,`device`,`model`,`defect`,`note`,`condition`,`dateCreateTicket`, `mark`, `status_id`) " +
                     "VALUES ('" + textPhone + "'," +
                     " '" + textFullName + "'," +
                     " '" + textDevice + "'," +
@@ -149,7 +149,6 @@ public class DataTickets {
                     " '" + textCondition + "'," +
                     " '" + date + "'," +
                     " '" + textMark + "'," +
-                    " '" + LocalDate.now() + "'," +
                     " '" + 1 + "')";
             try (Statement stmt = conn.createStatement()) {
                 stmt.execute(create);
@@ -188,9 +187,12 @@ public class DataTickets {
             conditionTicket = res.getString("condition");
             idStatusTicket = res.getString("status_id");
             commentTicket = res.getString("comment");
-            LocalDate dateClose = LocalDate.parse(res.getString("dateCloseTicket"));
-            DateTimeFormatter shortDateClose = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
-            if(statusTicket.equals("Выдан")) dateCloseTicket = shortDateClose.format(dateClose);
+
+            if(statusTicket.equals("Выдан")) {
+                LocalDate dateClose = LocalDate.parse(res.getString("dateCloseTicket"));
+                DateTimeFormatter shortDateClose = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
+                dateCloseTicket = shortDateClose.format(dateClose);
+            }
         }
     }
 
