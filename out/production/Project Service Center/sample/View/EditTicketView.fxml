@@ -10,7 +10,6 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -36,8 +35,8 @@
             <AnchorPane HBox.hgrow="ALWAYS">
                <children>
                   <Label fx:id="status" layoutX="323.0" layoutY="4.0" text="Статус" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0" />
-                  <Label fx:id="date" layoutX="99.0" text="Дата создания" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="0.0" />
-                  <Label layoutX="1.0" layoutY="4.0" prefWidth="100.0" text="Дата создания:" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="0.0" />
+                  <Label fx:id="date" layoutX="99.0" text="Дата создания" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="140.0" AnchorPane.topAnchor="0.0" />
+                  <Label layoutX="1.0" layoutY="4.0" prefWidth="100.0" text="Дата создания:" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="0.0" />
                   <Label layoutX="278.0" layoutY="7.0" text="Статус:" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="0.0" />
                </children>
             </AnchorPane>
@@ -108,7 +107,7 @@
                               <TextField fx:id="sparePart" HBox.hgrow="ALWAYS" />
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="180.0" GridPane.rowIndex="4">
+                        <HBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="180.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <children>
                               <Label prefHeight="17.0" prefWidth="100.0" text="Цена запчасти">
                                  <HBox.margin>
@@ -119,7 +118,7 @@
                               <Label prefHeight="17.0" prefWidth="100.0" text="руб." />
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="212.0" GridPane.rowIndex="5">
+                        <HBox alignment="CENTER_RIGHT" layoutX="20.0" layoutY="212.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                            <children>
                               <Label prefHeight="17.0" prefWidth="100.0" text="Общая цена">
                                  <HBox.margin>
@@ -127,7 +126,7 @@
                                  </HBox.margin>
                               </Label>
                               <Label fx:id="totalPrice" prefHeight="17.0" prefWidth="100.0" />
-                              <Label prefHeight="17.0" prefWidth="100.0" text="руб." />
+                              <Label prefHeight="17.0" text="руб." />
                            </children>
                         </HBox>
                         <HBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="180.0" GridPane.columnIndex="1">
@@ -165,58 +164,64 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </padding>
                   </GridPane>
-                  <HBox fillHeight="false">
-                     <children>
-                        <Label minWidth="-Infinity" prefWidth="100.0" text="Дефект" HBox.hgrow="ALWAYS">
-                           <HBox.margin>
-                              <Insets left="10.0" right="10.0" />
-                           </HBox.margin>
-                        </Label>
-                        <TextArea fx:id="defect" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="60.0" wrapText="true" HBox.hgrow="ALWAYS">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                        </TextArea>
-                     </children>
+                  <SplitPane dividerPositions="0.7002487562189055">
                      <VBox.margin>
-                        <Insets bottom="10.0" />
+                        <Insets />
                      </VBox.margin>
-                  </HBox>
-                  <HBox>
-                     <children>
-                        <Label minWidth="-Infinity" prefWidth="100.0" text="Примечание">
-                           <HBox.margin>
-                              <Insets left="10.0" right="10.0" />
-                           </HBox.margin>
-                        </Label>
-                        <TextArea fx:id="note" maxHeight="1.7976931348623157E308" minHeight="-Infinity" prefHeight="60.0" HBox.hgrow="ALWAYS" />
-                     </children>
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <HBox>
-                     <children>
-                        <Label minWidth="-Infinity" prefWidth="100.0" text="Состояние">
-                           <HBox.margin>
-                              <Insets left="10.0" right="10.0" />
-                           </HBox.margin>
-                        </Label>
-                        <TextArea fx:id="condition" maxHeight="1.7976931348623157E308" minHeight="-Infinity" prefHeight="60.0" HBox.hgrow="ALWAYS" />
-                     </children>
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <TitledPane alignment="TOP_LEFT" expanded="false" nodeOrientation="LEFT_TO_RIGHT" text="Комментарий">
-                     <content>
-                        <TextArea fx:id="comment" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                     <items>
+                        <VBox>
+                           <children>
+                              <HBox fillHeight="false">
+                                 <children>
+                                    <Label minWidth="-Infinity" prefWidth="100.0" text="Дефект" HBox.hgrow="ALWAYS">
+                                       <HBox.margin>
+                                          <Insets left="10.0" right="10.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <TextArea fx:id="defect" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="60.0" wrapText="true" HBox.hgrow="ALWAYS">
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                    </TextArea>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox>
+                                 <children>
+                                    <Label minWidth="-Infinity" prefWidth="100.0" text="Состояние">
+                                       <HBox.margin>
+                                          <Insets left="10.0" right="10.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <TextArea fx:id="condition" maxHeight="1.7976931348623157E308" minHeight="-Infinity" prefHeight="60.0" wrapText="true" HBox.hgrow="ALWAYS" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox>
+                                 <children>
+                                    <Label minWidth="-Infinity" prefWidth="100.0" text="Примечание">
+                                       <HBox.margin>
+                                          <Insets left="10.0" right="10.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <TextArea fx:id="note" maxHeight="1.7976931348623157E308" minHeight="-Infinity" prefHeight="60.0" wrapText="true" HBox.hgrow="ALWAYS" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </HBox>
+                           </children>
                            <padding>
-                              <Insets top="5.0" />
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </padding>
-                        </TextArea>
-                     </content>
-                  </TitledPane>
+                        </VBox>
+                        <TextArea fx:id="comment" prefHeight="200.0" prefWidth="200.0" wrapText="true" />
+                     </items>
+                  </SplitPane>
                </children>
                <padding>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
