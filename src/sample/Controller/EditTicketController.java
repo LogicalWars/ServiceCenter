@@ -70,11 +70,6 @@ public class EditTicketController {
     @FXML
     public void initialize() {
 
-        /**Вызов метода для тестовой печати*/
-
-        Print print = new Print();
-        print.createTXTFile("Любой текст сюда добавляю");
-
         try {
             dataTickets.editTicketRead(TicketListController.idRow);
         } catch (SQLException e) {
