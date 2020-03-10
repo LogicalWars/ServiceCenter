@@ -196,7 +196,7 @@ public class EditTicketController {
 
         String getStatusComboBox;
 
-        if(String.valueOf(statusComboBox.getValue()).equals("null")){
+        if(statusComboBox.getValue()==null){
             getStatusComboBox = dataTickets.getStatusTicket();
         }else{
             getStatusComboBox = String.valueOf(statusComboBox.getValue());
