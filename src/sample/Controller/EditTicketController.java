@@ -1,13 +1,21 @@
 package sample.Controller;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.print.PrinterJob;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import sample.Model.*;
+import java.io.IOException;
 import java.sql.SQLException;
 
 public class EditTicketController {
@@ -66,10 +74,14 @@ public class EditTicketController {
     @FXML
     private TableColumn<TicketLogs, String> dateLog;
 
+
+
+
     DataTickets dataTickets = new DataTickets();
 
     @FXML
     public void initialize() {
+
         try {
             dataTickets.editTicketRead(TicketListController.idRow);
         } catch (SQLException e) {
@@ -129,8 +141,29 @@ public class EditTicketController {
     }
 
     @FXML
-    private void printed() {
+    private void printed() throws IOException {
+
         System.out.println("печать");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/PrintTableView.fxml"));
+        loader.setController(new PrintTableController());
+        Parent pane = loader.load();
+        Stage dialogStage = new Stage();
+        dialogStage.initModality(Modality.APPLICATION_MODAL);
+        Scene scene = new Scene(pane);
+        dialogStage.setScene(scene);
+        dialogStage.showAndWait();
+        /**
+         * Запуск печати
+         */
+//        PrinterJob job = PrinterJob.createPrinterJob();
+//        if (job != null) {
+//            boolean success = job.printPage(pane);
+//            if (success) {
+//                job.endJob();
+//                System.out.println("печать завершена");
+//            }
+//        }
+
     }
 
     private void check() {
