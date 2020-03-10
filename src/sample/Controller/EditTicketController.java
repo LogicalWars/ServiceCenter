@@ -1,12 +1,6 @@
 package sample.Controller;
 
 import javafx.fxml.FXML;
-import javafx.print.PageOrientation;
-import javafx.print.Paper;
-import javafx.print.Printer;
-import javafx.print.PrinterJob;
-import javafx.scene.Node;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -14,16 +8,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import sample.Model.*;
-import sample.Model.Print.Print;
-
-import javax.print.*;
-import javax.print.attribute.HashPrintRequestAttributeSet;
-import javax.print.attribute.PrintRequestAttributeSet;
-import javax.print.attribute.standard.PageRanges;
-import java.awt.*;
-import java.io.*;
 import java.sql.SQLException;
-import java.time.LocalDate;
 
 public class EditTicketController {
 
@@ -115,23 +100,22 @@ public class EditTicketController {
 
         saveButton.setDisable(true);
 
-        phone.textProperty().addListener((observable,oldValue,newValue) -> check());
-        fullName.textProperty().addListener((observable,oldValue,newValue) ->check());
-        device.textProperty().addListener((observable,oldValue,newValue) ->check());
-        model.textProperty().addListener((observable,oldValue,newValue) ->check());
-        mark.textProperty().addListener((observable,oldValue,newValue) ->check());
-        defect.textProperty().addListener((observable,oldValue,newValue) ->check());
-        note.textProperty().addListener((observable,oldValue,newValue) ->check());
-        condition.textProperty().addListener((observable,oldValue,newValue) ->check());
-        comment.textProperty().addListener((observable,oldValue,newValue) ->check());
-        statusComboBox.valueProperty().addListener((observable, oldValue, newValue) ->check());
-
+        phone.textProperty().addListener((observable, oldValue, newValue) -> check());
+        fullName.textProperty().addListener((observable, oldValue, newValue) -> check());
+        device.textProperty().addListener((observable, oldValue, newValue) -> check());
+        model.textProperty().addListener((observable, oldValue, newValue) -> check());
+        mark.textProperty().addListener((observable, oldValue, newValue) -> check());
+        defect.textProperty().addListener((observable, oldValue, newValue) -> check());
+        note.textProperty().addListener((observable, oldValue, newValue) -> check());
+        condition.textProperty().addListener((observable, oldValue, newValue) -> check());
+        comment.textProperty().addListener((observable, oldValue, newValue) -> check());
+        statusComboBox.valueProperty().addListener((observable, oldValue, newValue) -> check());
 
 
         tableLogs.setRowFactory(tv -> {
             TableRow<TicketLogs> row = new TableRow<>();
             row.setOnMouseClicked(mouseEvent -> {
-                if(mouseEvent.getClickCount() == 2 && (!row.isEmpty())){
+                if (mouseEvent.getClickCount() == 2 && (!row.isEmpty())) {
                     int selectIndex = row.getIndex();
                     TicketLogs selectLog = tableLogs.getItems().get(selectIndex);
                     idLogs = selectLog.getIdLogFromDB();
@@ -142,14 +126,14 @@ public class EditTicketController {
         });
 
 
-
     }
+
     @FXML
-    private void printed(){
+    private void printed() {
         System.out.println("печать");
     }
 
-    private void check(){
+    private void check() {
         int phoneC = dataTickets.getPhoneNumber().compareTo(phone.getText());
         int conditionC = dataTickets.getConditionTicket().compareTo(condition.getText());
         int fullNameC = dataTickets.getFullName().compareTo(fullName.getText());
@@ -160,42 +144,44 @@ public class EditTicketController {
         int noteC = dataTickets.getNoteTicket().compareTo(note.getText());
         int commentC = dataTickets.getCommentTicket().compareTo(comment.getText());
         String statusD = "null";
-        int statusC =statusD.compareTo(String.valueOf(statusComboBox.getValue())) ;
-        if(phoneC==0&&conditionC==0&&fullNameC==0&&deviceC==0&&modelC==0&&markC==0&&defectC==0&&noteC==0&&statusC==0&&commentC==0)
-        {saveButton.setDisable(true);}else{saveButton.setDisable(false);}
+        int statusC = statusD.compareTo(String.valueOf(statusComboBox.getValue()));
+        if (phoneC == 0 && conditionC == 0 && fullNameC == 0 && deviceC == 0 && modelC == 0 && markC == 0 && defectC == 0 && noteC == 0 && statusC == 0 && commentC == 0) {
+            saveButton.setDisable(true);
+        } else {
+            saveButton.setDisable(false);
+        }
     }
 
-    public void saveEditTicket(){
-        if(statusComboBox.getSelectionModel().getSelectedIndex()+1 !=0) {
+    public void saveEditTicket() {
+        if (statusComboBox.getSelectionModel().getSelectedIndex() + 1 != 0) {
             dataTickets.saveEditTicketWrite(dataTickets.getIdTicket(), statusComboBox.getSelectionModel().getSelectedIndex() + 1, phone.getText(), fullName.getText(), device.getText(), model.getText(),
                     mark.getText(), defect.getText(), note.getText(), condition.getText(), comment.getText());
-        }else{
+        } else {
             dataTickets.saveEditTicketWrite(dataTickets.getIdTicket(), Integer.parseInt(dataTickets.getIdStatusTicket()), phone.getText(), fullName.getText(), device.getText(), model.getText(),
                     mark.getText(), defect.getText(), note.getText(), condition.getText(), comment.getText());
         }
         mainMenuController.ticketList();
-//        dataTickets.ticketLogsWrite(dataTickets.getIdTicket(), dataTickets.getPhoneNumber(), phone.getText());
         dataTickets.ticketLogsWrite(dataTickets.getIdTicket(),
-                                    dataTickets.getPhoneNumber(),
-                                    phone.getText(),
-                                    dataTickets.getFullName(),
-                                    fullName.getText(),
-                                    dataTickets.getStatusTicket(),
-                                    String.valueOf(statusComboBox.getValue()),
-                                    dataTickets.getDeviceTicket(),
-                                    device.getText(),
-                                    dataTickets.getModelTicket(),
-                                    model.getText(),
-                                    dataTickets.getDefectTicket(),
-                                    defect.getText(),
-                                    dataTickets.getNoteTicket(),
-                                    note.getText(),
-                                    dataTickets.getConditionTicket(),
-                                    condition.getText(),
-                                    dataTickets.getMarkTicket(),
-                                    mark.getText(),
-                                    dataTickets.getCommentTicket(),
-                                    comment.getText());
+                dataTickets.getPhoneNumber(),
+                phone.getText(),
+                dataTickets.getFullName(),
+                fullName.getText(),
+                dataTickets.getStatusTicket(),
+                String.valueOf(statusComboBox.getValue()),
+                dataTickets.getDeviceTicket(),
+                device.getText(),
+                dataTickets.getModelTicket(),
+                model.getText(),
+                dataTickets.getDefectTicket(),
+                defect.getText(),
+                dataTickets.getNoteTicket(),
+                note.getText(),
+                dataTickets.getConditionTicket(),
+                condition.getText(),
+                dataTickets.getMarkTicket(),
+                mark.getText(),
+                dataTickets.getCommentTicket(),
+                comment.getText());
     }
 
 }
