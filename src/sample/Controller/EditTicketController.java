@@ -1,29 +1,23 @@
 package sample.Controller;
 
 import javafx.fxml.FXML;
-import javafx.print.PageOrientation;
-import javafx.print.Paper;
-import javafx.print.Printer;
+import javafx.fxml.FXMLLoader;
 import javafx.print.PrinterJob;
-import javafx.scene.Node;
-import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import sample.Model.*;
-import sample.Model.Print.Print;
 
-import javax.print.*;
-import javax.print.attribute.HashPrintRequestAttributeSet;
-import javax.print.attribute.PrintRequestAttributeSet;
-import javax.print.attribute.standard.PageRanges;
-import java.awt.*;
-import java.io.*;
+import java.io.IOException;
 import java.sql.SQLException;
-import java.time.LocalDate;
 
 public class EditTicketController {
 
@@ -81,10 +75,14 @@ public class EditTicketController {
     @FXML
     private TableColumn<TicketLogs, String> dateLog;
 
+
+
+
     DataTickets dataTickets = new DataTickets();
 
     @FXML
     public void initialize() {
+
         try {
             dataTickets.editTicketRead(TicketListController.idRow);
         } catch (SQLException e) {
@@ -145,8 +143,28 @@ public class EditTicketController {
 
     }
     @FXML
-    private void printed(){
+    private void printed() throws IOException {
         System.out.println("печать");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/PrintTableView.fxml"));
+        loader.setController(new PrintTableController());
+        Parent pane = loader.load();
+        Stage dialogStage = new Stage();
+        dialogStage.initModality(Modality.APPLICATION_MODAL);
+        Scene scene = new Scene(pane);
+        dialogStage.setScene(scene);
+        dialogStage.showAndWait();
+        /**
+         * Запуск печати
+         */
+//        PrinterJob job = PrinterJob.createPrinterJob();
+//        if (job != null) {
+//            boolean success = job.printPage(pane);
+//            if (success) {
+//                job.endJob();
+//                System.out.println("печать завершена");
+//            }
+//        }
+
     }
 
     private void check(){
