@@ -161,8 +161,11 @@
                         </HBox>
                      </children>
                      <padding>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                        <Insets bottom="10.0" right="10.0" top="5.0" />
                      </padding>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
                   </GridPane>
                   <SplitPane dividerPositions="0.7002487562189055">
                      <VBox.margin>
@@ -216,18 +219,18 @@
                               </HBox>
                            </children>
                            <padding>
-                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                              <Insets bottom="10.0" right="10.0" top="10.0" />
                            </padding>
                         </VBox>
                         <TextArea fx:id="comment" prefHeight="200.0" prefWidth="200.0" wrapText="true" />
                      </items>
                   </SplitPane>
                </children>
-               <padding>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </padding>
             </VBox>
          </content>
+         <padding>
+            <Insets right="5.0" />
+         </padding>
       </ScrollPane>
       <SplitPane dividerPositions="0.5">
          <items>

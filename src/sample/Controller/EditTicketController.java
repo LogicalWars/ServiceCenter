@@ -193,6 +193,15 @@ public class EditTicketController {
             dataTickets.saveEditTicketWrite(dataTickets.getIdTicket(), Integer.parseInt(dataTickets.getIdStatusTicket()), phone.getText(), fullName.getText(), device.getText(), model.getText(),
                     mark.getText(), defect.getText(), note.getText(), condition.getText(), comment.getText());
         }
+
+        String getStatusComboBox;
+
+        if(String.valueOf(statusComboBox.getValue()).equals("null")){
+            getStatusComboBox = dataTickets.getStatusTicket();
+        }else{
+            getStatusComboBox = String.valueOf(statusComboBox.getValue());
+        }
+
         mainMenuController.ticketList();
         dataTickets.ticketLogsWrite(dataTickets.getIdTicket(),
                 dataTickets.getPhoneNumber(),
@@ -200,7 +209,7 @@ public class EditTicketController {
                 dataTickets.getFullName(),
                 fullName.getText(),
                 dataTickets.getStatusTicket(),
-                String.valueOf(statusComboBox.getValue()),
+                getStatusComboBox,
                 dataTickets.getDeviceTicket(),
                 device.getText(),
                 dataTickets.getModelTicket(),
