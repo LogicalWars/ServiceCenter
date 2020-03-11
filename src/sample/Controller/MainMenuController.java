@@ -12,6 +12,7 @@ import sample.Model.DBProcessor;
 import sample.Model.DataTickets;
 
 import java.io.IOException;
+import java.util.concurrent.Future;
 
 public class MainMenuController {
 
@@ -58,6 +59,7 @@ public class MainMenuController {
     }
 
 
+
     @FXML
     public void editTicket() {
         try {
@@ -71,6 +73,7 @@ public class MainMenuController {
             e.printStackTrace();
         }
     }
+
 
     @FXML
     public void dialogLogs() {

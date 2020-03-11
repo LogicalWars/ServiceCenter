@@ -9,8 +9,23 @@ import sample.Controller.PrintTableController;
 import java.io.IOException;
 
 public class Print {
+
     private double pgW;
     private double pgH;
+    private String idPrint;
+    private String labelTop;
+    private String labelMiddle;
+    private String labelBottomRight;
+    private String labelBottomLeft;
+    private String labelNameTicket;
+    private String labelFullName;
+    private String labelPhone;
+    private String labelNote;
+    private String labelDate;
+    private String labelDevice;
+    private String labelModel;
+    private String labelCondition;
+
     public void printed() throws IOException {
         System.out.println("printed");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/PrintTableView.fxml"));
@@ -37,4 +52,17 @@ public class Print {
 
     public double getPgW() {return pgW;}
     public double getPgH() {return pgH;}
+    public String getIdPrint() {return idPrint;}
+    public String getLabelTop() {return labelTop;}
+    public String getLabelMiddle() {return labelMiddle;}
+    public String getLabelBottomRight() {return labelBottomRight;}
+    public String getLabelBottomLeft() {return labelBottomLeft;}
+    public String getLabelNameTicket() {return labelNameTicket;}
+    public String getLabelFullName() {return labelFullName;}
+    public String getLabelPhone() {return labelPhone;}
+    public String getLabelNote() {return labelNote;}
+    public String getLabelDate() {return labelDate;}
+    public String getLabelDevice() {return labelDevice;}
+    public String getLabelModel() {return labelModel;}
+    public String getLabelCondition() {return labelCondition;}
 }
