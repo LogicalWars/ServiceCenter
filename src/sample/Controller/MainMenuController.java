@@ -96,4 +96,22 @@ public class MainMenuController {
 
     }
 
+    @FXML
+    public void editPrintPattern(){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/EditPatternPrint.fxml"));
+            loader.setController(new EditPatternPrintController());
+            Parent pane = loader.load();
+            EditPatternPrintController editPatternPrintController = loader.getController();
+            editPatternPrintController.setMainMenuController(this);
+            Stage dialogStage = new Stage();
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
+            Scene scene = new Scene(pane);
+            dialogStage.setScene(scene);
+            dialogStage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

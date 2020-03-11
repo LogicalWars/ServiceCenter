@@ -38,7 +38,7 @@
               <items>
                 <MenuItem fx:id="printPreview" mnemonicParsing="false" text="Предварительный просмотр" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem fx:id="printPattern" mnemonicParsing="false" text="Шаблон" />
+                  <MenuItem fx:id="printPattern" mnemonicParsing="false" onAction="#editPrintPattern" text="Шаблон" />
               </items>
             </Menu>
         </menus>
