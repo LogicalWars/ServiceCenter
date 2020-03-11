@@ -2,7 +2,7 @@ package sample.Controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.print.PrinterJob;
+import javafx.print.*;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -18,11 +18,11 @@ import sample.Model.*;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Set;
 
 public class EditTicketController {
 
     public static int idLogs;
-
 
     private MainMenuController mainMenuController;
 
@@ -76,8 +76,6 @@ public class EditTicketController {
     private TableColumn<TicketLogs, String> dateLog;
 
 
-
-
     DataTickets dataTickets = new DataTickets();
 
     @FXML
@@ -110,26 +108,23 @@ public class EditTicketController {
         statusComboBox.setItems(dataTickets.getStatusUpload());
         tableLogs.setItems(dataTickets.getTicketLogs());
 
-
         saveButton.setDisable(true);
 
-        phone.textProperty().addListener((observable,oldValue,newValue) -> check());
-        fullName.textProperty().addListener((observable,oldValue,newValue) ->check());
-        device.textProperty().addListener((observable,oldValue,newValue) ->check());
-        model.textProperty().addListener((observable,oldValue,newValue) ->check());
-        mark.textProperty().addListener((observable,oldValue,newValue) ->check());
-        defect.textProperty().addListener((observable,oldValue,newValue) ->check());
-        note.textProperty().addListener((observable,oldValue,newValue) ->check());
-        condition.textProperty().addListener((observable,oldValue,newValue) ->check());
-        comment.textProperty().addListener((observable,oldValue,newValue) ->check());
-        statusComboBox.valueProperty().addListener((observable, oldValue, newValue) ->check());
-
-
+        phone.textProperty().addListener((observable, oldValue, newValue) -> check());
+        fullName.textProperty().addListener((observable, oldValue, newValue) -> check());
+        device.textProperty().addListener((observable, oldValue, newValue) -> check());
+        model.textProperty().addListener((observable, oldValue, newValue) -> check());
+        mark.textProperty().addListener((observable, oldValue, newValue) -> check());
+        defect.textProperty().addListener((observable, oldValue, newValue) -> check());
+        note.textProperty().addListener((observable, oldValue, newValue) -> check());
+        condition.textProperty().addListener((observable, oldValue, newValue) -> check());
+        comment.textProperty().addListener((observable, oldValue, newValue) -> check());
+        statusComboBox.valueProperty().addListener((observable, oldValue, newValue) -> check());
 
         tableLogs.setRowFactory(tv -> {
             TableRow<TicketLogs> row = new TableRow<>();
             row.setOnMouseClicked(mouseEvent -> {
-                if(mouseEvent.getClickCount() == 2 && (!row.isEmpty())){
+                if (mouseEvent.getClickCount() == 2 && (!row.isEmpty())) {
                     int selectIndex = row.getIndex();
                     TicketLogs selectLog = tableLogs.getItems().get(selectIndex);
                     idLogs = selectLog.getIdLogFromDB();
@@ -140,34 +135,24 @@ public class EditTicketController {
         });
 
 
-
     }
+
     @FXML
     private void printed() throws IOException {
-        System.out.println("печать");
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/PrintTableView.fxml"));
-        loader.setController(new PrintTableController());
-        Parent pane = loader.load();
-        Stage dialogStage = new Stage();
-        dialogStage.initModality(Modality.APPLICATION_MODAL);
-        Scene scene = new Scene(pane);
-        dialogStage.setScene(scene);
-        dialogStage.showAndWait();
-        /**
-         * Запуск печати
-         */
-//        PrinterJob job = PrinterJob.createPrinterJob();
-//        if (job != null) {
-//            boolean success = job.printPage(pane);
-//            if (success) {
-//                job.endJob();
-//                System.out.println("печать завершена");
-//            }
-//        }
-
+//        System.out.println("печать");
+//        FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/PrintTableView.fxml"));
+//        loader.setController(new PrintTableController());
+//        Parent pane = loader.load();
+//        Stage dialogStage = new Stage();
+//        dialogStage.initModality(Modality.APPLICATION_MODAL);
+//        Scene scene = new Scene(pane);
+//        dialogStage.setScene(scene);
+//        dialogStage.showAndWait();
+        Print print = new Print();
+        print.printed();
     }
 
-    private void check(){
+    private void check() {
         int phoneC = dataTickets.getPhoneNumber().compareTo(phone.getText());
         int conditionC = dataTickets.getConditionTicket().compareTo(condition.getText());
         int fullNameC = dataTickets.getFullName().compareTo(fullName.getText());
@@ -178,42 +163,53 @@ public class EditTicketController {
         int noteC = dataTickets.getNoteTicket().compareTo(note.getText());
         int commentC = dataTickets.getCommentTicket().compareTo(comment.getText());
         String statusD = "null";
-        int statusC =statusD.compareTo(String.valueOf(statusComboBox.getValue())) ;
-        if(phoneC==0&&conditionC==0&&fullNameC==0&&deviceC==0&&modelC==0&&markC==0&&defectC==0&&noteC==0&&statusC==0&&commentC==0)
-        {saveButton.setDisable(true);}else{saveButton.setDisable(false);}
+        int statusC = statusD.compareTo(String.valueOf(statusComboBox.getValue()));
+        if (phoneC == 0 && conditionC == 0 && fullNameC == 0 && deviceC == 0 && modelC == 0 && markC == 0 && defectC == 0 && noteC == 0 && statusC == 0 && commentC == 0) {
+            saveButton.setDisable(true);
+        } else {
+            saveButton.setDisable(false);
+        }
     }
 
-    public void saveEditTicket(){
-        if(statusComboBox.getSelectionModel().getSelectedIndex()+1 !=0) {
+    public void saveEditTicket() {
+        if (statusComboBox.getSelectionModel().getSelectedIndex() + 1 != 0) {
             dataTickets.saveEditTicketWrite(dataTickets.getIdTicket(), statusComboBox.getSelectionModel().getSelectedIndex() + 1, phone.getText(), fullName.getText(), device.getText(), model.getText(),
                     mark.getText(), defect.getText(), note.getText(), condition.getText(), comment.getText());
-        }else{
+        } else {
             dataTickets.saveEditTicketWrite(dataTickets.getIdTicket(), Integer.parseInt(dataTickets.getIdStatusTicket()), phone.getText(), fullName.getText(), device.getText(), model.getText(),
                     mark.getText(), defect.getText(), note.getText(), condition.getText(), comment.getText());
         }
+
+        String getStatusComboBox;
+
+        if (statusComboBox.getValue() == null) {
+            getStatusComboBox = dataTickets.getStatusTicket();
+        } else {
+            getStatusComboBox = String.valueOf(statusComboBox.getValue());
+        }
+
         mainMenuController.ticketList();
-//        dataTickets.ticketLogsWrite(dataTickets.getIdTicket(), dataTickets.getPhoneNumber(), phone.getText());
         dataTickets.ticketLogsWrite(dataTickets.getIdTicket(),
-                                    dataTickets.getPhoneNumber(),
-                                    phone.getText(),
-                                    dataTickets.getFullName(),
-                                    fullName.getText(),
-                                    dataTickets.getStatusTicket(),
-                                    String.valueOf(statusComboBox.getValue()),
-                                    dataTickets.getDeviceTicket(),
-                                    device.getText(),
-                                    dataTickets.getModelTicket(),
-                                    model.getText(),
-                                    dataTickets.getDefectTicket(),
-                                    defect.getText(),
-                                    dataTickets.getNoteTicket(),
-                                    note.getText(),
-                                    dataTickets.getConditionTicket(),
-                                    condition.getText(),
-                                    dataTickets.getMarkTicket(),
-                                    mark.getText(),
-                                    dataTickets.getCommentTicket(),
-                                    comment.getText());
+                dataTickets.getPhoneNumber(),
+                phone.getText(),
+                dataTickets.getFullName(),
+                fullName.getText(),
+                dataTickets.getStatusTicket(),
+                getStatusComboBox,
+                dataTickets.getDeviceTicket(),
+                device.getText(),
+                dataTickets.getModelTicket(),
+                model.getText(),
+                dataTickets.getDefectTicket(),
+                defect.getText(),
+                dataTickets.getNoteTicket(),
+                note.getText(),
+                dataTickets.getConditionTicket(),
+                condition.getText(),
+                dataTickets.getMarkTicket(),
+                mark.getText(),
+                dataTickets.getCommentTicket(),
+                comment.getText());
     }
 
 }
