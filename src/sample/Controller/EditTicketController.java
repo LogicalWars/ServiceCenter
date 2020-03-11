@@ -15,6 +15,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sample.Model.*;
+
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -73,8 +74,6 @@ public class EditTicketController {
     private TableColumn<TicketLogs, Integer> numberLog;
     @FXML
     private TableColumn<TicketLogs, String> dateLog;
-
-
 
 
     DataTickets dataTickets = new DataTickets();
@@ -196,9 +195,9 @@ public class EditTicketController {
 
         String getStatusComboBox;
 
-        if(statusComboBox.getValue()==null){
+        if (statusComboBox.getValue() == null) {
             getStatusComboBox = dataTickets.getStatusTicket();
-        }else{
+        } else {
             getStatusComboBox = String.valueOf(statusComboBox.getValue());
         }
 

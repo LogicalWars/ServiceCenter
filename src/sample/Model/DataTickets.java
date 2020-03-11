@@ -111,10 +111,10 @@ public class DataTickets {
             DBProcessor dbProcessor = new DBProcessor();
             Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
             String query = "" +
-                    "SELECT table_test.*, status.`status` as `status` " +
-                    "FROM table_test " +
-                    "INNER JOIN status ON (table_test.`status_id` = status.`idStatus`) " +
-                    "ORDER BY `table_test`.`idTicket` DESC;";
+                    "SELECT ticket_data.*, status.`status` as `status` " +
+                    "FROM ticket_data " +
+                    "INNER JOIN status ON (ticket_data.`status_id` = status.`idStatus`) " +
+                    "ORDER BY `ticket_data`.`idTicket` DESC;";
             Statement stmt = conn.createStatement();
             ResultSet res = stmt.executeQuery(query);
             while (res.next()) {
@@ -139,7 +139,7 @@ public class DataTickets {
             LocalDate date = LocalDate.now();
             DBProcessor dbProcessor = new DBProcessor();
             Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
-            String create = "INSERT INTO `table_test` (`phoneNumber`, `fullName`,`device`,`model`,`defect`,`note`,`condition`,`dateCreateTicket`, `mark`, `status_id`) " +
+            String create = "INSERT INTO `ticket_data` (`phoneNumber`, `fullName`,`device`,`model`,`defect`,`note`,`condition`,`dateCreateTicket`, `mark`, `status_id`) " +
                     "VALUES ('" + textPhone + "'," +
                     " '" + textFullName + "'," +
                     " '" + textDevice + "'," +
@@ -165,10 +165,10 @@ public class DataTickets {
     public void editTicketRead(int id) throws SQLException {
         DBProcessor dbProcessor = new DBProcessor();
         Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
-        String query = "SELECT table_test.*, status.`status` as `status` " +
-                "FROM table_test " +
-                "INNER JOIN status ON (table_test.`status_id` = status.`idStatus`) " +
-                "WHERE table_test.`idTicket` =" + id;
+        String query = "SELECT ticket_data.*, status.`status` as `status` " +
+                "FROM ticket_data " +
+                "INNER JOIN status ON (ticket_data.`status_id` = status.`idStatus`) " +
+                "WHERE ticket_data.`idTicket` =" + id;
         Statement stmt = conn.createStatement();
         ResultSet res = stmt.executeQuery(query);
         while (res.next()) {
@@ -219,7 +219,7 @@ public class DataTickets {
             LocalDate date = LocalDate.now();
             DBProcessor dbProcessor = new DBProcessor();
             Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
-            String update = "UPDATE table_test " +
+            String update = "UPDATE ticket_data " +
                     "SET `phoneNumber` = " + phone + ", " +
                     "`status_id` = " + status + ", " +
                     "`fullName` = '" + fullName + "', " +
@@ -331,8 +331,8 @@ public class DataTickets {
             Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
             String query = "SELECT ticketLogs.* " +
                     "FROM ticketLogs " +
-                    "INNER JOIN table_test ON (ticketLogs.`idTicket` = table_test.`idTicket`) " +
-                    "WHERE table_test.`idTicket` = '" + id + "' ORDER BY `id`";
+                    "INNER JOIN ticket_data ON (ticketLogs.`idTicket` = ticket_data.`idTicket`) " +
+                    "WHERE ticket_data.`idTicket` = '" + id + "' ORDER BY `id`";
             Statement stmt = conn.createStatement();
             ResultSet res = stmt.executeQuery(query);
             int idLogs = 1;
@@ -373,7 +373,7 @@ public class DataTickets {
             Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
             String query = "SELECT ticketLogs.* " +
                     "FROM ticketLogs " +
-                    "INNER JOIN table_test ON (ticketLogs.`idTicket` = table_test.`idTicket`) " +
+                    "INNER JOIN ticket_data ON (ticketLogs.`idTicket` = ticket_data.`idTicket`) " +
                     "WHERE ticketLogs.`id` =" + id;
             Statement stmt = conn.createStatement();
             ResultSet res = stmt.executeQuery(query);
