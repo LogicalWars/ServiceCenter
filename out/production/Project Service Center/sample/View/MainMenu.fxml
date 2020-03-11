@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
@@ -20,14 +21,24 @@
           <Menu mnemonicParsing="false" text="Меню">
             <items>
               <MenuItem fx:id="ticketListButton" mnemonicParsing="false" onAction="#ticketList" text="Заявки" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" text="Склад" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" text="Отчеты" />
             </items>
           </Menu>
             <Menu mnemonicParsing="false" text="Настройки">
               <items>
                 <MenuItem mnemonicParsing="false" text="Настройки" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" onAction="#editTicket" text="Пользователи" />
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Печать">
+              <items>
+                <MenuItem fx:id="printPreview" mnemonicParsing="false" text="Предварительный просмотр" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem fx:id="printPattern" mnemonicParsing="false" text="Шаблон" />
               </items>
             </Menu>
         </menus>
