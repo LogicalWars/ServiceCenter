@@ -24,7 +24,11 @@
             <GridPane hgap="5.0" vgap="5.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="120.0" />
+<<<<<<< HEAD
                   <ColumnConstraints hgrow="SOMETIMES" percentWidth="30.0" />
+=======
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="252.0" minWidth="157.0" percentWidth="30.0" prefWidth="192.0" />
+>>>>>>> 27c0955e88a2c0f1a4c5b1ce741e45c96c59c0f0
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="70.0" />
                 <ColumnConstraints hgrow="SOMETIMES" />
               </columnConstraints>
@@ -188,7 +192,11 @@
             <GridPane hgap="5.0" prefWidth="306.0" vgap="5.0">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="120.0" />
+<<<<<<< HEAD
                   <ColumnConstraints hgrow="SOMETIMES" percentWidth="30.0" />
+=======
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="252.0" minWidth="157.0" percentWidth="30.0" prefWidth="192.0" />
+>>>>>>> 27c0955e88a2c0f1a4c5b1ce741e45c96c59c0f0
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="70.0" />
                   <ColumnConstraints hgrow="SOMETIMES" />
                </columnConstraints>
@@ -330,5 +338,9 @@
             <Insets top="10.0" />
          </padding>
       </VBox>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 27c0955e88a2c0f1a4c5b1ce741e45c96c59c0f0
    </children>
 </VBox>
