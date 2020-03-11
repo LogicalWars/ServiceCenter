@@ -2,7 +2,7 @@ package sample.Controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.print.PrinterJob;
+import javafx.print.*;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -18,11 +18,11 @@ import sample.Model.*;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Set;
 
 public class EditTicketController {
 
     public static int idLogs;
-
 
     private MainMenuController mainMenuController;
 
@@ -108,7 +108,6 @@ public class EditTicketController {
         statusComboBox.setItems(dataTickets.getStatusUpload());
         tableLogs.setItems(dataTickets.getTicketLogs());
 
-
         saveButton.setDisable(true);
 
         phone.textProperty().addListener((observable, oldValue, newValue) -> check());
@@ -121,7 +120,6 @@ public class EditTicketController {
         condition.textProperty().addListener((observable, oldValue, newValue) -> check());
         comment.textProperty().addListener((observable, oldValue, newValue) -> check());
         statusComboBox.valueProperty().addListener((observable, oldValue, newValue) -> check());
-
 
         tableLogs.setRowFactory(tv -> {
             TableRow<TicketLogs> row = new TableRow<>();
@@ -141,28 +139,17 @@ public class EditTicketController {
 
     @FXML
     private void printed() throws IOException {
-
-        System.out.println("печать");
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/PrintTableView.fxml"));
-        loader.setController(new PrintTableController());
-        Parent pane = loader.load();
-        Stage dialogStage = new Stage();
-        dialogStage.initModality(Modality.APPLICATION_MODAL);
-        Scene scene = new Scene(pane);
-        dialogStage.setScene(scene);
-        dialogStage.showAndWait();
-        /**
-         * Запуск печати
-         */
-//        PrinterJob job = PrinterJob.createPrinterJob();
-//        if (job != null) {
-//            boolean success = job.printPage(pane);
-//            if (success) {
-//                job.endJob();
-//                System.out.println("печать завершена");
-//            }
-//        }
-
+//        System.out.println("печать");
+//        FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/PrintTableView.fxml"));
+//        loader.setController(new PrintTableController());
+//        Parent pane = loader.load();
+//        Stage dialogStage = new Stage();
+//        dialogStage.initModality(Modality.APPLICATION_MODAL);
+//        Scene scene = new Scene(pane);
+//        dialogStage.setScene(scene);
+//        dialogStage.showAndWait();
+        Print print = new Print();
+        print.printed();
     }
 
     private void check() {

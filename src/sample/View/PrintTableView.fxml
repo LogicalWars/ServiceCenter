@@ -330,5 +330,6 @@
             <Insets top="10.0" />
          </padding>
       </VBox>
+
    </children>
 </VBox>

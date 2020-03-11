@@ -5,7 +5,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane  prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <TableView fx:id="tableLogData" layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="410.0" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
         <columns>
@@ -14,6 +14,6 @@
             <TableColumn fx:id="newValue" text="Новое значение" />
         </columns>
       </TableView>
-      <Button layoutX="354.0" layoutY="353.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="71.0" text="OK" />
+      <Button layoutX="354.0" layoutY="353.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="71.0" text="OK" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" />
    </children>
 </AnchorPane>
