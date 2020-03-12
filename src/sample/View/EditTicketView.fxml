@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<SplitPane dividerPositions="0.053824362606232294, 0.8654390934844193" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="10.0" orientation="VERTICAL" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<SplitPane fx:id="editTicketViewPane" dividerPositions="0.053824362606232294, 0.8654390934844193" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="10.0" orientation="VERTICAL" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
   <items>
       <HBox alignment="CENTER_LEFT" maxHeight="-Infinity">
          <children>

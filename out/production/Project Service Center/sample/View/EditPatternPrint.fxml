@@ -21,7 +21,7 @@
    <bottom>
       <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <buttons>
-            <Button layoutX="735.0" layoutY="18.0" mnemonicParsing="false" text="Сохранить" />
+            <Button fx:id="savePatternPrintButton" layoutX="735.0" layoutY="18.0" mnemonicParsing="false" onAction="#savePatternPrint" text="Сохранить" />
         </buttons>
          <BorderPane.margin>
             <Insets right="10.0" />

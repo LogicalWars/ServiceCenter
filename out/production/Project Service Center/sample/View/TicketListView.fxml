@@ -1,19 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 
-<SplitPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
-   <items>
-      <TableView fx:id="tableTickets" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" tableMenuButtonVisible="true">
-        <columns>
-          <TableColumn fx:id="idTicket" text="№" />
-          <TableColumn fx:id="phoneNumber" text="Телефон" />
-            <TableColumn fx:id="fullName" text="ФИО" />
-            <TableColumn fx:id="dateCreateTicket" text="Дата приема" />
-            <TableColumn fx:id="statusTicket" text="Статус" />
-        </columns>
-      </TableView>
-   </items>
-</SplitPane>
+
+<TableView fx:id="tableTickets" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" tableMenuButtonVisible="true" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+  <columns>
+    <TableColumn fx:id="idTicket" text="№" />
+    <TableColumn fx:id="phoneNumber" text="Телефон" />
+      <TableColumn fx:id="fullName" text="ФИО" />
+      <TableColumn fx:id="dateCreateTicket" text="Дата приема" />
+      <TableColumn fx:id="statusTicket" text="Статус" />
+  </columns>
+</TableView>

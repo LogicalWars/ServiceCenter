@@ -74,6 +74,8 @@ public class EditTicketController {
     private TableColumn<TicketLogs, Integer> numberLog;
     @FXML
     private TableColumn<TicketLogs, String> dateLog;
+    @FXML
+    private SplitPane editTicketViewPane;
 
 
     DataTickets dataTickets = new DataTickets();

@@ -216,7 +216,6 @@ public class DataTickets {
 
     public void saveEditTicketWrite(int id, int status, String phone, String fullName, String device, String model, String mark, String defect, String note, String condition, String comment) {
         try {
-            LocalDate date = LocalDate.now();
             DBProcessor dbProcessor = new DBProcessor();
             Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
             String update = "UPDATE ticket_data " +
@@ -455,6 +454,96 @@ public class DataTickets {
         if(field == null){
             return "";
         }else{return field;}
+    }
+
+    public ArrayList<String> getPrintPatternData() { return printPatternData; }
+    private ArrayList<String> printPatternData = new ArrayList<>();
+    /** labelTitle          0
+     *  labelRules          1
+     *  labelSignAccept     2
+     *  labelSignPassed     3
+     *  labelOrderTicket    4
+     *  labelFullName       5
+     *  labelNote           6
+     *  labelDate           7
+     *  labelDevice         8
+     *  labelModel          9
+     *  labelCondition      10
+     *  labelDefect         11
+     * */
+
+
+    public void editPatternPrintRead(){
+        try {
+            DBProcessor dbProcessor = new DBProcessor();
+            Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
+            String query = "SELECT * " +
+                    "FROM print_pattern ";
+            Statement stmt = conn.createStatement();
+            ResultSet res = stmt.executeQuery(query);
+            while (res.next()) {
+                printPatternData.add(res.getString("labelTitle"));
+                printPatternData.add(res.getString("labelRules"));
+                printPatternData.add(res.getString("labelSignAccept"));
+                printPatternData.add(res.getString("labelSignPassed"));
+                printPatternData.add(res.getString("labelOrderTicket"));
+                printPatternData.add(res.getString("labelFullName"));
+                printPatternData.add(res.getString("labelPhone"));
+                printPatternData.add(res.getString("labelNote"));
+                printPatternData.add(res.getString("labelDate"));
+                printPatternData.add(res.getString("labelDevice"));
+                printPatternData.add(res.getString("labelModel"));
+                printPatternData.add(res.getString("labelCondition"));
+                printPatternData.add(res.getString("labelDefect"));
+            }
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void editPatternPrintWrite(String labelTitle,
+                                      String labelRules,
+                                      String labelSignAccept,
+                                      String labelSignPassed,
+                                      String labelOrderTicket,
+                                      String labelFullName,
+                                      String labelPhone,
+                                      String labelNote,
+                                      String labelDate,
+                                      String labelDevice,
+                                      String labelModel,
+                                      String labelCondition,
+                                      String labelDefect){
+        try {
+            DBProcessor dbProcessor = new DBProcessor();
+            Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
+            String update = "UPDATE print_pattern " +
+                    "SET `labelTitle` = '" + labelTitle + "', " +
+                    "`labelRules` = '" + labelRules + "', " +
+                    "`labelSignAccept` = '" + labelSignAccept + "', " +
+                    "`labelSignPassed` ='" + labelSignPassed + "' , " +
+                    "`labelOrderTicket` = '" + labelOrderTicket + "', " +
+                    "`labelFullName` = '" + labelFullName + "', " +
+                    "`labelPhone` = '" + labelPhone + "', " +
+                    "`labelNote` = '" + labelNote + "', " +
+                    "`labelDate` = '" + labelDate + "', " +
+                    "`labelDevice` = '" + labelDevice + "'," +
+                    "`labelModel` = '" + labelModel + "'," +
+                    "`labelCondition` = '" + labelCondition + "'," +
+                    "`labelDefect` = '" + labelDefect + "'" +
+                    "WHERE `idPrint` = " + 1;
+            try (Statement stmt = conn.createStatement()) {
+                stmt.execute(update);
+            } catch (SQLException e) {
+                System.out.println(e);
+                e.getErrorCode();
+            }
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }
