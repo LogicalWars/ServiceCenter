@@ -149,12 +149,13 @@ public class EditPatternPrintController {
         signPassedLabel.setText(dataTickets.getPrintPatternData().get(3));
         orderLabel.setText(dataTickets.getPrintPatternData().get(4));
         fullNameLabel.setText(dataTickets.getPrintPatternData().get(5));
-        noteLabel.setText(dataTickets.getPrintPatternData().get(6));
-        dateLabel.setText(dataTickets.getPrintPatternData().get(7));
-        deviceLabel.setText(dataTickets.getPrintPatternData().get(8));
-        modelLabel.setText(dataTickets.getPrintPatternData().get(9));
-        conditionLabel.setText(dataTickets.getPrintPatternData().get(10));
-        defectLabel.setText(dataTickets.getPrintPatternData().get(11));
+        phoneLabel.setText(dataTickets.getPrintPatternData().get(6));
+        noteLabel.setText(dataTickets.getPrintPatternData().get(7));
+        dateLabel.setText(dataTickets.getPrintPatternData().get(8));
+        deviceLabel.setText(dataTickets.getPrintPatternData().get(9));
+        modelLabel.setText(dataTickets.getPrintPatternData().get(10));
+        conditionLabel.setText(dataTickets.getPrintPatternData().get(11));
+        defectLabel.setText(dataTickets.getPrintPatternData().get(12));
 
         titleTextArea.setText(titleLabel.getText());
         orderTextField.setText(orderLabel.getText());

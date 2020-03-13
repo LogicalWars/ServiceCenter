@@ -464,12 +464,13 @@ public class DataTickets {
      *  labelSignPassed     3
      *  labelOrderTicket    4
      *  labelFullName       5
-     *  labelNote           6
-     *  labelDate           7
-     *  labelDevice         8
-     *  labelModel          9
-     *  labelCondition      10
-     *  labelDefect         11
+     *  labelPhone          6
+     *  labelNote           7
+     *  labelDate           8
+     *  labelDevice         9
+     *  labelModel          10
+     *  labelCondition      11
+     *  labelDefect         12
      * */
 
 

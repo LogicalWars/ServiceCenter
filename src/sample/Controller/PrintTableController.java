@@ -139,12 +139,13 @@ public class PrintTableController {
         signPassedLabel.setText(dataTickets.getPrintPatternData().get(3));
         orderLabel.setText(dataTickets.getPrintPatternData().get(4));
         fullNameLabel.setText(dataTickets.getPrintPatternData().get(5));
-        noteLabel.setText(dataTickets.getPrintPatternData().get(6));
-        dateLabel.setText(dataTickets.getPrintPatternData().get(7));
-        deviceLabel.setText(dataTickets.getPrintPatternData().get(8));
-        modelLabel.setText(dataTickets.getPrintPatternData().get(9));
-        conditionLabel.setText(dataTickets.getPrintPatternData().get(10));
-        defectLabel.setText(dataTickets.getPrintPatternData().get(11));
+        phoneLabel.setText(dataTickets.getPrintPatternData().get(6));
+        noteLabel.setText(dataTickets.getPrintPatternData().get(7));
+        dateLabel.setText(dataTickets.getPrintPatternData().get(8));
+        deviceLabel.setText(dataTickets.getPrintPatternData().get(9));
+        modelLabel.setText(dataTickets.getPrintPatternData().get(10));
+        conditionLabel.setText(dataTickets.getPrintPatternData().get(11));
+        defectLabel.setText(dataTickets.getPrintPatternData().get(12));
 
         titleLabel1.setText(dataTickets.getPrintPatternData().get(0));
         rulesLabel1.setText(dataTickets.getPrintPatternData().get(1));
@@ -152,12 +153,13 @@ public class PrintTableController {
         signPassedLabel1.setText(dataTickets.getPrintPatternData().get(3));
         orderLabel1.setText(dataTickets.getPrintPatternData().get(4));
         fullNameLabel1.setText(dataTickets.getPrintPatternData().get(5));
-        noteLabel1.setText(dataTickets.getPrintPatternData().get(6));
-        dateLabel1.setText(dataTickets.getPrintPatternData().get(7));
-        deviceLabel1.setText(dataTickets.getPrintPatternData().get(8));
-        modelLabel1.setText(dataTickets.getPrintPatternData().get(9));
-        conditionLabel1.setText(dataTickets.getPrintPatternData().get(10));
-        defectLabel1.setText(dataTickets.getPrintPatternData().get(11));
+        phoneLabel.setText(dataTickets.getPrintPatternData().get(6));
+        noteLabel1.setText(dataTickets.getPrintPatternData().get(7));
+        dateLabel1.setText(dataTickets.getPrintPatternData().get(8));
+        deviceLabel1.setText(dataTickets.getPrintPatternData().get(9));
+        modelLabel1.setText(dataTickets.getPrintPatternData().get(10));
+        conditionLabel1.setText(dataTickets.getPrintPatternData().get(11));
+        defectLabel1.setText(dataTickets.getPrintPatternData().get(12));
 
     }
 
