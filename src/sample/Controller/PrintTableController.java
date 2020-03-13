@@ -111,7 +111,7 @@ public class PrintTableController {
                 SQLException e) {
             e.printStackTrace();
         }
-        nameTicket.setText(String.valueOf(dataTickets.getIdTicket()));
+        nameTicket.setText(String.valueOf(dataTickets.getNumberTicket()));
         fullName.setText(dataTickets.getFullName());
         phone.setText(dataTickets.getPhoneNumber());
         note.setText(dataTickets.getNoteTicket());
@@ -121,7 +121,7 @@ public class PrintTableController {
         model.setText(dataTickets.getModelTicket());
         condition.setText(dataTickets.getConditionTicket());
 
-        nameTicket1.setText(String.valueOf(dataTickets.getIdTicket()));
+        nameTicket1.setText(String.valueOf(dataTickets.getNumberTicket()));
         fullName1.setText(dataTickets.getFullName());
         phone1.setText(dataTickets.getPhoneNumber());
         note1.setText(dataTickets.getNoteTicket());

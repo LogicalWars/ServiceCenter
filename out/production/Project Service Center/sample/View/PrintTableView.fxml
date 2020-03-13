@@ -98,17 +98,12 @@
                         <Font size="11.0" />
                      </font>
                   </Label>
-                  <Label maxWidth="1.7976931348623157E308" text="Марка:" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                  <Label fx:id="modelLabel" maxWidth="1.7976931348623157E308" text="Модель:" GridPane.columnIndex="2" GridPane.rowIndex="2">
                      <font>
                         <Font size="11.0" />
                      </font>
                   </Label>
-                  <Label fx:id="modelLabel" maxWidth="1.7976931348623157E308" text="Модель:" GridPane.columnIndex="2" GridPane.rowIndex="3">
-                     <font>
-                        <Font size="11.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="conditionLabel" maxWidth="1.7976931348623157E308" text="Состояние:" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                  <Label fx:id="conditionLabel" maxWidth="1.7976931348623157E308" text="Состояние:" GridPane.columnIndex="2" GridPane.rowIndex="3">
                      <font>
                         <Font size="11.0" />
                      </font>
@@ -123,17 +118,12 @@
                         <Font size="11.0" />
                      </font>
                   </Label>
-                  <Label maxWidth="1.7976931348623157E308" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                  <Label fx:id="model" maxWidth="1.7976931348623157E308" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="2">
                      <font>
                         <Font size="11.0" />
                      </font>
                   </Label>
-                  <Label fx:id="model" maxWidth="1.7976931348623157E308" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="3">
-                     <font>
-                        <Font size="11.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="condition" maxWidth="1.7976931348623157E308" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                  <Label fx:id="condition" maxWidth="1.7976931348623157E308" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="3">
                      <font>
                         <Font size="11.0" />
                      </font>
@@ -262,17 +252,12 @@
                         <Font size="11.0" />
                      </font>
                   </Label>
-                  <Label maxWidth="1.7976931348623157E308" text="Марка:" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                  <Label fx:id="modelLabel1" maxWidth="1.7976931348623157E308" text="Модель:" GridPane.columnIndex="2" GridPane.rowIndex="2">
                      <font>
                         <Font size="11.0" />
                      </font>
                   </Label>
-                  <Label fx:id="modelLabel1" maxWidth="1.7976931348623157E308" text="Модель:" GridPane.columnIndex="2" GridPane.rowIndex="3">
-                     <font>
-                        <Font size="11.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="conditionLabel1" maxWidth="1.7976931348623157E308" text="Состояние:" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                  <Label fx:id="conditionLabel1" maxWidth="1.7976931348623157E308" text="Состояние:" GridPane.columnIndex="2" GridPane.rowIndex="3">
                      <font>
                         <Font size="11.0" />
                      </font>
@@ -287,17 +272,12 @@
                         <Font size="11.0" />
                      </font>
                   </Label>
-                  <Label maxWidth="1.7976931348623157E308" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                  <Label fx:id="model1" maxWidth="1.7976931348623157E308" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="2">
                      <font>
                         <Font size="11.0" />
                      </font>
                   </Label>
-                  <Label fx:id="model1" maxWidth="1.7976931348623157E308" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="3">
-                     <font>
-                        <Font size="11.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="condition1" maxWidth="1.7976931348623157E308" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                  <Label fx:id="condition1" maxWidth="1.7976931348623157E308" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="3">
                      <font>
                         <Font size="11.0" />
                      </font>

@@ -34,6 +34,7 @@ public class DataTickets {
 
 
     private int idTicket;
+    private int numberTicket;
     private String phoneNumber;
     private String fullName;
     private String dateCreateTicket;
@@ -42,7 +43,6 @@ public class DataTickets {
     private String deviceTicket;
     private String defectTicket;
     private String modelTicket;
-    private String markTicket;
     private String noteTicket;
     private String conditionTicket;
     private String idStatusTicket;
@@ -93,8 +93,8 @@ public class DataTickets {
         return modelTicket;
     }
 
-    public String getMarkTicket() {
-        return markTicket;
+    public int getNumberTicket() {
+        return numberTicket;
     }
 
     public String getNoteTicket() {
@@ -118,7 +118,7 @@ public class DataTickets {
             Statement stmt = conn.createStatement();
             ResultSet res = stmt.executeQuery(query);
             while (res.next()) {
-                int id = res.getInt("idTicket");
+                int id = res.getInt("numberTicket");
                 String p = res.getString("phoneNumber");
                 String name = res.getString("fullName");
                 LocalDate date1 = LocalDate.parse(res.getString("dateCreateTicket"));
@@ -134,12 +134,32 @@ public class DataTickets {
 
     }
 
-    public void createNewTicketWrite(String textPhone, String textFullName, String textDevice, String textModel, String textDefect, String textNode, String textCondition, String textMark) {
+    public void createNewTicketWrite(String textPhone, String textFullName, String textDevice, String textModel, String textDefect, String textNode, String textCondition) {
+        int id = 0;
+        try {
+            DBProcessor dbProcessor = new DBProcessor();
+            Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
+            String query = "" +
+                    "SELECT *" +
+                    "FROM ticket_data " +
+                    "ORDER BY `idTicket` DESC LIMIT 1;";
+            Statement stmt = conn.createStatement();
+            ResultSet res = stmt.executeQuery(query);
+            while (res.next()){
+                id = res.getInt("idTicket");
+                id++;
+            }
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         try {
             LocalDate date = LocalDate.now();
             DBProcessor dbProcessor = new DBProcessor();
             Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
-            String create = "INSERT INTO `ticket_data` (`phoneNumber`, `fullName`,`device`,`model`,`defect`,`note`,`condition`,`dateCreateTicket`, `mark`, `status_id`) " +
+            String create = "INSERT INTO `ticket_data` (`phoneNumber`, `fullName`,`device`,`model`,`defect`,`note`,`condition`,`dateCreateTicket`,`numberTicket`, `status_id`) " +
                     "VALUES ('" + textPhone + "'," +
                     " '" + textFullName + "'," +
                     " '" + textDevice + "'," +
@@ -148,7 +168,7 @@ public class DataTickets {
                     " '" + textNode + "'," +
                     " '" + textCondition + "'," +
                     " '" + date + "'," +
-                    " '" + textMark + "'," +
+                    " '" + id + "'," +
                     " '" + 1 + "')";
             try (Statement stmt = conn.createStatement()) {
                 stmt.execute(create);
@@ -168,11 +188,12 @@ public class DataTickets {
         String query = "SELECT ticket_data.*, status.`status` as `status` " +
                 "FROM ticket_data " +
                 "INNER JOIN status ON (ticket_data.`status_id` = status.`idStatus`) " +
-                "WHERE ticket_data.`idTicket` =" + id;
+                "WHERE ticket_data.`numberTicket` =" + id;
         Statement stmt = conn.createStatement();
         ResultSet res = stmt.executeQuery(query);
         while (res.next()) {
             idTicket = res.getInt("idTicket");
+            numberTicket = res.getInt("numberTicket");
             phoneNumber = checkNull(res.getString("phoneNumber"));
             fullName = checkNull(res.getString("fullName"));
             LocalDate date = LocalDate.parse(res.getString("dateCreateTicket"));
@@ -182,7 +203,6 @@ public class DataTickets {
             deviceTicket = checkNull(res.getString("device"));
             defectTicket = checkNull(res.getString("defect"));
             modelTicket = checkNull(res.getString("model"));
-            markTicket = checkNull(res.getString("mark"));
             noteTicket = checkNull(res.getString("note"));
             conditionTicket = checkNull(res.getString("condition"));
             idStatusTicket = checkNull(res.getString("status_id"));
@@ -214,7 +234,7 @@ public class DataTickets {
         }
     }
 
-    public void saveEditTicketWrite(int id, int status, String phone, String fullName, String device, String model, String mark, String defect, String note, String condition, String comment) {
+    public void saveEditTicketWrite(int id, int status, String phone, String fullName, String device, String model, String defect, String note, String condition, String comment, int numberTicket) {
         try {
             DBProcessor dbProcessor = new DBProcessor();
             Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
@@ -224,11 +244,11 @@ public class DataTickets {
                     "`fullName` = '" + fullName + "', " +
                     "`device` ='" + device + "' , " +
                     "`model` = '" + model + "', " +
-                    "`mark` = '" + mark + "', " +
                     "`defect` = '" + defect + "', " +
                     "`note` = '" + note + "', " +
                     "`condition` = '" + condition + "'," +
                     "`comment` = '" + comment + "'," +
+                    "`numberTicket` = '" + numberTicket + "'," +
                     "`dateCloseTicket` = '" + LocalDate.now() + "'" +
                     "WHERE `idTicket` = " + id;
             try (Statement stmt = conn.createStatement()) {
@@ -260,10 +280,10 @@ public class DataTickets {
                                 String noteNew,
                                 String conditionOld,
                                 String conditionNew,
-                                String markOld,
-                                String markNew,
                                 String commentOld,
-                                String commentNew) {
+                                String commentNew,
+                                String numberTicketOld,
+                                String numberTicketNew) {
         try {
             LocalDateTime date = LocalDateTime.now();
             DBProcessor dbProcessor = new DBProcessor();
@@ -286,10 +306,10 @@ public class DataTickets {
                     " `noteNew`," +
                     " `conditionOld`," +
                     " `conditionNew`," +
-                    " `markOld`," +
-                    " `markNew`," +
                     " `commentOld`," +
-                    " `commentNew`)" +
+                    " `commentNew`," +
+                    " `numberTicketOld`," +
+                    " `numberTicketNew`)" +
                     "VALUES ('" + date + "'," +
                     "'" + idTicket + "'," +
                     " '" + phoneNumberOld + "'," +
@@ -308,10 +328,10 @@ public class DataTickets {
                     " '" + noteNew + "'," +
                     " '" + conditionOld + "'," +
                     " '" + conditionNew + "'," +
-                    " '" + markOld + "'," +
-                    " '" + markNew + "',"+
                     " '" + commentOld + "'," +
-                    " '" + commentNew + "' )";
+                    " '" + commentNew + "'," +
+                    " '" + numberTicketOld + "'," +
+                    " '" + numberTicketNew + "' )";
             try (Statement stmt = conn.createStatement()) {
                 stmt.execute(create);
             } catch (SQLException e) {
@@ -377,6 +397,8 @@ public class DataTickets {
             Statement stmt = conn.createStatement();
             ResultSet res = stmt.executeQuery(query);
             while (res.next()) {
+                String numberTicketOld = checkNull(res.getString("numberTicketOld"));
+                String numberTicketNew = checkNull(res.getString("numberTicketNew"));
                 String phoneNumberOld = checkNull(res.getString("phoneNumberOld"));
                 String phoneNumberNew = checkNull(res.getString("phoneNumberNew"));
                 String fullNameOld = checkNull(res.getString("fullNameOld"));
@@ -393,11 +415,10 @@ public class DataTickets {
                 String noteNew = checkNull(res.getString("noteNew"));
                 String conditionOld = checkNull(res.getString("conditionOld"));
                 String conditionNew = checkNull(res.getString("conditionNew"));
-                String markOld = checkNull(res.getString("markOld"));
-                String markNew = checkNull(res.getString("markNew"));
                 String commentOld = checkNull(res.getString("commentOld"));
                 String commentNew = checkNull(res.getString("commentNew"));
 
+                checkForLogs(numberTicketOld,numberTicketNew,"№ заявки");
                 checkForLogs(phoneNumberOld,phoneNumberNew,"Телефон");
                 checkForLogs(fullNameOld,fullNameNew,"ФИО");
                 checkForLogs(statusOld,statusNew,"Статус");
@@ -406,7 +427,6 @@ public class DataTickets {
                 checkForLogs(defectOld,defectNew,"Дефект");
                 checkForLogs(noteOld,noteNew,"Примечание");
                 checkForLogs(conditionOld,conditionNew,"Состояние");
-                checkForLogs(markOld,markNew,"Марка");
                 checkForLogs(commentOld,commentNew,"Комментарий");
             }
             int i = 0;

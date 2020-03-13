@@ -34,8 +34,6 @@ public class NewTicketController{
     @FXML
     private TextField textModel;
     @FXML
-    private TextField textMark;
-    @FXML
     private TextArea textDefect;
     @FXML
     private TextArea textNote;
@@ -48,7 +46,7 @@ public class NewTicketController{
     public void createNewTicket() throws SQLException {
         if(textPhone.getLength()>0){
             if(textFullName.getLength()>0){
-                new DataTickets().createNewTicketWrite(textPhone.getText(), textFullName.getText(), textDevice.getText(), textModel.getText(), textDefect.getText(), textNote.getText(), textCondition.getText(), textMark.getText());
+                new DataTickets().createNewTicketWrite(textPhone.getText(), textFullName.getText(), textDevice.getText(), textModel.getText(), textDefect.getText(), textNote.getText(), textCondition.getText());
                 mainMenuController.ticketList();
             }else{
                 textFullName.setPromptText("Заполните поле");}

@@ -1,19 +1,17 @@
 package sample.Controller;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import sample.Model.DataTickets;
-import sample.Model.Tickets;
 
 public class EditPatternPrintController {
     private MainMenuController mainMenuController;
@@ -23,117 +21,45 @@ public class EditPatternPrintController {
     }
 
     @FXML
-    private Label titleLabel;
-    @FXML
-    private TextArea titleTextArea;
-    @FXML
-    private Label orderLabel;
-    @FXML
-    private TextField orderTextField;
-    @FXML
-    private Label fullNameLabel;
-    @FXML
-    private TextField fullNameTextField;
-    @FXML
-    private Label phoneLabel;
-    @FXML
-    private TextField phoneTextField;
-    @FXML
-    private Label noteLabel;
-    @FXML
-    private TextField noteTextField;
-    @FXML
-    private Label defectLabel;
-    @FXML
-    private TextField defectTextField;
-    @FXML
-    private Label dateLabel;
-    @FXML
-    private TextField dateTextField;
-    @FXML
-    private Label deviceLabel;
-    @FXML
-    private TextField deviceTextField;
-    @FXML
-    private Label modelLabel;
-    @FXML
-    private TextField modelTextField;
-    @FXML
-    private Label conditionLabel;
-    @FXML
-    private TextField conditionTextField;
-    @FXML
-    private Label rulesLabel;
-    @FXML
-    private TextArea rulesTextArea;
-    @FXML
-    private Label signAcceptLabel;
-    @FXML
-    private TextField signAcceptTextField;
-    @FXML
-    private Label signPassedLabel;
-    @FXML
-    private TextField signPassedTextField;
-    @FXML
     private Button savePatternPrintButton;
+    @FXML
+    private HBox titleHBox;
+    @FXML
+    private Label titleLabel;
     @FXML
     private GridPane gridPane;
     @FXML
-    private VBox titleVBox;
-
+    private Label orderLabel;
     @FXML
-    void conditionContextHidden() { conditionLabel.setText(conditionTextField.getText());}
-
+    private Label fullNameLabel;
     @FXML
-    void dateContextHidden() { dateLabel.setText(dateTextField.getText());}
-
+    private Label phoneLabel;
     @FXML
-    void defectContextHidden() {defectLabel.setText(defectTextField.getText()); }
-
+    private Label noteLabel;
     @FXML
-    void deviceContextHidden() {deviceLabel.setText(deviceTextField.getText()); }
-
+    private Label defectLabel;
     @FXML
-    void fullNameContextHidden() { fullNameLabel.setText(fullNameTextField.getText());}
-
+    private Label dateLabel;
     @FXML
-    void modelContextHidden() { modelLabel.setText(modelTextField.getText());}
-
+    private Label deviceLabel;
     @FXML
-    void noteContextHidden() { noteLabel.setText(noteTextField.getText());}
-
+    private Label modelLabel;
     @FXML
-    void orderContextHidden() { orderLabel.setText(orderTextField.getText());}
-
+    private Label conditionLabel;
     @FXML
-    void phoneContextHidden() { phoneLabel.setText(phoneTextField.getText());}
-
+    private Label rulesLabel;
     @FXML
-    void rulesContextHidden() {rulesLabel.setText(rulesTextArea.getText()); }
-
+    private Label signAcceptLabel;
     @FXML
-    void signAcceptContextHidden() { signAcceptLabel.setText(signAcceptTextField.getText());}
-
-    @FXML
-    void signPassedContextHidden() { signPassedLabel.setText(signPassedTextField.getText()); }
-
-    @FXML
-    void titleContextHidden() { titleLabel.setText(titleTextArea.getText()); }
+    private Label signPassedLabel;
 
     DataTickets dataTickets = new DataTickets();
+
     @FXML
     public void initialize() {
 
-        TextField orderTextField1 = new TextField(orderLabel.getText());
-
-        orderLabel.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 2) {
-                orderLabel.setVisible(false);
-                gridPane.add(orderTextField1, 0, 0);
-                orderTextField1.requestFocus();
-            }});
-
         dataTickets.editPatternPrintRead();
+
         titleLabel.setText(dataTickets.getPrintPatternData().get(0));
         rulesLabel.setText(dataTickets.getPrintPatternData().get(1));
         signAcceptLabel.setText(dataTickets.getPrintPatternData().get(2));
@@ -148,19 +74,235 @@ public class EditPatternPrintController {
         conditionLabel.setText(dataTickets.getPrintPatternData().get(11));
         defectLabel.setText(dataTickets.getPrintPatternData().get(12));
 
-        titleTextArea.setText(titleLabel.getText());
-        orderTextField.setText(orderLabel.getText());
-        fullNameTextField.setText(fullNameLabel.getText());
-        phoneTextField.setText(phoneLabel.getText());
-        noteTextField.setText(noteLabel.getText());
-        defectTextField.setText(defectLabel.getText());
-        dateTextField.setText(dateLabel.getText());
-        deviceTextField.setText(deviceLabel.getText());
-        modelTextField.setText(modelLabel.getText());
-        conditionTextField.setText(conditionLabel.getText());
-        rulesTextArea.setText(rulesLabel.getText());
-        signAcceptTextField.setText(signAcceptLabel.getText());
-        signPassedTextField.setText(signPassedLabel.getText());
+        Font font = new Font("Regular", 11);
+
+        TextArea titleTextArea = new TextArea(titleLabel.getText());
+        titleTextArea.setFont(font);
+        HBox.setHgrow(titleTextArea, Priority.ALWAYS);
+        titleTextArea.setWrapText(true);
+        titleTextArea.setPrefHeight(25.0);
+        titleTextArea.setMinHeight(25.0);
+
+        TextField orderTextField = new TextField(orderLabel.getText());
+        orderTextField.setFont(font);
+
+        TextField fullNameTextField = new TextField(fullNameLabel.getText());
+        fullNameTextField.setFont(font);
+
+        TextField phoneTextField = new TextField(phoneLabel.getText());
+        phoneTextField.setFont(font);
+
+        TextField noteTextField = new TextField(noteLabel.getText());
+        noteTextField.setFont(font);
+
+        TextField defectTextField = new TextField(defectLabel.getText());
+        defectTextField.setFont(font);
+
+        TextField dateTextField = new TextField(dateLabel.getText());
+        dateTextField.setFont(font);
+
+        TextField deviceTextField = new TextField(deviceLabel.getText());
+        deviceTextField.setFont(font);
+
+        TextField modelTextField = new TextField(modelLabel.getText());
+        modelTextField.setFont(font);
+
+        TextField conditionTextField = new TextField(conditionLabel.getText());
+        conditionTextField.setFont(font);
+
+        TextField signAcceptTextField = new TextField(signAcceptLabel.getText());
+        signAcceptTextField.setFont(font);
+
+        TextField signPassedTextField = new TextField(signPassedLabel.getText());
+        signPassedTextField.setFont(font);
+
+        TextArea rulesTextArea = new TextArea(rulesLabel.getText());
+        rulesTextArea.setFont(font);
+        rulesTextArea.setWrapText(true);
+
+        titleLabel.setOnMouseClicked(event ->  {
+            titleHBox.getChildren().remove(titleLabel);
+            titleHBox.getChildren().add(titleTextArea);
+            titleTextArea.requestFocus();
+        });
+        titleTextArea.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {
+            if (newPropertyValue!=true)
+            {
+                titleHBox.getChildren().remove(titleTextArea);
+                titleHBox.getChildren().add(titleLabel);
+                titleLabel.setVisible(true);
+                titleLabel.setText(titleTextArea.getText());
+            }
+        });
+
+        orderLabel.setOnMouseClicked(event ->  {
+            orderLabel.setVisible(false);
+            gridPane.add(orderTextField, 0, 0);
+            orderTextField.requestFocus();
+        });
+        orderTextField.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {
+            if (newPropertyValue!=true)
+            {
+                gridPane.getChildren().remove(orderTextField);
+                orderLabel.setVisible(true);
+                orderLabel.setText(orderTextField.getText());
+            }
+        });
+
+        fullNameLabel.setOnMouseClicked(event ->  {
+            fullNameLabel.setVisible(false);
+            gridPane.add(fullNameTextField, 0, 1);
+            fullNameTextField.requestFocus();
+        });
+        fullNameTextField.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {
+            if (newPropertyValue!=true)
+            {
+                gridPane.getChildren().remove(fullNameTextField);
+                fullNameLabel.setVisible(true);
+                fullNameLabel.setText(fullNameTextField.getText());
+            }
+        });
+
+        phoneLabel.setOnMouseClicked(event ->  {
+            phoneLabel.setVisible(false);
+            gridPane.add(phoneTextField, 0, 2);
+            phoneTextField.requestFocus();
+        });
+        phoneTextField.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {
+            if (newPropertyValue!=true)
+            {
+                gridPane.getChildren().remove(phoneTextField);
+                phoneLabel.setVisible(true);
+                phoneLabel.setText(phoneTextField.getText());
+            }
+        });
+
+        noteLabel.setOnMouseClicked(event ->  {
+            noteLabel.setVisible(false);
+            gridPane.add(noteTextField, 0, 3);
+            noteTextField.requestFocus();
+        });
+        noteTextField.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {
+            if (newPropertyValue!=true)
+            {
+                gridPane.getChildren().remove(noteTextField);
+                noteLabel.setVisible(true);
+                noteLabel.setText(noteTextField.getText());
+            }
+        });
+
+        defectLabel.setOnMouseClicked(event ->  {
+            defectLabel.setVisible(false);
+            gridPane.add(defectTextField, 0, 4);
+            defectTextField.requestFocus();
+        });
+        defectTextField.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {
+            if (newPropertyValue!=true)
+            {
+                gridPane.getChildren().remove(defectTextField);
+                defectLabel.setVisible(true);
+                defectLabel.setText(defectTextField.getText());
+            }
+        });
+
+        dateLabel.setOnMouseClicked(event ->  {
+            dateLabel.setVisible(false);
+            gridPane.add(dateTextField, 2, 0);
+            dateTextField.requestFocus();
+        });
+        dateTextField.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {
+            if (newPropertyValue!=true)
+            {
+                gridPane.getChildren().remove(dateTextField);
+                dateLabel.setVisible(true);
+                dateLabel.setText(dateTextField.getText());
+            }
+        });
+
+        deviceLabel.setOnMouseClicked(event ->  {
+            deviceLabel.setVisible(false);
+            gridPane.add(deviceTextField, 2, 1);
+            deviceTextField.requestFocus();
+        });
+        deviceTextField.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {
+            if (newPropertyValue!=true)
+            {
+                gridPane.getChildren().remove(deviceTextField);
+                deviceLabel.setVisible(true);
+                deviceLabel.setText(deviceTextField.getText());
+            }
+        });
+
+        modelLabel.setOnMouseClicked(event ->  {
+            modelLabel.setVisible(false);
+            gridPane.add(modelTextField, 2, 2);
+            modelTextField.requestFocus();
+        });
+        modelTextField.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {
+            if (newPropertyValue!=true)
+            {
+                gridPane.getChildren().remove(modelTextField);
+                modelLabel.setVisible(true);
+                modelLabel.setText(modelTextField.getText());
+            }
+        });
+
+        conditionLabel.setOnMouseClicked(event ->  {
+            conditionLabel.setVisible(false);
+            gridPane.add(conditionTextField, 2, 3);
+            conditionTextField.requestFocus();
+        });
+        conditionTextField.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {
+            if (newPropertyValue!=true)
+            {
+                gridPane.getChildren().remove(conditionTextField);
+                conditionLabel.setVisible(true);
+                conditionLabel.setText(conditionTextField.getText());
+            }
+        });
+
+        signAcceptLabel.setOnMouseClicked(event ->  {
+            signAcceptLabel.setVisible(false);
+            gridPane.add(signAcceptTextField, 1, 6);
+            signAcceptTextField.requestFocus();
+        });
+        signAcceptTextField.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {
+            if (newPropertyValue!=true)
+            {
+                gridPane.getChildren().remove(signAcceptTextField);
+                signAcceptLabel.setVisible(true);
+                signAcceptLabel.setText(signAcceptTextField.getText());
+            }
+        });
+
+        signPassedLabel.setOnMouseClicked(event ->  {
+            signPassedLabel.setVisible(false);
+            gridPane.add(signPassedTextField, 3, 6);
+            signPassedTextField.requestFocus();
+        });
+        signPassedTextField.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {
+            if (newPropertyValue!=true)
+            {
+                gridPane.getChildren().remove(signPassedTextField);
+                signPassedLabel.setVisible(true);
+                signPassedLabel.setText(signPassedTextField.getText());
+            }
+        });
+
+        rulesLabel.setOnMouseClicked(event ->  {
+            rulesLabel.setVisible(false);
+            gridPane.add(rulesTextArea, 0, 5, 4, 1);
+            rulesTextArea.requestFocus();
+        });
+        rulesTextArea.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {
+            if (newPropertyValue!=true)
+            {
+                gridPane.getChildren().remove(rulesTextArea);
+                rulesLabel.setVisible(true);
+                rulesLabel.setText(rulesTextArea.getText());
+            }
+        });
+
     }
 
     @FXML

@@ -17,7 +17,7 @@
    <items>
       <VBox SplitPane.resizableWithParent="false">
          <children>
-            <GridPane hgap="10.0" vgap="10.0">
+            <GridPane hgap="10.0" vgap="5.0">
                <columnConstraints>
                   <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" prefWidth="285.0" />
                   <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" prefWidth="285.0" />
@@ -25,7 +25,6 @@
                <rowConstraints>
                   <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="ALWAYS" />
                   <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="ALWAYS" />
-                  <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="ALWAYS" />
                   <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" vgrow="ALWAYS" />
                   <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" vgrow="ALWAYS" />
                   <RowConstraints vgrow="ALWAYS" />
@@ -38,7 +37,7 @@
                               <Insets />
                            </HBox.margin>
                         </Label>
-                        <TextField fx:id="textPhone" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" HBox.hgrow="ALWAYS">
+                        <TextField fx:id="textPhone" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>
@@ -69,16 +68,6 @@
                      <children>
                         <Label minWidth="-Infinity" prefWidth="100.0" text="Модель" />
                         <TextField fx:id="textModel" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
-                           <HBox.margin>
-                              <Insets left="10.0" />
-                           </HBox.margin>
-                        </TextField>
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER_LEFT" layoutX="230.0" layoutY="60.0" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2">
-                     <children>
-                        <Label minWidth="-Infinity" prefWidth="100.0" text="Марка" />
-                        <TextField fx:id="textMark" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>

@@ -31,7 +31,9 @@ public class EditTicketController {
     }
 
     @FXML
-    private Label idTicket;
+    private Label numberTicket;
+    @FXML
+    private TextField numberTicketText;
     @FXML
     private TextField phone;
     @FXML
@@ -48,8 +50,6 @@ public class EditTicketController {
     private TextField device;
     @FXML
     private TextField model;
-    @FXML
-    private TextField mark;
     @FXML
     private TextArea defect;
     @FXML
@@ -78,6 +78,7 @@ public class EditTicketController {
     private SplitPane editTicketViewPane;
 
 
+
     DataTickets dataTickets = new DataTickets();
 
     @FXML
@@ -94,12 +95,12 @@ public class EditTicketController {
         numberLog.setCellValueFactory(new PropertyValueFactory<>("idLog"));
         dateLog.setCellValueFactory(new PropertyValueFactory<>("dateLog"));
 
-        idTicket.setText(String.valueOf(dataTickets.getIdTicket()));
+        numberTicket.setText(String.valueOf(dataTickets.getNumberTicket()));
+        numberTicketText.setText(String.valueOf(dataTickets.getNumberTicket()));
         phone.setText(dataTickets.getPhoneNumber());
         fullName.setText(dataTickets.getFullName());
         device.setText(dataTickets.getDeviceTicket());
         model.setText(dataTickets.getModelTicket());
-        mark.setText(dataTickets.getMarkTicket());
         defect.setText(dataTickets.getDefectTicket());
         note.setText(dataTickets.getNoteTicket());
         condition.setText(dataTickets.getConditionTicket());
@@ -112,11 +113,11 @@ public class EditTicketController {
 
         saveButton.setDisable(true);
 
+        numberTicketText.textProperty().addListener((observable, oldValue, newValue) -> check());
         phone.textProperty().addListener((observable, oldValue, newValue) -> check());
         fullName.textProperty().addListener((observable, oldValue, newValue) -> check());
         device.textProperty().addListener((observable, oldValue, newValue) -> check());
         model.textProperty().addListener((observable, oldValue, newValue) -> check());
-        mark.textProperty().addListener((observable, oldValue, newValue) -> check());
         defect.textProperty().addListener((observable, oldValue, newValue) -> check());
         note.textProperty().addListener((observable, oldValue, newValue) -> check());
         condition.textProperty().addListener((observable, oldValue, newValue) -> check());
@@ -141,32 +142,23 @@ public class EditTicketController {
 
     @FXML
     private void printed() throws IOException {
-//        System.out.println("печать");
-//        FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/PrintTableView.fxml"));
-//        loader.setController(new PrintTableController());
-//        Parent pane = loader.load();
-//        Stage dialogStage = new Stage();
-//        dialogStage.initModality(Modality.APPLICATION_MODAL);
-//        Scene scene = new Scene(pane);
-//        dialogStage.setScene(scene);
-//        dialogStage.showAndWait();
         Print print = new Print();
         print.printed();
     }
 
     private void check() {
+        int numberTicketC =String.valueOf(dataTickets.getNumberTicket()).compareTo(numberTicketText.getText());
         int phoneC = dataTickets.getPhoneNumber().compareTo(phone.getText());
         int conditionC = dataTickets.getConditionTicket().compareTo(condition.getText());
         int fullNameC = dataTickets.getFullName().compareTo(fullName.getText());
         int deviceC = dataTickets.getDeviceTicket().compareTo(device.getText());
         int modelC = dataTickets.getModelTicket().compareTo(model.getText());
-        int markC = dataTickets.getMarkTicket().compareTo(mark.getText());
         int defectC = dataTickets.getDefectTicket().compareTo(defect.getText());
         int noteC = dataTickets.getNoteTicket().compareTo(note.getText());
         int commentC = dataTickets.getCommentTicket().compareTo(comment.getText());
         String statusD = "null";
         int statusC = statusD.compareTo(String.valueOf(statusComboBox.getValue()));
-        if (phoneC == 0 && conditionC == 0 && fullNameC == 0 && deviceC == 0 && modelC == 0 && markC == 0 && defectC == 0 && noteC == 0 && statusC == 0 && commentC == 0) {
+        if (numberTicketC == 0 && phoneC == 0 && conditionC == 0 && fullNameC == 0 && deviceC == 0 && modelC == 0 && defectC == 0 && noteC == 0 && statusC == 0 && commentC == 0) {
             saveButton.setDisable(true);
         } else {
             saveButton.setDisable(false);
@@ -176,10 +168,10 @@ public class EditTicketController {
     public void saveEditTicket() {
         if (statusComboBox.getSelectionModel().getSelectedIndex() + 1 != 0) {
             dataTickets.saveEditTicketWrite(dataTickets.getIdTicket(), statusComboBox.getSelectionModel().getSelectedIndex() + 1, phone.getText(), fullName.getText(), device.getText(), model.getText(),
-                    mark.getText(), defect.getText(), note.getText(), condition.getText(), comment.getText());
+                    defect.getText(), note.getText(), condition.getText(), comment.getText(), Integer.parseInt(numberTicketText.getText()));
         } else {
             dataTickets.saveEditTicketWrite(dataTickets.getIdTicket(), Integer.parseInt(dataTickets.getIdStatusTicket()), phone.getText(), fullName.getText(), device.getText(), model.getText(),
-                    mark.getText(), defect.getText(), note.getText(), condition.getText(), comment.getText());
+                    defect.getText(), note.getText(), condition.getText(), comment.getText(), Integer.parseInt(numberTicketText.getText()));
         }
 
         String getStatusComboBox;
@@ -208,10 +200,10 @@ public class EditTicketController {
                 note.getText(),
                 dataTickets.getConditionTicket(),
                 condition.getText(),
-                dataTickets.getMarkTicket(),
-                mark.getText(),
                 dataTickets.getCommentTicket(),
-                comment.getText());
+                comment.getText(),
+                String.valueOf(dataTickets.getNumberTicket()),
+                numberTicketText.getText());
     }
     @FXML
     public void printPreview(){
