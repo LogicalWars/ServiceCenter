@@ -215,7 +215,18 @@ public class EditTicketController {
     }
     @FXML
     public void printPreview(){
-
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/PrintPreview.fxml"));
+            loader.setController(new PrintPreviewController());
+            Parent pane = loader.load();
+            Stage dialogStage = new Stage();
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
+            Scene scene = new Scene(pane);
+            dialogStage.setScene(scene);
+            dialogStage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

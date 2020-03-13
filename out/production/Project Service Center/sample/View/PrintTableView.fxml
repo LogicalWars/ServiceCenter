@@ -13,7 +13,7 @@
    <children>
       <VBox>
          <children>
-            <Label maxWidth="1.7976931348623157E308" text="ИП Ревина Т.В.3000 Ремонтов www.3000remontov.ru тел. 8-917-211-77-78" wrapText="true" VBox.vgrow="ALWAYS">
+            <Label fx:id="titleLabel" maxWidth="1.7976931348623157E308" text="ИП Ревина Т.В.3000 Ремонтов www.3000remontov.ru тел. 8-917-211-77-78" wrapText="true" VBox.vgrow="ALWAYS">
                <VBox.margin>
                   <Insets bottom="5.0" />
                </VBox.margin>
@@ -38,62 +38,62 @@
                   <RowConstraints vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label maxWidth="1.7976931348623157E308" text="Заказ:">
+                  <Label fx:id="orderLabel" maxWidth="1.7976931348623157E308" text="Заказ:">
                      <font>
                         <Font size="11.0" />
                      </font>
                   </Label>
-                  <Label maxWidth="1.7976931348623157E308" text="ФИО:" GridPane.rowIndex="1">
+                  <Label fx:id="fullNameLabel" maxWidth="1.7976931348623157E308" text="ФИО:" GridPane.rowIndex="1">
                      <font>
                         <Font size="11.0" />
                      </font>
                   </Label>
-                  <Label maxWidth="1.7976931348623157E308" text="Телефон:" GridPane.rowIndex="2">
+                  <Label fx:id="phoneLabel" maxWidth="1.7976931348623157E308" text="Телефон:" GridPane.rowIndex="2">
                      <font>
                         <Font size="11.0" />
                      </font>
                   </Label>
-                  <Label maxWidth="1.7976931348623157E308" text="Примечание:" GridPane.rowIndex="3">
+                  <Label fx:id="noteLabel" maxWidth="1.7976931348623157E308" text="Примечание:" GridPane.rowIndex="3">
                      <font>
                         <Font size="11.0" />
                      </font>
                   </Label>
-                  <Label maxWidth="1.7976931348623157E308" text="Дефект со слов клиента:" wrapText="true" GridPane.rowIndex="4">
+                  <Label fx:id="defectLabel" maxWidth="1.7976931348623157E308" text="Дефект со слов клиента:" wrapText="true" GridPane.rowIndex="4">
                      <font>
                         <Font size="11.0" />
                      </font>
                   </Label>
-                  <Label maxWidth="1.7976931348623157E308" text="Label" GridPane.columnIndex="1">
+                  <Label fx:id="nameTicket" maxWidth="1.7976931348623157E308" text="Label" GridPane.columnIndex="1">
                      <font>
                         <Font size="11.0" />
                      </font>
                   </Label>
-                  <Label maxWidth="1.7976931348623157E308" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <Label fx:id="fullName" maxWidth="1.7976931348623157E308" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <font>
                         <Font size="11.0" />
                      </font>
                   </Label>
-                  <Label maxWidth="1.7976931348623157E308" text="8(962)-617-91-99" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <Label fx:id="phone" maxWidth="1.7976931348623157E308" text="8(962)-617-91-99" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <font>
                         <Font size="11.0" />
                      </font>
                   </Label>
-                  <Label maxWidth="1.7976931348623157E308" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                  <Label fx:id="note" maxWidth="1.7976931348623157E308" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <font>
                         <Font size="11.0" />
                      </font>
                   </Label>
-                  <Label maxWidth="1.7976931348623157E308" text="Кнопок нет, поцарапан экран" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                  <Label fx:id="defect" maxWidth="1.7976931348623157E308" text="Кнопок нет, поцарапан экран" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4">
                      <font>
                         <Font size="11.0" />
                      </font>
                   </Label>
-                  <Label maxWidth="1.7976931348623157E308" text="от:" GridPane.columnIndex="2">
+                  <Label fx:id="dateLabel" maxWidth="1.7976931348623157E308" text="от:" GridPane.columnIndex="2">
                      <font>
                         <Font size="11.0" />
                      </font>
                   </Label>
-                  <Label maxWidth="1.7976931348623157E308" text="Аппарат:" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                  <Label fx:id="deviceLabel" maxWidth="1.7976931348623157E308" text="Аппарат:" GridPane.columnIndex="2" GridPane.rowIndex="1">
                      <font>
                         <Font size="11.0" />
                      </font>
@@ -103,22 +103,22 @@
                         <Font size="11.0" />
                      </font>
                   </Label>
-                  <Label maxWidth="1.7976931348623157E308" text="Модель:" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                  <Label fx:id="modelLabel" maxWidth="1.7976931348623157E308" text="Модель:" GridPane.columnIndex="2" GridPane.rowIndex="3">
                      <font>
                         <Font size="11.0" />
                      </font>
                   </Label>
-                  <Label maxWidth="1.7976931348623157E308" text="Состояние:" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                  <Label fx:id="conditionLabel" maxWidth="1.7976931348623157E308" text="Состояние:" GridPane.columnIndex="2" GridPane.rowIndex="4">
                      <font>
                         <Font size="11.0" />
                      </font>
                   </Label>
-                  <Label maxWidth="1.7976931348623157E308" text="Label" GridPane.columnIndex="3">
+                  <Label fx:id="date" maxWidth="1.7976931348623157E308" text="Label" GridPane.columnIndex="3">
                      <font>
                         <Font size="11.0" />
                      </font>
                   </Label>
-                  <Label maxWidth="1.7976931348623157E308" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                  <Label fx:id="device" maxWidth="1.7976931348623157E308" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="1">
                      <font>
                         <Font size="11.0" />
                      </font>
@@ -128,22 +128,22 @@
                         <Font size="11.0" />
                      </font>
                   </Label>
-                  <Label maxWidth="1.7976931348623157E308" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="3">
+                  <Label fx:id="model" maxWidth="1.7976931348623157E308" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="3">
                      <font>
                         <Font size="11.0" />
                      </font>
                   </Label>
-                  <Label maxWidth="1.7976931348623157E308" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                  <Label fx:id="condition" maxWidth="1.7976931348623157E308" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="4">
                      <font>
                         <Font size="11.0" />
                      </font>
                   </Label>
-                  <Label maxWidth="1.7976931348623157E308" text="1.Срок выполнения заказа оговаривается дополнитель. 2.Аппаратура возвращается по предъявлению листа-заказа. При утрате листа-заказа необходимо немедленно сообщить об этом по телефону, либо лично, в противном случае ИП Ревин И.А. не несет ответственность за получение аппаратуры другим лицом. 3.Аппаратура с согласия заказчика принята без разборки, проверки неисправностей.Заказчик согласен, что все неисправности и внутренние повреждения, которые могут быть обнаруженны в аппартуре при диагностике/ремонте, возникли до приема аппаратуры по данному заказу.4.При неполучении аппарата заказчиком более 30 дней с момента сдачи в ремонт, хранение изделия осуществляется на платном складе, и составляет 10 рублей в сутки.5.При неполучении аппарата заказчиком более 180 дней с момента сдачи в ремонт изделие утилизируется." textAlignment="JUSTIFY" wrapText="true" GridPane.columnSpan="4" GridPane.rowIndex="5">
+                  <Label fx:id="rulesLabel" maxWidth="1.7976931348623157E308" text="1.Срок выполнения заказа оговаривается дополнитель. 2.Аппаратура возвращается по предъявлению листа-заказа. При утрате листа-заказа необходимо немедленно сообщить об этом по телефону, либо лично, в противном случае ИП Ревин И.А. не несет ответственность за получение аппаратуры другим лицом. 3.Аппаратура с согласия заказчика принята без разборки, проверки неисправностей.Заказчик согласен, что все неисправности и внутренние повреждения, которые могут быть обнаруженны в аппартуре при диагностике/ремонте, возникли до приема аппаратуры по данному заказу.4.При неполучении аппарата заказчиком более 30 дней с момента сдачи в ремонт, хранение изделия осуществляется на платном складе, и составляет 10 рублей в сутки.5.При неполучении аппарата заказчиком более 180 дней с момента сдачи в ремонт изделие утилизируется." textAlignment="JUSTIFY" wrapText="true" GridPane.columnSpan="4" GridPane.rowIndex="5">
                      <font>
                         <Font size="11.0" />
                      </font>
                   </Label>
-                  <Label maxWidth="1.7976931348623157E308" minWidth="-Infinity" text="Принял:__________________" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                  <Label fx:id="signAcceptLabel" maxWidth="1.7976931348623157E308" minWidth="-Infinity" text="Принял:__________________" GridPane.columnIndex="1" GridPane.rowIndex="6">
                      <font>
                         <Font size="11.0" />
                      </font>
@@ -151,7 +151,7 @@
                         <Insets top="10.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label maxWidth="1.7976931348623157E308" text="Сдал:__________________" GridPane.columnIndex="3" GridPane.rowIndex="6">
+                  <Label fx:id="signPassedLabel" maxWidth="1.7976931348623157E308" text="Сдал:__________________" GridPane.columnIndex="3" GridPane.rowIndex="6">
                      <font>
                         <Font size="11.0" />
                      </font>
@@ -177,7 +177,7 @@
       </VBox>
       <VBox>
          <children>
-            <Label maxWidth="1.7976931348623157E308" text="ИП Ревина Т.В.3000 Ремонтов www.3000remontov.ru тел. 8-917-211-77-78" wrapText="true" VBox.vgrow="ALWAYS">
+            <Label fx:id="titleLabel1" maxWidth="1.7976931348623157E308" text="ИП Ревина Т.В.3000 Ремонтов www.3000remontov.ru тел. 8-917-211-77-78" wrapText="true" VBox.vgrow="ALWAYS">
                <VBox.margin>
                   <Insets bottom="5.0" />
                </VBox.margin>
@@ -185,7 +185,7 @@
                   <Font size="11.0" />
                </font>
             </Label>
-            <GridPane hgap="5.0" prefWidth="306.0" vgap="5.0">
+            <GridPane hgap="5.0" vgap="5.0">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="120.0" />
                   <ColumnConstraints hgrow="SOMETIMES" percentWidth="30.0" />
@@ -202,62 +202,62 @@
                   <RowConstraints vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Label maxWidth="1.7976931348623157E308" text="Заказ:">
+                  <Label fx:id="orderLabel1" maxWidth="1.7976931348623157E308" text="Заказ:">
                      <font>
                         <Font size="11.0" />
                      </font>
                   </Label>
-                  <Label maxWidth="1.7976931348623157E308" text="ФИО:" GridPane.rowIndex="1">
+                  <Label fx:id="fullNameLabel1" maxWidth="1.7976931348623157E308" text="ФИО:" GridPane.rowIndex="1">
                      <font>
                         <Font size="11.0" />
                      </font>
                   </Label>
-                  <Label maxWidth="1.7976931348623157E308" text="Телефон:" GridPane.rowIndex="2">
+                  <Label fx:id="phoneLabel1" maxWidth="1.7976931348623157E308" text="Телефон:" GridPane.rowIndex="2">
                      <font>
                         <Font size="11.0" />
                      </font>
                   </Label>
-                  <Label maxWidth="1.7976931348623157E308" text="Примечание:" GridPane.rowIndex="3">
+                  <Label fx:id="noteLabel1" maxWidth="1.7976931348623157E308" text="Примечание:" GridPane.rowIndex="3">
                      <font>
                         <Font size="11.0" />
                      </font>
                   </Label>
-                  <Label maxWidth="1.7976931348623157E308" text="Дефект со слов клиента:" wrapText="true" GridPane.rowIndex="4">
+                  <Label fx:id="defectLabel1" maxWidth="1.7976931348623157E308" text="Дефект со слов клиента:" wrapText="true" GridPane.rowIndex="4">
                      <font>
                         <Font size="11.0" />
                      </font>
                   </Label>
-                  <Label maxWidth="1.7976931348623157E308" text="Label" GridPane.columnIndex="1">
+                  <Label fx:id="nameTicket1" maxWidth="1.7976931348623157E308" text="Label" GridPane.columnIndex="1">
                      <font>
                         <Font size="11.0" />
                      </font>
                   </Label>
-                  <Label maxWidth="1.7976931348623157E308" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <Label fx:id="fullName1" maxWidth="1.7976931348623157E308" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <font>
                         <Font size="11.0" />
                      </font>
                   </Label>
-                  <Label maxWidth="1.7976931348623157E308" text="8(962)-617-91-99" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <Label fx:id="phone1" maxWidth="1.7976931348623157E308" text="8(962)-617-91-99" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <font>
                         <Font size="11.0" />
                      </font>
                   </Label>
-                  <Label maxWidth="1.7976931348623157E308" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                  <Label fx:id="note1" maxWidth="1.7976931348623157E308" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <font>
                         <Font size="11.0" />
                      </font>
                   </Label>
-                  <Label maxWidth="1.7976931348623157E308" text="Кнопок нет, поцарапан экран" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                  <Label fx:id="defect1" maxWidth="1.7976931348623157E308" text="Кнопок нет, поцарапан экран" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4">
                      <font>
                         <Font size="11.0" />
                      </font>
                   </Label>
-                  <Label maxWidth="1.7976931348623157E308" text="от:" GridPane.columnIndex="2">
+                  <Label fx:id="dateLabel1" maxWidth="1.7976931348623157E308" text="от:" GridPane.columnIndex="2">
                      <font>
                         <Font size="11.0" />
                      </font>
                   </Label>
-                  <Label maxWidth="1.7976931348623157E308" text="Аппарат:" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                  <Label fx:id="deviceLabel1" maxWidth="1.7976931348623157E308" text="Аппарат:" GridPane.columnIndex="2" GridPane.rowIndex="1">
                      <font>
                         <Font size="11.0" />
                      </font>
@@ -267,22 +267,22 @@
                         <Font size="11.0" />
                      </font>
                   </Label>
-                  <Label maxWidth="1.7976931348623157E308" text="Модель:" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                  <Label fx:id="modelLabel1" maxWidth="1.7976931348623157E308" text="Модель:" GridPane.columnIndex="2" GridPane.rowIndex="3">
                      <font>
                         <Font size="11.0" />
                      </font>
                   </Label>
-                  <Label maxWidth="1.7976931348623157E308" text="Состояние:" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                  <Label fx:id="conditionLabel1" maxWidth="1.7976931348623157E308" text="Состояние:" GridPane.columnIndex="2" GridPane.rowIndex="4">
                      <font>
                         <Font size="11.0" />
                      </font>
                   </Label>
-                  <Label maxWidth="1.7976931348623157E308" text="Label" GridPane.columnIndex="3">
+                  <Label fx:id="date1" maxWidth="1.7976931348623157E308" text="Label" GridPane.columnIndex="3">
                      <font>
                         <Font size="11.0" />
                      </font>
                   </Label>
-                  <Label maxWidth="1.7976931348623157E308" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                  <Label fx:id="device1" maxWidth="1.7976931348623157E308" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="1">
                      <font>
                         <Font size="11.0" />
                      </font>
@@ -292,22 +292,22 @@
                         <Font size="11.0" />
                      </font>
                   </Label>
-                  <Label maxWidth="1.7976931348623157E308" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="3">
+                  <Label fx:id="model1" maxWidth="1.7976931348623157E308" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="3">
                      <font>
                         <Font size="11.0" />
                      </font>
                   </Label>
-                  <Label maxWidth="1.7976931348623157E308" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                  <Label fx:id="condition1" maxWidth="1.7976931348623157E308" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="4">
                      <font>
                         <Font size="11.0" />
                      </font>
                   </Label>
-                  <Label maxWidth="1.7976931348623157E308" text="1.Срок выполнения заказа оговаривается дополнитель. 2.Аппаратура возвращается по предъявлению листа-заказа. При утрате листа-заказа необходимо немедленно сообщить об этом по телефону, либо лично, в противном случае ИП Ревин И.А. не несет ответственность за получение аппаратуры другим лицом. 3.Аппаратура с согласия заказчика принята без разборки, проверки неисправностей.Заказчик согласен, что все неисправности и внутренние повреждения, которые могут быть обнаруженны в аппартуре при диагностике/ремонте, возникли до приема аппаратуры по данному заказу.4.При неполучении аппарата заказчиком более 30 дней с момента сдачи в ремонт, хранение изделия осуществляется на платном складе, и составляет 10 рублей в сутки.5.При неполучении аппарата заказчиком более 180 дней с момента сдачи в ремонт изделие утилизируется." textAlignment="JUSTIFY" wrapText="true" GridPane.columnSpan="4" GridPane.rowIndex="5">
+                  <Label fx:id="rulesLabel1" maxWidth="1.7976931348623157E308" text="1.Срок выполнения заказа оговаривается дополнитель. 2.Аппаратура возвращается по предъявлению листа-заказа. При утрате листа-заказа необходимо немедленно сообщить об этом по телефону, либо лично, в противном случае ИП Ревин И.А. не несет ответственность за получение аппаратуры другим лицом. 3.Аппаратура с согласия заказчика принята без разборки, проверки неисправностей.Заказчик согласен, что все неисправности и внутренние повреждения, которые могут быть обнаруженны в аппартуре при диагностике/ремонте, возникли до приема аппаратуры по данному заказу.4.При неполучении аппарата заказчиком более 30 дней с момента сдачи в ремонт, хранение изделия осуществляется на платном складе, и составляет 10 рублей в сутки.5.При неполучении аппарата заказчиком более 180 дней с момента сдачи в ремонт изделие утилизируется." textAlignment="JUSTIFY" wrapText="true" GridPane.columnSpan="4" GridPane.rowIndex="5">
                      <font>
                         <Font size="11.0" />
                      </font>
                   </Label>
-                  <Label maxWidth="1.7976931348623157E308" minWidth="-Infinity" text="Принял:__________________" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                  <Label fx:id="signAcceptLabel1" maxWidth="1.7976931348623157E308" minWidth="-Infinity" text="Принял:__________________" GridPane.columnIndex="1" GridPane.rowIndex="6">
                      <font>
                         <Font size="11.0" />
                      </font>
@@ -315,7 +315,7 @@
                         <Insets top="10.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label maxWidth="1.7976931348623157E308" text="Сдал:__________________" GridPane.columnIndex="3" GridPane.rowIndex="6">
+                  <Label fx:id="signPassedLabel1" maxWidth="1.7976931348623157E308" text="Сдал:__________________" GridPane.columnIndex="3" GridPane.rowIndex="6">
                      <font>
                         <Font size="11.0" />
                      </font>
@@ -325,6 +325,15 @@
                   </Label>
                </children>
             </GridPane>
+            <AnchorPane>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+               <children>
+                  <Label text="---------------------------------------------------------" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <Label layoutX="10.0" layoutY="10.0" text="---------------------------------------------------------" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+               </children>
+            </AnchorPane>
          </children>
          <padding>
             <Insets top="10.0" />
