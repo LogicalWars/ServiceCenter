@@ -8,9 +8,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import sample.Model.DataTickets;
+import sample.Model.Tickets;
 
 public class EditPatternPrintController {
     private MainMenuController mainMenuController;
@@ -18,86 +21,65 @@ public class EditPatternPrintController {
     public void setMainMenuController(MainMenuController mainMenuController) {
         this.mainMenuController = mainMenuController;
     }
+
     @FXML
     private Label titleLabel;
-
     @FXML
     private TextArea titleTextArea;
-
     @FXML
     private Label orderLabel;
-
     @FXML
     private TextField orderTextField;
-
     @FXML
     private Label fullNameLabel;
-
     @FXML
     private TextField fullNameTextField;
-
     @FXML
     private Label phoneLabel;
-
     @FXML
     private TextField phoneTextField;
-
     @FXML
     private Label noteLabel;
-
     @FXML
     private TextField noteTextField;
-
     @FXML
     private Label defectLabel;
-
     @FXML
     private TextField defectTextField;
-
     @FXML
     private Label dateLabel;
-
     @FXML
     private TextField dateTextField;
-
     @FXML
     private Label deviceLabel;
-
     @FXML
     private TextField deviceTextField;
-
     @FXML
     private Label modelLabel;
-
     @FXML
     private TextField modelTextField;
-
     @FXML
     private Label conditionLabel;
-
     @FXML
     private TextField conditionTextField;
-
     @FXML
     private Label rulesLabel;
-
     @FXML
     private TextArea rulesTextArea;
-
     @FXML
     private Label signAcceptLabel;
-
     @FXML
     private TextField signAcceptTextField;
-
     @FXML
     private Label signPassedLabel;
-
     @FXML
     private TextField signPassedTextField;
-
     @FXML
     private Button savePatternPrintButton;
+    @FXML
+    private GridPane gridPane;
+    @FXML
+    private VBox titleVBox;
 
     @FXML
     void conditionContextHidden() { conditionLabel.setText(conditionTextField.getText());}
@@ -141,6 +123,15 @@ public class EditPatternPrintController {
     DataTickets dataTickets = new DataTickets();
     @FXML
     public void initialize() {
+
+        TextField orderTextField1 = new TextField(orderLabel.getText());
+
+        orderLabel.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                orderLabel.setVisible(false);
+                gridPane.add(orderTextField1, 0, 0);
+                orderTextField1.requestFocus();
+            }});
 
         dataTickets.editPatternPrintRead();
         titleLabel.setText(dataTickets.getPrintPatternData().get(0));

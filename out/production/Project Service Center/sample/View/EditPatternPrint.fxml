@@ -33,7 +33,7 @@
         <content>
             <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="560.0">
                 <children>
-                    <VBox>
+                    <VBox fx:id="titleVBox">
                         <children>
                             <Label fx:id="titleLabel" maxWidth="1.7976931348623157E308" style="-fx-border-color: #000000;" text="ИП Ревина Т.В.3000 Ремонтов www.3000remontov.ru тел. 8-917-211-77-78" wrapText="true" VBox.vgrow="ALWAYS">
                                 <VBox.margin>
@@ -57,7 +57,7 @@
                               <Cursor fx:constant="TEXT" />
                            </cursor>
                             </Label>
-                            <GridPane focusTraversable="true" hgap="5.0" vgap="5.0">
+                            <GridPane fx:id="gridPane" focusTraversable="true" hgap="5.0" vgap="5.0">
                                 <columnConstraints>
                                     <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="120.0" />
                                     <ColumnConstraints hgrow="SOMETIMES" percentWidth="30.0" />
@@ -172,27 +172,27 @@
                                     <Cursor fx:constant="TEXT" />
                                  </cursor>
                                     </Label>
-                                    <Label maxWidth="1.7976931348623157E308" GridPane.columnIndex="1">
+                                    <Label maxWidth="1.7976931348623157E308" text="258" GridPane.columnIndex="1">
                                         <font>
                                             <Font size="11.0" />
                                         </font>
                                     </Label>
-                                    <Label maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                    <Label maxWidth="1.7976931348623157E308" text="Иванов_ИИ" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                         <font>
                                             <Font size="11.0" />
                                         </font>
                                     </Label>
-                                    <Label maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                    <Label maxWidth="1.7976931348623157E308" text="7(999)-000-00-00" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                         <font>
                                             <Font size="11.0" />
                                         </font>
                                     </Label>
-                                    <Label maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                    <Label maxWidth="1.7976931348623157E308" text="примечание" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                         <font>
                                             <Font size="11.0" />
                                         </font>
                                     </Label>
-                                    <Label maxWidth="1.7976931348623157E308" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                    <Label maxWidth="1.7976931348623157E308" text="дефект" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                         <font>
                                             <Font size="11.0" />
                                         </font>
@@ -292,12 +292,12 @@
                                     <Cursor fx:constant="TEXT" />
                                  </cursor>
                                     </Label>
-                                    <Label maxWidth="1.7976931348623157E308" GridPane.columnIndex="3">
+                                    <Label maxWidth="1.7976931348623157E308" text="01.01.2000" GridPane.columnIndex="3">
                                         <font>
                                             <Font size="11.0" />
                                         </font>
                                     </Label>
-                                    <Label maxWidth="1.7976931348623157E308" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                                    <Label maxWidth="1.7976931348623157E308" text="аппарат" GridPane.columnIndex="3" GridPane.rowIndex="1">
                                         <font>
                                             <Font size="11.0" />
                                         </font>
@@ -307,12 +307,12 @@
                                             <Font size="11.0" />
                                         </font>
                                     </Label>
-                                    <Label maxWidth="1.7976931348623157E308" GridPane.columnIndex="3" GridPane.rowIndex="3">
+                                    <Label maxWidth="1.7976931348623157E308" text="модель" GridPane.columnIndex="3" GridPane.rowIndex="3">
                                         <font>
                                             <Font size="11.0" />
                                         </font>
                                     </Label>
-                                    <Label maxWidth="1.7976931348623157E308" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                                    <Label maxWidth="1.7976931348623157E308" text="состояние" GridPane.columnIndex="3" GridPane.rowIndex="4">
                                         <font>
                                             <Font size="11.0" />
                                         </font>
