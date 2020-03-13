@@ -213,5 +213,9 @@ public class EditTicketController {
                 dataTickets.getCommentTicket(),
                 comment.getText());
     }
+    @FXML
+    public void printPreview(){
+
+    }
 
 }

@@ -20,17 +20,11 @@ public class MainMenuController {
     private BorderPane paneMainContent;
     @FXML
     private Label infoLeft;
-    @FXML
-    public MenuItem printPreview;
 
     @FXML
     public void initialize() {
         ticketList();
         infoLeft.setText(new DBProcessor().resultConnection());
-        if(paneMainContent.getChildren().get(3).getId() == "editTicketViewPane"){
-           printPreview.setDisable(false);
-            System.out.println("++");
-        }
     }
 
 
@@ -43,7 +37,6 @@ public class MainMenuController {
             paneMainContent.setCenter(newPane);
             NewTicketController newTicketController = loader.getController();
             newTicketController.setMainMenuController(this);
-            printPreview.setDisable(true);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -59,7 +52,6 @@ public class MainMenuController {
             paneMainContent.setCenter(newPane);
             TicketListController ticketListController = loader.getController();
             ticketListController.setMainMenuController(this);
-            printPreview.setDisable(true);
         } catch (IOException e) {
             e.printStackTrace();
         }

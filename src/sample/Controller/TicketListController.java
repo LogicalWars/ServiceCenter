@@ -52,8 +52,6 @@ public class TicketListController {
                     Tickets selectTickets = tableTickets.getItems().get(selectIndex);
                     idRow = selectTickets.getIdTicket();
                     mainMenuController.editTicket();
-                    mainMenuController.printPreview.setDisable(false);
-
                 }
             });
 
