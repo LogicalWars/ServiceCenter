@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import sample.Model.DataTickets;
 import sample.Model.TicketLogs;
 
@@ -30,6 +31,9 @@ public class DialogLogsController {
 
     @FXML
     private TableColumn<TicketLogs, String> newValue;
+
+    @FXML
+    private Button okButton;
 
     DataTickets dataTickets = new DataTickets();
 
@@ -60,6 +64,12 @@ public class DialogLogsController {
             return cell;
         });
         tableLogData.setItems(dataTickets.getTicketLogsData());
+    }
+
+    @FXML
+    public void okButtonCloseDLogs(){
+        Stage stage = (Stage) okButton.getScene().getWindow();
+        stage.close();
     }
 
 }
