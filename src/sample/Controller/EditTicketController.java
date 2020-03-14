@@ -163,47 +163,58 @@ public class EditTicketController {
         } else {
             saveButton.setDisable(false);
         }
+        if(dataTickets.allNumberTicket(Integer.parseInt(numberTicketText.getText()))) {
+            numberTicketText.setStyle("-fx-background-color: white");
+        }else{
+            numberTicketText.setStyle("-fx-background-color: rgba(176,0,0,0.49)");
+            saveButton.setDisable(true);
+        }
+
+
     }
 
+    @FXML
     public void saveEditTicket() {
-        if (statusComboBox.getSelectionModel().getSelectedIndex() + 1 != 0) {
-            dataTickets.saveEditTicketWrite(dataTickets.getIdTicket(), statusComboBox.getSelectionModel().getSelectedIndex() + 1, phone.getText(), fullName.getText(), device.getText(), model.getText(),
-                    defect.getText(), note.getText(), condition.getText(), comment.getText(), Integer.parseInt(numberTicketText.getText()));
-        } else {
-            dataTickets.saveEditTicketWrite(dataTickets.getIdTicket(), Integer.parseInt(dataTickets.getIdStatusTicket()), phone.getText(), fullName.getText(), device.getText(), model.getText(),
-                    defect.getText(), note.getText(), condition.getText(), comment.getText(), Integer.parseInt(numberTicketText.getText()));
-        }
 
-        String getStatusComboBox;
+            if (statusComboBox.getSelectionModel().getSelectedIndex() + 1 != 0) {
+                dataTickets.saveEditTicketWrite(dataTickets.getIdTicket(), statusComboBox.getSelectionModel().getSelectedIndex() + 1, phone.getText(), fullName.getText(), device.getText(), model.getText(),
+                        defect.getText(), note.getText(), condition.getText(), comment.getText(), Integer.parseInt(numberTicketText.getText()));
+            } else {
+                dataTickets.saveEditTicketWrite(dataTickets.getIdTicket(), Integer.parseInt(dataTickets.getIdStatusTicket()), phone.getText(), fullName.getText(), device.getText(), model.getText(),
+                        defect.getText(), note.getText(), condition.getText(), comment.getText(), Integer.parseInt(numberTicketText.getText()));
 
-        if (statusComboBox.getValue() == null) {
-            getStatusComboBox = dataTickets.getStatusTicket();
-        } else {
-            getStatusComboBox = String.valueOf(statusComboBox.getValue());
-        }
+                String getStatusComboBox;
 
-        mainMenuController.ticketList();
-        dataTickets.ticketLogsWrite(dataTickets.getIdTicket(),
-                dataTickets.getPhoneNumber(),
-                phone.getText(),
-                dataTickets.getFullName(),
-                fullName.getText(),
-                dataTickets.getStatusTicket(),
-                getStatusComboBox,
-                dataTickets.getDeviceTicket(),
-                device.getText(),
-                dataTickets.getModelTicket(),
-                model.getText(),
-                dataTickets.getDefectTicket(),
-                defect.getText(),
-                dataTickets.getNoteTicket(),
-                note.getText(),
-                dataTickets.getConditionTicket(),
-                condition.getText(),
-                dataTickets.getCommentTicket(),
-                comment.getText(),
-                String.valueOf(dataTickets.getNumberTicket()),
-                numberTicketText.getText());
+                if (statusComboBox.getValue() == null) {
+                    getStatusComboBox = dataTickets.getStatusTicket();
+                } else {
+                    getStatusComboBox = String.valueOf(statusComboBox.getValue());
+                }
+
+                mainMenuController.ticketList();
+                dataTickets.ticketLogsWrite(dataTickets.getIdTicket(),
+                        dataTickets.getPhoneNumber(),
+                        phone.getText(),
+                        dataTickets.getFullName(),
+                        fullName.getText(),
+                        dataTickets.getStatusTicket(),
+                        getStatusComboBox,
+                        dataTickets.getDeviceTicket(),
+                        device.getText(),
+                        dataTickets.getModelTicket(),
+                        model.getText(),
+                        dataTickets.getDefectTicket(),
+                        defect.getText(),
+                        dataTickets.getNoteTicket(),
+                        note.getText(),
+                        dataTickets.getConditionTicket(),
+                        condition.getText(),
+                        dataTickets.getCommentTicket(),
+                        comment.getText(),
+                        String.valueOf(dataTickets.getNumberTicket()),
+                        numberTicketText.getText());
+            }
+
     }
     @FXML
     public void printPreview(){

@@ -114,7 +114,7 @@ public class DataTickets {
                     "SELECT ticket_data.*, status.`status` as `status` " +
                     "FROM ticket_data " +
                     "INNER JOIN status ON (ticket_data.`status_id` = status.`idStatus`) " +
-                    "ORDER BY `ticket_data`.`idTicket` DESC;";
+                    "ORDER BY `ticket_data`.`numberTicket` DESC;";
             Statement stmt = conn.createStatement();
             ResultSet res = stmt.executeQuery(query);
             while (res.next()) {
@@ -565,6 +565,33 @@ public class DataTickets {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public Boolean allNumberTicket(int newNummberTicket) {
+        Boolean b = true;
+        ArrayList<Integer> arrayList = new ArrayList<>();
+        try {
+            DBProcessor dbProcessor = new DBProcessor();
+            Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
+            String query = "SELECT numberTicket " +
+                    "FROM ticket_data ";
+            Statement stmt = conn.createStatement();
+            ResultSet res = stmt.executeQuery(query);
+            while (res.next()) {
+                int i = res.getInt("numberTicket");
+                arrayList.add(i);
+            }
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        for (int a : arrayList) {
+            if (a == newNummberTicket) {
+                b = false;
+            }
+        }
+        return b;
     }
 
 }
