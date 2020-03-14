@@ -68,7 +68,7 @@
                         <Font size="11.0" />
                      </font>
                   </Label>
-                  <Label fx:id="fullName" maxWidth="1.7976931348623157E308" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <Label fx:id="fullName" maxWidth="1.7976931348623157E308" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <font>
                         <Font size="11.0" />
                      </font>
@@ -123,7 +123,7 @@
                         <Font size="11.0" />
                      </font>
                   </Label>
-                  <Label fx:id="condition" maxWidth="1.7976931348623157E308" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="3">
+                  <Label fx:id="condition" maxWidth="1.7976931348623157E308" text="Label" wrapText="true" GridPane.columnIndex="3" GridPane.rowIndex="3">
                      <font>
                         <Font size="11.0" />
                      </font>
