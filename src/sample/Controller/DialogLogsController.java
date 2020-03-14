@@ -2,11 +2,15 @@ package sample.Controller;
 
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import sample.Model.DataTickets;
 import sample.Model.TicketLogs;
+
+import java.io.IOException;
 
 public class DialogLogsController {
 
@@ -15,8 +19,6 @@ public class DialogLogsController {
     public void setMainMenuController(MainMenuController mainMenuController) {
         this.mainMenuController = mainMenuController;
     }
-
-
     @FXML
     private TableView<TicketLogs> tableLogData;
 
