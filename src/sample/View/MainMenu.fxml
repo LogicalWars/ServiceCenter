@@ -14,11 +14,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="paneMainContent" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="paneMainContent" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" styleClass="border-pane" stylesheets="@CSS/defaultStyles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <top>
-      <MenuBar style="-fx-border-color: #000000; -fx-border-radius: 8;" BorderPane.alignment="CENTER">
+      <MenuBar stylesheets="@CSS/defaultStyles.css" BorderPane.alignment="CENTER">
         <menus>
-          <Menu mnemonicParsing="false" text="Меню">
+          <Menu mnemonicParsing="false" styleClass="label-menu" text="Меню">
             <items>
               <MenuItem fx:id="ticketListButton" mnemonicParsing="false" onAction="#ticketList" text="Заявки" />
                   <SeparatorMenuItem mnemonicParsing="false" />
@@ -30,7 +30,6 @@
             <Menu mnemonicParsing="false" text="Настройки">
               <items>
                 <MenuItem mnemonicParsing="false" text="Настройки" />
-                  <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" onAction="#editTicket" text="Пользователи" />
               </items>
             </Menu>
@@ -45,7 +44,7 @@
    <bottom>
       <HBox BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="infoLeft" alignment="CENTER_RIGHT" cache="true" cacheHint="QUALITY" depthTest="DISABLE" style="-fx-border-color: #000000;" text="Информация" textAlignment="CENTER">
+            <Label fx:id="infoLeft" alignment="CENTER_RIGHT" cache="true" cacheHint="QUALITY" depthTest="DISABLE" text="Информация" textAlignment="CENTER" textFill="WHITE">
                <HBox.margin>
                   <Insets bottom="5.0" left="10.0" top="5.0" />
                </HBox.margin>
@@ -66,7 +65,7 @@
             <Insets left="5.0" right="5.0" top="5.0" />
          </BorderPane.margin>
          <children>
-          <Button fx:id="createNewTicketButton" mnemonicParsing="false" onAction="#newTicket" text="Создать заявку" textAlignment="CENTER">
+          <Button fx:id="createNewTicketButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#newTicket" text="Создать заявку" textAlignment="CENTER">
                <font>
                   <Font size="18.0" />
                </font>
