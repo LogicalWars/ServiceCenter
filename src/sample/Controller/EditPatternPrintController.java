@@ -235,7 +235,7 @@ public class EditPatternPrintController {
 
         modelLabel.setOnMouseClicked(event ->  {
             modelLabel.setVisible(false);
-            gridPane.add(modelTextField, 2, 3);
+            gridPane.add(modelTextField, 2, 2);
             modelTextField.requestFocus();
         });
         modelTextField.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {
@@ -249,7 +249,7 @@ public class EditPatternPrintController {
 
         conditionLabel.setOnMouseClicked(event ->  {
             conditionLabel.setVisible(false);
-            gridPane.add(conditionTextField, 2, 4);
+            gridPane.add(conditionTextField, 2, 3);
             conditionTextField.requestFocus();
         });
         conditionTextField.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {
