@@ -44,7 +44,7 @@
    <bottom>
       <HBox BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="infoLeft" alignment="CENTER_RIGHT" cache="true" cacheHint="QUALITY" depthTest="DISABLE" text="Информация" textAlignment="CENTER" textFill="WHITE">
+            <Label fx:id="infoLeft" alignment="CENTER_RIGHT" cache="true" cacheHint="QUALITY" depthTest="DISABLE" text="Информация" textAlignment="CENTER">
                <HBox.margin>
                   <Insets bottom="5.0" left="10.0" top="5.0" />
                </HBox.margin>
