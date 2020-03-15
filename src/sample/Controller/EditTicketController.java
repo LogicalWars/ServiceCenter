@@ -183,38 +183,37 @@ public class EditTicketController {
             } else {
                 dataTickets.saveEditTicketWrite(dataTickets.getIdTicket(), Integer.parseInt(dataTickets.getIdStatusTicket()), phone.getText(), fullName.getText(), device.getText(), model.getText(),
                         defect.getText(), note.getText(), condition.getText(), comment.getText(), Integer.parseInt(numberTicketText.getText()));
-
-                String getStatusComboBox;
-
-                if (statusComboBox.getValue() == null) {
-                    getStatusComboBox = dataTickets.getStatusTicket();
-                } else {
-                    getStatusComboBox = String.valueOf(statusComboBox.getValue());
-                }
-
-                mainMenuController.ticketList();
-                dataTickets.ticketLogsWrite(dataTickets.getIdTicket(),
-                        dataTickets.getPhoneNumber(),
-                        phone.getText(),
-                        dataTickets.getFullName(),
-                        fullName.getText(),
-                        dataTickets.getStatusTicket(),
-                        getStatusComboBox,
-                        dataTickets.getDeviceTicket(),
-                        device.getText(),
-                        dataTickets.getModelTicket(),
-                        model.getText(),
-                        dataTickets.getDefectTicket(),
-                        defect.getText(),
-                        dataTickets.getNoteTicket(),
-                        note.getText(),
-                        dataTickets.getConditionTicket(),
-                        condition.getText(),
-                        dataTickets.getCommentTicket(),
-                        comment.getText(),
-                        String.valueOf(dataTickets.getNumberTicket()),
-                        numberTicketText.getText());
             }
+        String getStatusComboBox;
+
+        if (statusComboBox.getValue() == null) {
+            getStatusComboBox = dataTickets.getStatusTicket();
+        } else {
+            getStatusComboBox = String.valueOf(statusComboBox.getValue());
+        }
+
+        mainMenuController.ticketList();
+        dataTickets.ticketLogsWrite(dataTickets.getIdTicket(),
+                dataTickets.getPhoneNumber(),
+                phone.getText(),
+                dataTickets.getFullName(),
+                fullName.getText(),
+                dataTickets.getStatusTicket(),
+                getStatusComboBox,
+                dataTickets.getDeviceTicket(),
+                device.getText(),
+                dataTickets.getModelTicket(),
+                model.getText(),
+                dataTickets.getDefectTicket(),
+                defect.getText(),
+                dataTickets.getNoteTicket(),
+                note.getText(),
+                dataTickets.getConditionTicket(),
+                condition.getText(),
+                dataTickets.getCommentTicket(),
+                comment.getText(),
+                String.valueOf(dataTickets.getNumberTicket()),
+                numberTicketText.getText());
 
     }
     @FXML
