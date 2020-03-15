@@ -2,23 +2,19 @@ package sample.Controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.print.*;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import sample.Model.*;
+import sample.Model.DataTickets;
+import sample.Model.Print;
+import sample.Model.Status;
+import sample.Model.TicketLogs;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Set;
 
 public class EditTicketController {
 
@@ -113,7 +109,13 @@ public class EditTicketController {
 
         saveButton.setDisable(true);
 
-        numberTicketText.textProperty().addListener((observable, oldValue, newValue) -> check());
+        numberTicketText.textProperty().addListener((observable, oldValue, newValue) -> {
+            if(!newValue.matches("\\d*")){numberTicketText.setText(oldValue);}
+            if(!dataTickets.allNumberTicket(StringToInt(numberTicketText.getText()))) {
+                numberTicketText.setText(oldValue);
+            }
+            check();
+        });
         phone.textProperty().addListener((observable, oldValue, newValue) -> check());
         fullName.textProperty().addListener((observable, oldValue, newValue) -> check());
         device.textProperty().addListener((observable, oldValue, newValue) -> check());
@@ -163,14 +165,13 @@ public class EditTicketController {
         } else {
             saveButton.setDisable(false);
         }
-        if(dataTickets.allNumberTicket(Integer.parseInt(numberTicketText.getText()))) {
-            numberTicketText.setStyle("-fx-background-color: white");
-        }else{
-            numberTicketText.setStyle("-fx-background-color: rgba(176,0,0,0.49)");
-            saveButton.setDisable(true);
+    }
+    private int StringToInt(String inputString){
+        try{
+            return Integer.parseInt(inputString);
+        }catch(NumberFormatException ex){
+            return 0; // при пустой строке вернем "0"
         }
-
-
     }
 
     @FXML
