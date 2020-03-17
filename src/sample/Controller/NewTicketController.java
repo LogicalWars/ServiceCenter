@@ -62,74 +62,93 @@ public class NewTicketController {
 
     }
 
-    /**
-     * Adds a static mask to the specified text field.
-     *
-     * @param tf   the text field.
-     * @param mask the mask to apply. Example of usage: addMask(txtDate, " / /
-     *             ");
-     */
-    public static void addMask(final TextField tf, final String mask) {
-        tf.setText(mask);
-        // addTextLimiter(tf, mask.length());
+//    public static void addMask(final TextField tf, final String mask) {
+//        tf.setText(mask);
+//        // addTextLimiter(tf, mask.length());
+//
+////        tf.textProperty().addListener(new ChangeListener<String>() {
+////            @Override
+////            public void changed(final ObservableValue<? extends String> ov,
+////                                final String oldValue, final String newValue) {
+////
+////            }
+////        });
+//
+//        tf.setOnKeyPressed(new EventHandler<KeyEvent>() {
+//            @Override
+//            public void handle(final KeyEvent e) {
+//                int caretPosition = tf.getCaretPosition();
+//                String value = stripMask(tf.getText(), mask);
+//                tf.setText(merge(value, mask));
+//                if (caretPosition < mask.length() - 1
+//                        && mask.charAt(caretPosition) != ' '
+//                        && e.getCode() != KeyCode.BACK_SPACE
+//                        && e.getCode() != KeyCode.LEFT) {
+//                    tf.positionCaret(caretPosition + 1);
+//                } else {
+//                    tf.positionCaret(caretPosition);
+//                }
+//            }
+//        });
+//    }
+//
+//    static String stripMask(String text, final String mask) {
+//        final Set<String> maskChars = new HashSet<>();
+//        for (int i = 0; i < mask.length(); i++) {
+//            char c = mask.charAt(i);
+//            if (c != ' ') {
+//                maskChars.add(String.valueOf(c));
+//            }
+//        }
+//        for (String c : maskChars) {
+//            text = text.replace(c, "");
+//        }
+//        return text;
+//    }
+//
+//    static String merge(final String value, final String mask) {
+//        final StringBuilder sb = new StringBuilder(mask);
+//        System.out.println(value);
+//        int k = 0;
+//        for (int i = 0; i < mask.length(); i++) {
+//            if (mask.charAt(i) == ' ' && k < value.length()) {
+//                sb.setCharAt(i, value.charAt(k));
+//                k++;
+//            }
+//        }
+//        return sb.toString();
+//    }
+    private ArrayList<Integer> indexCharMask = new ArrayList<>();
+    private ArrayList<String> charMask = new ArrayList<>();
 
-        tf.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(final ObservableValue<? extends String> ov,
-                                final String oldValue, final String newValue) {
-
-            }
-        });
-
-        tf.setOnKeyPressed(new EventHandler<KeyEvent>() {
+    private void maskToTextField(TextField textField, String mask){
+        indexMask(mask);
+        textField.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(final KeyEvent e) {
-                int caretPosition = tf.getCaretPosition();
-                String value = stripMask(tf.getText(), mask);
-                tf.setText(merge(value, mask));
-                if (caretPosition < mask.length() - 1
-                        && mask.charAt(caretPosition) != ' '
-                        && e.getCode() != KeyCode.BACK_SPACE
-                        && e.getCode() != KeyCode.LEFT) {
-                    tf.positionCaret(caretPosition + 1);
-                } else {
-                    tf.positionCaret(caretPosition);
+                if(textField.getCaretPosition() == 0){
+                    textField.setText(charMask.get(0) + charMask.get(1));
+                    textField.positionCaret(indexCharMask.get(0));
                 }
             }
         });
     }
 
-    static String stripMask(String text, final String mask) {
-        final Set<String> maskChars = new HashSet<>();
-        for (int i = 0; i < mask.length(); i++) {
-            char c = mask.charAt(i);
-            if (c != ' ') {
-                maskChars.add(String.valueOf(c));
+    private void indexMask(String mask){
+        for (int i=0; i<mask.length(); i++){
+            if (mask.charAt(i)!=' '){
+                charMask.add(String.valueOf(mask.charAt(i)));
+            }else{
+                indexCharMask.add(i);
             }
         }
-        for (String c : maskChars) {
-            text = text.replace(c, "");
-        }
-        return text;
-    }
-
-    static String merge(final String value, final String mask) {
-        final StringBuilder sb = new StringBuilder(mask);
-        System.out.println(value);
-        int k = 0;
-        for (int i = 0; i < mask.length(); i++) {
-            if (mask.charAt(i) == ' ' && k < value.length()) {
-                sb.setCharAt(i, value.charAt(k));
-                k++;
-            }
-        }
-        return sb.toString();
     }
 
 
     @FXML
     public void initialize() {
-        addMask(textModel, "8-(   )-   -  -  ");
+
+        //maskToTextField(textPhone, "8(   )-   -  -  ");
     }
 
 
