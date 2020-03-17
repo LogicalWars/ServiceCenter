@@ -8,6 +8,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import sample.Enum.User;
 import sample.Model.DataTickets;
 import sample.Model.Print;
 import sample.Model.Status;
@@ -73,12 +74,18 @@ public class EditTicketController {
     @FXML
     private SplitPane editTicketViewPane;
 
-
-
     DataTickets dataTickets = new DataTickets();
-
     @FXML
     public void initialize() {
+
+
+        switch (User.USER){
+            case ADMIN: fullName.setDisable(true);break;
+            case MASTER:  phone.setDisable(true);break;
+            case OPERATOR: numberTicket.setDisable(true);break;
+        }
+        System.out.println(User.USER + " =user");
+
 
         try {
             dataTickets.editTicketRead(TicketListController.idRow);

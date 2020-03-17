@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import sample.Controller.MainMenuController;
+import sample.Enum.User;
 
 import java.io.IOException;
 
@@ -16,6 +17,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        User.getUseRole("master","master");
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("View/MainMenu.fxml"));
             loader.setController(new MainMenuController());
