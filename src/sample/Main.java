@@ -2,9 +2,12 @@ package sample;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import sample.Controller.LogInController;
 import sample.Controller.MainMenuController;
+import sample.Enum.User;
 
 import java.io.IOException;
 
@@ -17,12 +20,11 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("View/MainMenu.fxml"));
-            loader.setController(new MainMenuController());
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("View/LoginView.fxml"));
+            loader.setController(new LogInController());
             primaryStage.setScene(new Scene(loader.load()));
             primaryStage.show();
-            primaryStage.setMinHeight(640);
-            primaryStage.setMinWidth(920);
+            primaryStage.setResizable(false);
         } catch (IOException e) {
             e.printStackTrace();
         }

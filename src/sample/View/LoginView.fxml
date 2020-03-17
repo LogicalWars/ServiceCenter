@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="149.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <AnchorPane>
+               <children>
+                  <Label layoutX="5.0" layoutY="9.0" text="Пользователь:" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="0.0" />
+                  <TextField fx:id="user" layoutX="121.0" promptText="Пользователь" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="0.0" />
+               </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </AnchorPane>
+            <AnchorPane layoutX="15.0" layoutY="15.0">
+               <children>
+                  <Label layoutX="5.0" layoutY="9.0" text="Пароль:" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="0.0" />
+                  <PasswordField fx:id="password" promptText="Пароль" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="0.0" />
+               </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </AnchorPane>
+         </children>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="15.0" />
+         </padding>
+      </VBox>
+      <Button layoutX="176.0" layoutY="106.0" mnemonicParsing="false" onAction="#logInButton" text="Войти" AnchorPane.leftAnchor="176.0" AnchorPane.rightAnchor="175.0" />
+   </children>
+</AnchorPane>
