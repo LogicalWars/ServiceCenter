@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
@@ -21,13 +22,14 @@
             <TableColumn fx:id="login" text="Логин" />
           <TableColumn fx:id="password" text="Пароль" />
             <TableColumn fx:id="rules" text="Роль" />
+            <TableColumn fx:id="valid" text="Активный" />
         </columns>
       </TableView>
    </center>
    <bottom>
       <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <buttons>
-          <Button mnemonicParsing="false" onAction="#addNewUser" text="Добавить пользователя" />
+            <Button layoutX="590.0" layoutY="18.0" mnemonicParsing="false" onAction="#addNewUser" text="Добавить пользователя" />
         </buttons>
          <padding>
             <Insets right="25.0" />
@@ -72,6 +74,14 @@
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>
+            </AnchorPane>
+            <AnchorPane layoutX="15.0" layoutY="205.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+               <children>
+                  <CheckBox fx:id="validCheckBox" mnemonicParsing="false" text="Активный" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0" />
+               </children>
             </AnchorPane>
             <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                <children>

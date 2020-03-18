@@ -2,6 +2,8 @@ package sample.Model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
 import sample.Enum.User;
 
 import java.sql.Connection;
@@ -628,7 +630,8 @@ public class DataTickets {
                 String password = res.getString("password");
                 String rules = res.getString("rules");
                 String name = res.getString("name");
-                userListData.add(new UserData(id, login, password, rules, name));
+                int valid = res.getInt("valid");
+                userListData.add(new UserData(id, login, password, rules, name, valid));
             }
             stmt.close();
             conn.close();
@@ -649,15 +652,16 @@ public class DataTickets {
         allRulesData.add(new Rules(User.OPERATOR.name()));
     }
 
-    public void addNewUser(String name, String login, String password, String rules){
+    public void addNewUser(String name, String login, String password, String rules, int valid){
         try {
             DBProcessor dbProcessor = new DBProcessor();
             Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
-            String create = "INSERT INTO `rules` (`name`, `login`,`password`,`rules`) " +
+            String create = "INSERT INTO `rules` (`name`, `login`,`password`,`rules`, `valid`) " +
                     "VALUES ('" + name + "'," +
                     " '" + login + "'," +
                     " '" + password + "'," +
-                    " '" + rules + "')";
+                    " '" + rules + "'," +
+                    " '" + valid + "')";
             try (Statement stmt = conn.createStatement()) {
             stmt.execute(create);
             } catch (SQLException e) {
@@ -687,6 +691,25 @@ public class DataTickets {
                     "SET" +
                     "`comment` = '" + text + "'" +
                     "WHERE `numberTicket` = " + id;
+            try (Statement stmt = conn.createStatement()) {
+                stmt.execute(update);
+            } catch (SQLException e) {
+                System.out.println(e);
+                e.getErrorCode();
+            }
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setValidUser(int userId){
+        try {
+            DBProcessor dbProcessor = new DBProcessor();
+            Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
+            String update = "UPDATE rules " +
+                    "SET `valid` = '" + 0 + "'" +
+                    "WHERE `userId` = " + userId;
             try (Statement stmt = conn.createStatement()) {
                 stmt.execute(update);
             } catch (SQLException e) {

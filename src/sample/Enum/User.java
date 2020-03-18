@@ -23,7 +23,9 @@ public enum User {
                     "FROM `rules` WHERE " +
                     "`login` = '" + login + "'" +
                     "AND " +
-                    "`password` = '" + password + "'";
+                    "`password` = '" + password + "'" +
+                    "AND" +
+                    "`valid`=" + 1;
             Statement stmt = conn.createStatement();
             ResultSet res = stmt.executeQuery(query);
             while (res.next()) {

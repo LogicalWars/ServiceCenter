@@ -3,10 +3,7 @@ package sample.Controller;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import sample.Enum.User;
@@ -28,6 +25,8 @@ public class UserListController {
     @FXML
     private TableColumn<UserData, String> rules;
     @FXML
+    private TableColumn<UserData, String> valid;
+    @FXML
     private TextField nameTextField;
     @FXML
     private TextField loginTextField;
@@ -37,6 +36,8 @@ public class UserListController {
     private VBox editMenu;
     @FXML
     private ComboBox<Rules> rulesComboBox;
+    @FXML
+    private CheckBox validCheckBox;
 
     DataTickets dataTickets = new DataTickets();
 
@@ -52,6 +53,7 @@ public class UserListController {
         password.setCellValueFactory(new PropertyValueFactory<>("password"));
         rules.setCellValueFactory(new PropertyValueFactory<>("rules"));
         name.setCellValueFactory(new PropertyValueFactory<>("name"));
+        valid.setCellValueFactory(new PropertyValueFactory<>("valid"));
 
         tableUserList.setItems(dataTickets.getUserListData());
         rulesComboBox.setItems(dataTickets.getAllRulesData());
@@ -59,14 +61,29 @@ public class UserListController {
 
     @FXML
     void SaveСhanges() {
-        dataTickets.addNewUser(nameTextField.getText(), loginTextField.getText(), passwordTextField.getText(), String.valueOf(rulesComboBox.getValue()));
-
+        int isValid = 0;
+        if(validCheckBox.isSelected()) isValid = 1;
+        dataTickets.addNewUser(nameTextField.getText(), loginTextField.getText(), passwordTextField.getText(), String.valueOf(rulesComboBox.getValue()), isValid);
+        tableUserList.getItems().clear();
+        dataTickets.UserListDataRead();
+        tableUserList.setItems(dataTickets.getUserListData());
         editMenu.setDisable(true);
+        nameTextField.clear();
+        loginTextField.clear();
+        passwordTextField.clear();
+        rulesComboBox.getItems().clear();
+        dataTickets.allRules();
+        rulesComboBox.setItems(dataTickets.getAllRulesData());
     }
 
     @FXML
     void addNewUser() {
         editMenu.setDisable(false);
+    }
+
+    @FXML
+    void addValid(){
+        dataTickets.setValidUser(tableUserList.getSelectionModel().getFocusedIndex() + 1);
     }
 
 }

@@ -2,6 +2,8 @@ package sample.Model;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
 
 public class UserData {
     private SimpleIntegerProperty userId = new SimpleIntegerProperty();
@@ -70,11 +72,26 @@ public class UserData {
         this.name.set(name);
     }
 
-    public UserData(int userId, String login, String password, String rules, String name){
+    private String valid;
+
+    public String getValid() {
+        return valid;
+    }
+
+    public void setValid(String valid) {
+        this.valid = valid;
+    }
+
+    public UserData(int userId, String login, String password, String rules, String name, int valid){
         this.userId = new SimpleIntegerProperty(userId);
         this.login = new SimpleStringProperty(login);
         this.password = new SimpleStringProperty(password);
         this.rules = new SimpleStringProperty(rules);
         this.name = new SimpleStringProperty(name);
+        if (valid ==0){
+            this.valid = "Блокирован";
+        }else{
+            this.valid = "Активный";
+        }
     }
 }
