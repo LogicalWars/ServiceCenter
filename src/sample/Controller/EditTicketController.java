@@ -238,12 +238,14 @@ public class EditTicketController {
         int idStatus = 1;
         int idStatusTrue = 0;
         for(String s: dataTickets.getAllStatus()){
-            if (!s.contains(String.valueOf(statusComboBox.getValue()))){
+            if (!s.equals(String.valueOf(statusComboBox.getValue()))){
                 idStatus++;
             }else{
                 idStatusTrue =idStatus;
             }
         }
+
+
             if (statusComboBox.getSelectionModel().getSelectedIndex() + 1 != 0) {
                 dataTickets.saveEditTicketWrite(dataTickets.getIdTicket(), idStatusTrue, phone.getText(), fullName.getText(), device.getText(), model.getText(),
                         defect.getText(), note.getText(), condition.getText(), comment.getText(), Integer.parseInt(numberTicketText.getText()));
