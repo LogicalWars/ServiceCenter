@@ -77,6 +77,7 @@ public class EditTicketController {
     DataTickets dataTickets = new DataTickets();
     @FXML
     public void initialize() {
+
         try {
             dataTickets.editTicketRead(TicketListController.idRow);
         } catch (SQLException e) {

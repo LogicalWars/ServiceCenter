@@ -14,7 +14,7 @@ public enum User {
 
     public static User USER;
 
-    public static void getUseRole(String login, String password){
+    public static void getUserRole(String login, String password){
         try {
             DBProcessor dbProcessor = new DBProcessor();
             Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
@@ -25,7 +25,6 @@ public enum User {
                     "`password` = '" + password + "'";
             Statement stmt = conn.createStatement();
             ResultSet res = stmt.executeQuery(query);
-            System.out.println(query);
             while (res.next()) {
                 String rulesString = res.getString("rulesId");
                 if(rulesString.equals(ADMIN.name())){
@@ -33,6 +32,9 @@ public enum User {
                 }
                 if(rulesString.equals(MASTER.name())){
                     USER = MASTER;
+                }
+                if(rulesString.equals(OPERATOR.name())){
+                    USER = OPERATOR;
                 }
             }
             stmt.close();
