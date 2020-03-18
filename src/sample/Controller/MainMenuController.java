@@ -8,6 +8,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import sample.Enum.User;
 import sample.Model.DBProcessor;
 import sample.Model.DataTickets;
 
@@ -20,11 +21,35 @@ public class MainMenuController {
     private BorderPane paneMainContent;
     @FXML
     private Label infoLeft;
+    @FXML
+    private Label user;
+    @FXML
+    private Button logOffButton;
 
     @FXML
     public void initialize() {
         ticketList();
         infoLeft.setText(new DBProcessor().resultConnection());
+        user.setText(User.loginUser);
+    }
+
+    @FXML
+    void logOff(){
+        Stage stage = (Stage) logOffButton.getScene().getWindow();
+        stage.close();
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/LoginView.fxml"));
+            loader.setController(new LogInController());
+            Parent pane = loader.load();
+            Stage primaryStage = new Stage();
+            Scene scene = new Scene(pane);
+            primaryStage.setScene(scene);
+            primaryStage.show();
+            primaryStage.setResizable(false);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -85,7 +110,7 @@ public class MainMenuController {
             DialogLogsController dialogLogsController = loader.getController();
             dialogLogsController.setMainMenuController(this);
             Stage dialogStage = new Stage();
-            dialogStage.setTitle(dataTickets.getDateTimeLogRead(EditTicketController.idLogs));
+            dialogStage.setTitle(dataTickets.getDateTimeLogRead(EditTicketController.idLogs) + "  ");
             dialogStage.initModality(Modality.APPLICATION_MODAL);
             Scene scene = new Scene(pane);
             dialogStage.setScene(scene);

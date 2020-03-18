@@ -291,7 +291,8 @@ public class DataTickets {
                                 String commentOld,
                                 String commentNew,
                                 String numberTicketOld,
-                                String numberTicketNew) {
+                                String numberTicketNew,
+                                int userId) {
         try {
             LocalDateTime date = LocalDateTime.now();
             DBProcessor dbProcessor = new DBProcessor();
@@ -317,7 +318,8 @@ public class DataTickets {
                     " `commentOld`," +
                     " `commentNew`," +
                     " `numberTicketOld`," +
-                    " `numberTicketNew`)" +
+                    " `numberTicketNew`," +
+                    " `userId`)" +
                     "VALUES ('" + date + "'," +
                     "'" + idTicket + "'," +
                     " '" + phoneNumberOld + "'," +
@@ -339,7 +341,8 @@ public class DataTickets {
                     " '" + commentOld + "'," +
                     " '" + commentNew + "'," +
                     " '" + numberTicketOld + "'," +
-                    " '" + numberTicketNew + "' )";
+                    " '" + numberTicketNew + "'," +
+                    " '" + userId + "' )";
             try (Statement stmt = conn.createStatement()) {
                 stmt.execute(create);
             } catch (SQLException e) {
@@ -356,9 +359,10 @@ public class DataTickets {
         try {
             DBProcessor dbProcessor = new DBProcessor();
             Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
-            String query = "SELECT ticketLogs.* " +
+            String query = "SELECT ticketLogs.date, ticketLogs.id, rules.`login` as `login`" +
                     "FROM ticketLogs " +
                     "INNER JOIN ticket_data ON (ticketLogs.`idTicket` = ticket_data.`idTicket`) " +
+                    "INNER JOIN rules ON (ticketLogs.`userId` = rules.`userId`) " +
                     "WHERE ticket_data.`idTicket` = '" + id + "' ORDER BY `id`";
             Statement stmt = conn.createStatement();
             ResultSet res = stmt.executeQuery(query);
@@ -368,8 +372,9 @@ public class DataTickets {
                 String i = res.getString("date");
                 LocalDateTime date1 = LocalDateTime.parse(i, formatter);
                 DateTimeFormatter fr = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
+                String userLogin = res.getString("login");
                 int idLog = res.getInt("id");
-                ticketLogs.add(new TicketLogs(idLogs, date1.format(fr), idLog));
+                ticketLogs.add(new TicketLogs(idLogs, date1.format(fr), idLog, userLogin));
                 idLogs++;
             }
             stmt.close();
