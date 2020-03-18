@@ -72,6 +72,8 @@ public class EditTicketController {
     @FXML
     private TableColumn<TicketLogs, String> dateLog;
     @FXML
+    private TableColumn<TicketLogs, String> user;
+    @FXML
     private SplitPane editTicketViewPane;
 
     DataTickets dataTickets = new DataTickets();
@@ -88,6 +90,7 @@ public class EditTicketController {
 
         numberLog.setCellValueFactory(new PropertyValueFactory<>("idLog"));
         dateLog.setCellValueFactory(new PropertyValueFactory<>("dateLog"));
+        user.setCellValueFactory(new PropertyValueFactory<>("user"));
 
         numberTicket.setText(String.valueOf(dataTickets.getNumberTicket()));
         numberTicketText.setText(String.valueOf(dataTickets.getNumberTicket()));
@@ -282,7 +285,8 @@ public class EditTicketController {
                 dataTickets.getCommentTicket(),
                 comment.getText(),
                 String.valueOf(dataTickets.getNumberTicket()),
-                numberTicketText.getText());
+                numberTicketText.getText(),
+                User.USER.ordinal()+1);
 
     }
     @FXML

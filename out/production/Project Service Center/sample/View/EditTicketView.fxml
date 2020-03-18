@@ -227,6 +227,7 @@
               <columns>
                 <TableColumn fx:id="numberLog" text="№" />
                 <TableColumn fx:id="dateLog" text="Дата" />
+                  <TableColumn fx:id="user" text="Пользователь" />
               </columns>
             </TableView>
             <VBox maxHeight="1.7976931348623157E308" maxWidth="-Infinity">

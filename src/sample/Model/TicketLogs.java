@@ -65,15 +65,30 @@ public class TicketLogs {
     private SimpleIntegerProperty idLog;
     private SimpleStringProperty dateLog;
 
+    public String getUser() {
+        return user.get();
+    }
+
+    public SimpleStringProperty userProperty() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user.set(user);
+    }
+
+    private SimpleStringProperty user;
+
     private int idLogFromDB;
     private String oldValue;
     private String newValue;
     private String field;
 
-    public TicketLogs(int idLog, String dateLog, int idTicket) {
+    public TicketLogs(int idLog, String dateLog, int idTicket, String user) {
         this.idLog = new SimpleIntegerProperty(idLog);
         this.dateLog = new SimpleStringProperty(dateLog);
         this.idLogFromDB = idTicket;
+        this.user = new SimpleStringProperty(user);
     }
 
     public TicketLogs(String field, String oldValue, String newValue) {
