@@ -1,11 +1,16 @@
 package sample.Controller;
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sample.Enum.User;
@@ -54,6 +59,8 @@ public class EditTicketController {
     @FXML
     private TextArea condition;
     @FXML
+    private TextArea commentText;
+    @FXML
     private TextArea comment;
     @FXML
     private Button saveButton;
@@ -79,7 +86,9 @@ public class EditTicketController {
     DataTickets dataTickets = new DataTickets();
     @FXML
     public void initialize() {
+        comment.setEditable(false);
 
+        comment.setScrollTop(Double.MAX_VALUE);
         try {
             dataTickets.editTicketRead(TicketListController.idRow);
         } catch (SQLException e) {
@@ -102,6 +111,7 @@ public class EditTicketController {
         note.setText(dataTickets.getNoteTicket());
         condition.setText(dataTickets.getConditionTicket());
         comment.setText(dataTickets.getCommentTicket());
+        comment.appendText("");
         status.setText(dataTickets.getStatusTicket());
         date.setText(dataTickets.getDateCreateTicket());
         dateClose.setText(dataTickets.getDateCloseTicket());
@@ -139,6 +149,26 @@ public class EditTicketController {
             });
             return row;
         });
+
+
+
+        KeyCodeCombination kComb = new KeyCodeCombination(KeyCode.ENTER, KeyCombination.SHIFT_DOWN);
+        commentText.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                if (kComb.match(keyEvent)&&!commentText.getText().equals("")){
+                    String chat;
+                    chat = comment.getText() + "\n" + dataTickets.pressedComment(commentText.getText() + "\n");
+                    comment.setText(chat);
+                    comment.appendText("");
+
+                    commentText.setText("");
+                    dataTickets.saveComment(chat, Integer.parseInt(numberTicket.getText()));
+                }
+            }
+        });
+
+
 
         switch (status.getText()){
             case "Диагностика":
@@ -231,8 +261,6 @@ public class EditTicketController {
 
     int idStatus;
 
-
-
     @FXML
     public void saveEditTicket() {
         /**
@@ -241,7 +269,7 @@ public class EditTicketController {
         int idStatus = 1;
         int idStatusTrue = 0;
         for(String s: dataTickets.getAllStatus()){
-            if (!s.contains(String.valueOf(statusComboBox.getValue()))){
+            if (!s.equals(String.valueOf(statusComboBox.getValue()))){
                 idStatus++;
             }else{
                 idStatusTrue =idStatus;

@@ -651,7 +651,6 @@ public class DataTickets {
 
     public void addNewUser(String name, String login, String password, String rules){
         try {
-            LocalDate date = LocalDate.now();
             DBProcessor dbProcessor = new DBProcessor();
             Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
             String create = "INSERT INTO `rules` (`name`, `login`,`password`,`rules`) " +
@@ -660,7 +659,36 @@ public class DataTickets {
                     " '" + password + "'," +
                     " '" + rules + "')";
             try (Statement stmt = conn.createStatement()) {
-                stmt.execute(create);
+            stmt.execute(create);
+            } catch (SQLException e) {
+            System.out.println(e);
+            e.getErrorCode();
+        }
+        conn.close();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    }
+
+    public String pressedComment(String text){
+        String name;
+        String time;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        LocalDateTime date1 = LocalDateTime.now();
+        time = date1.format(formatter);
+        name = time + "   " + User.loginUser + "\n" + text;
+        return name;
+    }
+    public void saveComment(String text,int id){
+        try {
+            DBProcessor dbProcessor = new DBProcessor();
+            Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
+            String update = "UPDATE ticket_data " +
+                    "SET" +
+                    "`comment` = '" + text + "'" +
+                    "WHERE `numberTicket` = " + id;
+            try (Statement stmt = conn.createStatement()) {
+                stmt.execute(update);
             } catch (SQLException e) {
                 System.out.println(e);
                 e.getErrorCode();
@@ -670,6 +698,4 @@ public class DataTickets {
             e.printStackTrace();
         }
     }
-
-
 }
