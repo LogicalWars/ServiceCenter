@@ -19,7 +19,7 @@ public enum User {
         try {
             DBProcessor dbProcessor = new DBProcessor();
             Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
-            String query = "SELECT `rulesId`, `login` " +
+            String query = "SELECT `rules`, `login` " +
                     "FROM `rules` WHERE " +
                     "`login` = '" + login + "'" +
                     "AND " +
@@ -27,7 +27,7 @@ public enum User {
             Statement stmt = conn.createStatement();
             ResultSet res = stmt.executeQuery(query);
             while (res.next()) {
-                String rulesString = res.getString("rulesId");
+                String rulesString = res.getString("rules");
                 loginUser = res.getString("login");
 
                 if(rulesString.equals(ADMIN.name())){

@@ -2,6 +2,7 @@ package sample.Model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import sample.Enum.User;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.ArrayList;
+
 
 public class DataTickets {
 
@@ -607,9 +609,67 @@ public class DataTickets {
         return b;
     }
 
+    public ObservableList<UserData> getUserListData() {
+        return userListData;
+    }
 
+    private ObservableList<UserData> userListData = FXCollections.observableArrayList();
 
+    public void UserListDataRead(){
+        try {
+            DBProcessor dbProcessor = new DBProcessor();
+            Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
+            String query = "SELECT * FROM rules";
+            Statement stmt = conn.createStatement();
+            ResultSet res = stmt.executeQuery(query);
+            while (res.next()) {
+                int id = res.getInt("userId");
+                String login = res.getString("login");
+                String password = res.getString("password");
+                String rules = res.getString("rules");
+                String name = res.getString("name");
+                userListData.add(new UserData(id, login, password, rules, name));
+            }
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
+    public ObservableList<Rules> getAllRulesData() {
+        return allRulesData;
+    }
+
+    ObservableList<Rules> allRulesData = FXCollections.observableArrayList();
+
+    public void allRules(){
+        allRulesData.add(new Rules(User.ADMIN.name()));
+        allRulesData.add(new Rules(User.MASTER.name()));
+        allRulesData.add(new Rules(User.OPERATOR.name()));
+    }
+
+    public void addNewUser(String name, String login, String password, String rules){
+        try {
+            LocalDate date = LocalDate.now();
+            DBProcessor dbProcessor = new DBProcessor();
+            Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
+            String create = "INSERT INTO `rules` (`name`, `login`,`password`,`rules`) " +
+                    "VALUES ('" + name + "'," +
+                    " '" + login + "'," +
+                    " '" + password + "'," +
+                    " '" + rules + "')";
+            try (Statement stmt = conn.createStatement()) {
+                stmt.execute(create);
+            } catch (SQLException e) {
+                System.out.println(e);
+                e.getErrorCode();
+            }
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 }
