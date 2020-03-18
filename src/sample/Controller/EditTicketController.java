@@ -159,8 +159,8 @@ public class EditTicketController {
                 if (kComb.match(keyEvent)&&!commentText.getText().equals("")){
                     String chat;
                     chat = comment.getText() + "\n" + dataTickets.pressedComment(commentText.getText() + "\n");
-//                    comment.setText(chat);
-                    comment.appendText(chat);
+                    comment.setText(chat);
+                    comment.appendText("");
 
                     commentText.setText("");
                     dataTickets.saveComment(chat, Integer.parseInt(numberTicket.getText()));
