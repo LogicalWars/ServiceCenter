@@ -217,6 +217,12 @@ public class DataTickets {
         }
     }
 
+    private ArrayList<String> allStatus = new ArrayList<>();
+
+    public ArrayList<String> getAllStatus() {
+        return allStatus;
+    }
+
     public void statusUploadRead() {
         try {
             DBProcessor dbProcessor = new DBProcessor();
@@ -227,6 +233,7 @@ public class DataTickets {
             while (res.next()) {
                 String status = checkNull(res.getString("status"));
                 statusUpload.add(new Status(status));
+                allStatus.add(status);
             }
             stmt.close();
             conn.close();

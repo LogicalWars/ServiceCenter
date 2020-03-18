@@ -77,16 +77,6 @@ public class EditTicketController {
     DataTickets dataTickets = new DataTickets();
     @FXML
     public void initialize() {
-
-
-        switch (User.USER){
-            case ADMIN: fullName.setDisable(true);break;
-            case MASTER:  phone.setDisable(true);break;
-            case OPERATOR: numberTicket.setDisable(true);break;
-        }
-        System.out.println(User.USER + " =user");
-
-
         try {
             dataTickets.editTicketRead(TicketListController.idRow);
         } catch (SQLException e) {
@@ -146,7 +136,61 @@ public class EditTicketController {
             return row;
         });
 
+        switch (status.getText()){
+            case "Диагностика":
+                switch (User.USER){
+                    case MASTER:  numberTicketText.setDisable(true);
+                                  statusComboBox.getItems().remove(2,7);
+                                  statusComboBox.getItems().remove(0);break;
+                    case OPERATOR: numberTicketText.setDisable(true);
+                                   statusComboBox.setDisable(true);break;
+                };break;
+            case "На согласовании":
+                switch (User.USER){
+                    case ADMIN:;break;
+                    default: setEditableNumPhoNamDevModDefConNot();
+                        statusComboBox.getItems().remove(5,7);
+                        statusComboBox.getItems().remove(3);
+                        statusComboBox.getItems().remove(0,2);break;
 
+                };break;
+            case "Согласованно":
+                switch (User.USER){
+                    case MASTER:  setEditableNumPhoNamDevModDefConNot();
+                                  statusComboBox.getItems().remove(4,6);
+                                  statusComboBox.getItems().remove(0,3);break;
+                    case OPERATOR: setEditableNumPhoNamDevModDefConNot();
+                                   statusComboBox.setDisable(true);break;
+                };break;
+            case "Готов":
+                switch (User.USER){
+                    case MASTER:  setEditableNumPhoNamDevModDefConNot();
+                        statusComboBox.getItems().remove(0,6);
+                        break;
+                    case OPERATOR: setEditableNumPhoNamDevModDefConNot();break;
+                };break;
+            case "Отказ от ремонта":
+                switch (User.USER){
+                    case MASTER:  setEditableNumPhoNamDevModDefConNot();
+                        statusComboBox.getItems().remove(4,6);
+                        statusComboBox.getItems().remove(0,3);break;
+                    case OPERATOR: setEditableNumPhoNamDevModDefConNot();
+                        statusComboBox.setDisable(true);break;
+                };break;
+            case "Готов к выдаче":
+                switch (User.USER){
+                    case ADMIN:;break;
+                    default:setEditableNumPhoNamDevModDefConNot();
+                        statusComboBox.getItems().remove(6);
+                        statusComboBox.getItems().remove(0,5);break;
+                };break;
+            case "Выдан":
+                switch (User.USER){
+                    case ADMIN:;break;
+                    default:setEditableNumPhoNamDevModDefConNot();
+                        statusComboBox.setDisable(true);break;
+                };break;
+        }
     }
 
     @FXML
@@ -181,11 +225,26 @@ public class EditTicketController {
         }
     }
 
+    int idStatus;
+
+
+
     @FXML
     public void saveEditTicket() {
-
+        /**
+         * Проверка id статуса из массива getAllStatus()
+         */
+        int idStatus = 1;
+        int idStatusTrue = 0;
+        for(String s: dataTickets.getAllStatus()){
+            if (!s.contains(String.valueOf(statusComboBox.getValue()))){
+                idStatus++;
+            }else{
+                idStatusTrue =idStatus;
+            }
+        }
             if (statusComboBox.getSelectionModel().getSelectedIndex() + 1 != 0) {
-                dataTickets.saveEditTicketWrite(dataTickets.getIdTicket(), statusComboBox.getSelectionModel().getSelectedIndex() + 1, phone.getText(), fullName.getText(), device.getText(), model.getText(),
+                dataTickets.saveEditTicketWrite(dataTickets.getIdTicket(), idStatusTrue, phone.getText(), fullName.getText(), device.getText(), model.getText(),
                         defect.getText(), note.getText(), condition.getText(), comment.getText(), Integer.parseInt(numberTicketText.getText()));
             } else {
                 dataTickets.saveEditTicketWrite(dataTickets.getIdTicket(), Integer.parseInt(dataTickets.getIdStatusTicket()), phone.getText(), fullName.getText(), device.getText(), model.getText(),
@@ -237,6 +296,25 @@ public class EditTicketController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    private void setEditableNumPhoNamDevModDefConNot(){
+        numberTicketText.setEditable(false);
+        phone.setEditable(false);
+        fullName.setEditable(false);
+        device.setEditable(false);
+        model.setEditable(false);
+        defect.setEditable(false);
+        condition.setEditable(false);
+        note.setEditable(false);
+        numberTicketText.setStyle("-fx-text-fill: rgba(116,32,0,0.91)");
+        phone.setStyle("-fx-text-fill: rgba(116,32,0,0.91)");
+        fullName.setStyle("-fx-text-fill: rgba(116,32,0,0.91)");
+        defect.setStyle("-fx-text-fill: rgba(116,32,0,0.91)");
+        device.setStyle("-fx-text-fill: rgba(116,32,0,0.91)");
+        model.setStyle("-fx-text-fill: rgba(116,32,0,0.91)");
+        condition.setStyle("-fx-text-fill: rgba(116,32,0,0.91)");
+        note.setStyle("-fx-text-fill: rgba(116,32,0,0.91)");
+
     }
 
 }
