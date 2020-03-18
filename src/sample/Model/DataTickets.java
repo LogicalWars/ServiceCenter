@@ -2,6 +2,7 @@ package sample.Model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import sample.Enum.User;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -606,10 +607,32 @@ public class DataTickets {
         }
         return b;
     }
-
-
-
-
-
-
+    public String pressedComment(String text){
+        String name;
+        String time;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        LocalDateTime date1 = LocalDateTime.now();
+        time = date1.format(formatter);
+        name = time + "   " + User.loginUser + "\n" + text;
+        return name;
+    }
+    public void saveComment(String text,int id){
+        try {
+            DBProcessor dbProcessor = new DBProcessor();
+            Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
+            String update = "UPDATE ticket_data " +
+                    "SET" +
+                    "`comment` = '" + text + "'" +
+                    "WHERE `numberTicket` = " + id;
+            try (Statement stmt = conn.createStatement()) {
+                stmt.execute(update);
+            } catch (SQLException e) {
+                System.out.println(e);
+                e.getErrorCode();
+            }
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
