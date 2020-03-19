@@ -138,14 +138,16 @@ public class MainMenuController {
             e.printStackTrace();
         }
     }
+
+
     @FXML
-    public void chatRead(){
+    void userList(){
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/ChatView.fxml"));
-            loader.setController(new ChatController());
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/UserListView.fxml"));
+            loader.setController(new UserListController());
             Parent pane = loader.load();
             Stage dialogStage = new Stage();
-            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
             Scene scene = new Scene(pane);
             dialogStage.setScene(scene);
             dialogStage.showAndWait();
