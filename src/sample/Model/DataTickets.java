@@ -690,7 +690,7 @@ public class DataTickets {
                     "`login` = '" + login + "', " +
                     "`password` = '" + password + "', " +
                     "`rules` ='" + rules + "' , " +
-                    "`valid` = '" + valid + "'" +
+                    "`valid` = " + valid + " " +
                     "WHERE `userId` = " + userId;
             try (Statement stmt = conn.createStatement()) {
                 stmt.execute(update);

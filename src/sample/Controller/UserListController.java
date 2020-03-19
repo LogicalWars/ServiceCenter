@@ -108,6 +108,7 @@ public class UserListController {
         rulesComboBox.getItems().clear();
         dataTickets.allRules();
         rulesComboBox.setItems(dataTickets.getAllRulesData());
+        statusButton = 0;
 
 
     }
@@ -115,7 +116,6 @@ public class UserListController {
     @FXML
     void addNewUser() {
         statusButton = 2;
-        updateButton.setDisable(true);
         editMenu.setDisable(false);
         nameTextField.clear();
         loginTextField.clear();
@@ -128,9 +128,22 @@ public class UserListController {
     }
     @FXML
     private void userListWrite(){
+        System.out.println(validCheckBox.isSelected());
         int isValid = 0;
         if(validCheckBox.isSelected()) isValid = 1;
+        System.out.println(validCheckBox.isSelected() + "   " + isValid);
         dataTickets.userListWrite(selectIndex,nameTextField.getText(),loginTextField.getText(), passwordTextField.getText(),String.valueOf(rulesComboBox.getValue()),isValid);
+        tableUserList.getItems().clear();
+        dataTickets.UserListDataRead();
+        tableUserList.setItems(dataTickets.getUserListData());
+        editMenu.setDisable(true);
+        nameTextField.clear();
+        loginTextField.clear();
+        passwordTextField.clear();
+        rulesComboBox.getItems().clear();
+        dataTickets.allRules();
+        rulesComboBox.setItems(dataTickets.getAllRulesData());
+        statusButton = 0;
     }
 
 
