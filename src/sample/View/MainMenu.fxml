@@ -26,6 +26,8 @@
                   <MenuItem mnemonicParsing="false" text="Склад" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" text="Отчеты" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem fx:id="chatButton" mnemonicParsing="false" onAction="#chatRead" text="Чат" />
             </items>
           </Menu>
             <Menu mnemonicParsing="false" text="Настройки">

@@ -4,7 +4,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -13,7 +14,6 @@ import sample.Model.DBProcessor;
 import sample.Model.DataTickets;
 
 import java.io.IOException;
-import java.util.concurrent.Future;
 
 public class MainMenuController {
 
@@ -131,6 +131,21 @@ public class MainMenuController {
             editPatternPrintController.setMainMenuController(this);
             Stage dialogStage = new Stage();
             dialogStage.initModality(Modality.APPLICATION_MODAL);
+            Scene scene = new Scene(pane);
+            dialogStage.setScene(scene);
+            dialogStage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    @FXML
+    public void chatRead(){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/ChatView.fxml"));
+            loader.setController(new ChatController());
+            Parent pane = loader.load();
+            Stage dialogStage = new Stage();
+            dialogStage.initModality(Modality.WINDOW_MODAL);
             Scene scene = new Scene(pane);
             dialogStage.setScene(scene);
             dialogStage.showAndWait();
