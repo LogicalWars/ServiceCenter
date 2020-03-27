@@ -85,7 +85,8 @@
             </AnchorPane>
             <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                <children>
-                  <Button mnemonicParsing="false" onAction="#SaveСhanges" text="Сохранить" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0" />
+                  <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveСhanges" text="Сохранить" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0" />
+                  <Button fx:id="updateButton" layoutX="135.0" layoutY="13.0" mnemonicParsing="false" onAction="#userListWrite" text="Обновить" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="0.0" />
                </children>
                <VBox.margin>
                   <Insets top="50.0" />

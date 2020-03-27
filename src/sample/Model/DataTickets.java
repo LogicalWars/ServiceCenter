@@ -2,8 +2,6 @@ package sample.Model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
-import javafx.scene.control.CheckBox;
 import sample.Enum.User;
 
 import java.sql.Connection;
@@ -617,8 +615,16 @@ public class DataTickets {
 
     private ObservableList<UserData> userListData = FXCollections.observableArrayList();
 
+    public ArrayList<String> getLoginList() {
+        return loginList;
+    }
+
+    private ArrayList<String> loginList = new ArrayList<>();
+
+
     public void UserListDataRead(){
         try {
+            loginList.clear();
             DBProcessor dbProcessor = new DBProcessor();
             Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
             String query = "SELECT * FROM rules";
@@ -632,6 +638,7 @@ public class DataTickets {
                 String name = res.getString("name");
                 int valid = res.getInt("valid");
                 userListData.add(new UserData(id, login, password, rules, name, valid));
+                loginList.add(login);
             }
             stmt.close();
             conn.close();
@@ -672,6 +679,30 @@ public class DataTickets {
     } catch (SQLException e) {
         e.printStackTrace();
     }
+    }
+
+
+    public void userListWrite(int userId, String name, String login, String password, String rules, int valid){
+        try {
+            DBProcessor dbProcessor = new DBProcessor();
+            Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
+            String update = "UPDATE rules " +
+                    "SET `name` = '" + name + "', " +
+                    "`login` = '" + login + "', " +
+                    "`password` = '" + password + "', " +
+                    "`rules` ='" + rules + "' , " +
+                    "`valid` = " + valid + " " +
+                    "WHERE `userId` = " + userId;
+            try (Statement stmt = conn.createStatement()) {
+                stmt.execute(update);
+            } catch (SQLException e) {
+                System.out.println(e);
+                e.getErrorCode();
+            }
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public String pressedComment(String text){
@@ -721,4 +752,6 @@ public class DataTickets {
             e.printStackTrace();
         }
     }
+
+
 }

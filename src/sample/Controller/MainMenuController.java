@@ -4,7 +4,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -13,7 +14,6 @@ import sample.Model.DBProcessor;
 import sample.Model.DataTickets;
 
 import java.io.IOException;
-import java.util.concurrent.Future;
 
 public class MainMenuController {
 
@@ -138,6 +138,7 @@ public class MainMenuController {
             e.printStackTrace();
         }
     }
+
 
     @FXML
     void userList(){

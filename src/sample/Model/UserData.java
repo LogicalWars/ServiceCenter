@@ -2,8 +2,6 @@ package sample.Model;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.fxml.FXML;
-import javafx.scene.control.CheckBox;
 
 public class UserData {
     private SimpleIntegerProperty userId = new SimpleIntegerProperty();
@@ -94,4 +92,5 @@ public class UserData {
             this.valid = "Активный";
         }
     }
+
 }
