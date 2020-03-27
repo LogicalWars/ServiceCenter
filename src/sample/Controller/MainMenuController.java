@@ -155,4 +155,20 @@ public class MainMenuController {
         }
     }
 
+    @FXML
+    void stockList() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/StockListView.fxml"));
+            loader.setController(new StockListController());
+            Parent pane = loader.load();
+            Stage dialogStage = new Stage();
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
+            Scene scene = new Scene(pane);
+            dialogStage.setScene(scene);
+            dialogStage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
