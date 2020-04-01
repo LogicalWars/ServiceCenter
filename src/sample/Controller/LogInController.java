@@ -46,6 +46,7 @@ public class LogInController {
             }
         }else{
             errorPass.setVisible(true);
+
         }
     }
 

@@ -24,12 +24,13 @@
       </TableView>
    </center>
    <bottom>
-      <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <ButtonBar BorderPane.alignment="CENTER">
         <buttons>
+            <TextField fx:id="search" promptText="Поиск" />
             <Button layoutX="590.0" layoutY="18.0" mnemonicParsing="false" onAction="#addNewElement" text="Добавить элемент" />
         </buttons>
          <padding>
-            <Insets right="25.0" />
+            <Insets bottom="5.0" right="10.0" top="10.0" />
          </padding>
       </ButtonBar>
    </bottom>
@@ -39,7 +40,7 @@
             <AnchorPane>
                <children>
                   <Label layoutX="58.0" layoutY="58.0" prefWidth="100.0" text="Модель" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="0.0" />
-                  <TextField fx:id="modelTextField" layoutX="148.0" layoutY="63.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="110.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0" />
+                  <TextField fx:id="modelTextField" layoutX="20.0" layoutY="6.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="110.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0" />
                </children>
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -66,7 +67,7 @@
             <AnchorPane layoutX="15.0" layoutY="85.0">
                <children>
                   <Label layoutX="58.0" layoutY="58.0" prefWidth="100.0" text="Цена" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="0.0" />
-                  <TextField fx:id="priceTextField1" layoutX="148.0" layoutY="63.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="110.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0" />
+                  <TextField fx:id="priceTextField" layoutX="148.0" layoutY="63.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="110.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0" />
                </children>
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -74,7 +75,8 @@
             </AnchorPane>
             <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                <children>
-                  <Button mnemonicParsing="false" onAction="#SaveСhanges" text="Сохранить" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0" />
+                  <Button fx:id="updateButton" mnemonicParsing="false" onAction="#updateButton" text="Обновить" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="0.0" />
+                  <Button fx:id="saveButton" layoutX="251.0" layoutY="15.0" mnemonicParsing="false" onAction="#SaveСhanges" text="Сохранить" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="0.0" />
                </children>
                <VBox.margin>
                   <Insets top="50.0" />

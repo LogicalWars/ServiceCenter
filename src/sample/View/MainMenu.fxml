@@ -23,7 +23,7 @@
             <items>
               <MenuItem fx:id="ticketListButton" mnemonicParsing="false" onAction="#ticketList" text="Заявки" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" onAction="#stockList" text="Склад" />
+                  <MenuItem fx:id="stockButton" mnemonicParsing="false" onAction="#stockList" text="Склад" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" text="Отчеты" />
             </items>

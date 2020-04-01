@@ -31,15 +31,16 @@ public enum User {
             while (res.next()) {
                 String rulesString = res.getString("rules");
                 loginUser = res.getString("login");
-
-                if(rulesString.equals(ADMIN.name())){
-                    USER = ADMIN;
-                }
-                if(rulesString.equals(MASTER.name())){
-                    USER = MASTER;
-                }
-                if(rulesString.equals(OPERATOR.name())){
-                    USER = OPERATOR;
+                if(USER == null) {
+                    if (rulesString.equals(ADMIN.name())) {
+                        USER = ADMIN;
+                    }
+                    if (rulesString.equals(MASTER.name())) {
+                        USER = MASTER;
+                    }
+                    if (rulesString.equals(OPERATOR.name())) {
+                        USER = OPERATOR;
+                    }
                 }
             }
             stmt.close();

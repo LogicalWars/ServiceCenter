@@ -11,6 +11,9 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sample.Enum.User;
@@ -21,6 +24,8 @@ import sample.Model.TicketLogs;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EditTicketController {
 
@@ -42,10 +47,6 @@ public class EditTicketController {
     private TextField fullName;
     @FXML
     private TextField repairPrice;
-    @FXML
-    private TextField sparePart;
-    @FXML
-    private Label sparePrice;
     @FXML
     private Label totalPrice;
     @FXML
@@ -82,6 +83,14 @@ public class EditTicketController {
     private TableColumn<TicketLogs, String> user;
     @FXML
     private SplitPane editTicketViewPane;
+    @FXML
+    private ComboBox<String> elementComboBox;
+    @FXML
+    private TextField elementTextField;
+    @FXML
+    private Button elementButton;
+    @FXML
+    private GridPane gridPane;
 
     DataTickets dataTickets = new DataTickets();
     @FXML
@@ -95,6 +104,7 @@ public class EditTicketController {
             e.printStackTrace();
         }
         dataTickets.statusUploadRead();
+        dataTickets.stockListDataRead();
         dataTickets.ticketLogsRead(dataTickets.getIdTicket());
 
         numberLog.setCellValueFactory(new PropertyValueFactory<>("idLog"));
@@ -225,6 +235,40 @@ public class EditTicketController {
                         statusComboBox.setDisable(true);break;
                 };break;
         }
+        int idNameModel=0;
+        List<Integer> idModel = new ArrayList();
+        for(String s: dataTickets.getModelList()) {
+            if (s.equals(model.getText())){
+                idModel.add(idNameModel);
+                elementComboBox.setPromptText("Имеется запчасть");
+                elementComboBox.getItems().add(dataTickets.getNameList().get(idNameModel));
+            }
+            idNameModel++;
+        }
+
+        elementComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+           elementTextField.setText(String.valueOf(idPrice(newValue,idModel)));
+
+        });
+
+
+    }
+    private int idPrice(String text, List<Integer> idM){
+        int id = 0;
+        int idPrice = 0;
+        for(String s: dataTickets.getNameList()) {
+                for(int i: idM){
+                    if(i == id){
+                        if (s.equals(text)){
+                            dataTickets.getNameList().indexOf(model.getText());
+                            idPrice = dataTickets.getPriceList().get(id);
+                        }
+                    }
+                }
+
+            id++;
+        }
+        return idPrice;
     }
 
     @FXML
@@ -348,6 +392,24 @@ public class EditTicketController {
         condition.setStyle("-fx-text-fill: rgba(116,32,0,0.91)");
         note.setStyle("-fx-text-fill: rgba(116,32,0,0.91)");
 
+    }
+
+    private int i = 3;
+
+    @FXML
+    void elementButton() {
+        HBox hBox = new HBox();
+        Label label = new Label("Запчасть");
+        ComboBox comboBox = new ComboBox();
+        comboBox.setId("comboBox_" + i);
+        comboBox.setEditable(true);
+        TextField textField = new TextField();
+        textField.setId("textField_" + i);
+        hBox.getChildren().addAll(label, comboBox, textField);
+        gridPane.add(hBox, 0, i);
+        i++;
+        System.out.println(comboBox.getId());
+        System.out.println(textField.getId());
     }
 
 }

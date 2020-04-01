@@ -5,9 +5,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import org.controlsfx.control.textfield.TextFields;
 import sample.Model.DataTickets;
 
 import java.sql.SQLException;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 
 public class NewTicketController {
@@ -49,13 +52,15 @@ public class NewTicketController {
         }
 
     }
-
+    DataTickets dataTickets = new DataTickets();
     @FXML
     public void initialize() {
         textPhone.textProperty().addListener((observable, oldValue, newValue) -> {
             if(!newValue.matches("\\d*")){textPhone.setText(oldValue);}
         });
-
+        dataTickets.stockListDataRead();
+        Set<String> set = new LinkedHashSet(dataTickets.getModelList());
+        TextFields.bindAutoCompletion(textModel,set);
     }
 
 

@@ -753,5 +753,112 @@ public class DataTickets {
         }
     }
 
+    public ObservableList<StockList> getStockListData() {
+        return stockListData;
+    }
+
+    private ObservableList<StockList> stockListData = FXCollections.observableArrayList();
+
+    public ObservableList<StockList> getStockListSearch() {
+        return stockListSearch;
+    }
+
+    private ObservableList<StockList> stockListSearch = FXCollections.observableArrayList();
+
+    private ArrayList<Integer> elementIdList = new ArrayList<>();
+    private ArrayList<String> modelList = new ArrayList<>();
+    private ArrayList<String> nameList = new ArrayList<>();
+    private ArrayList<Integer> amountList = new ArrayList<>();
+    private ArrayList<Integer> priceList = new ArrayList<>();
+
+    public ArrayList<String> getModelList() {
+        return modelList;
+    }
+
+    public ArrayList<String> getNameList() {
+        return nameList;
+    }
+
+    public ArrayList<Integer> getAmountList() {
+        return amountList;
+    }
+
+    public ArrayList<Integer> getPriceList() {
+        return priceList;
+    }
+
+    public ArrayList<Integer> getElementIdList() {
+        return elementIdList;
+    }
+
+    public void stockListDataRead(){
+        try {
+            DBProcessor dbProcessor = new DBProcessor();
+            Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
+            String query = "SELECT * FROM stock";
+            Statement stmt = conn.createStatement();
+            ResultSet res = stmt.executeQuery(query);
+            while (res.next()) {
+                int elementId = res.getInt("idElement");
+                String model = res.getString("model");
+                String name = res.getString("name");
+                int amount = res.getInt("amount");
+                int price = res.getInt("price");
+                stockListData.add(new StockList(elementId, model, name, amount, price));
+                elementIdList.add(elementId);
+                modelList.add(model);
+                nameList.add(name);
+                amountList.add(amount);
+                priceList.add(price);
+            }
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addNewElementWrite(String model, String name, int amount, int price){
+        try {
+            DBProcessor dbProcessor = new DBProcessor();
+            Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
+            String create = "INSERT INTO `stock` (`model`, `name`,`amount`,`price`) " +
+                    "VALUES ('" + model + "'," +
+                    " '" + name + "'," +
+                    " '" + amount + "'," +
+                    " '" + price + "')";
+            try (Statement stmt = conn.createStatement()) {
+                stmt.execute(create);
+            } catch (SQLException e) {
+                System.out.println(e);
+                e.getErrorCode();
+            }
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void stockListWrite(int id, String model, String name, int amount, int price){
+        try {
+            DBProcessor dbProcessor = new DBProcessor();
+            Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
+            String update = "UPDATE stock " +
+                    "SET `model` = '" + model + "', " +
+                    "`name` = '" + name + "', " +
+                    "`amount` = '" + amount + "', " +
+                    "`price` = " + price + " " +
+                    "WHERE `idElement` = " + id;
+            try (Statement stmt = conn.createStatement()) {
+                stmt.execute(update);
+            } catch (SQLException e) {
+                System.out.println(e);
+                e.getErrorCode();
+            }
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -25,18 +26,24 @@ public class MainMenuController {
     private Label user;
     @FXML
     private Button logOffButton;
+    @FXML
+    private MenuItem stockButton;
 
     @FXML
     public void initialize() {
         ticketList();
         infoLeft.setText(new DBProcessor().resultConnection());
         user.setText(User.loginUser);
+        if(User.USER == User.ADMIN || User.USER == User.MASTER) {
+            stockButton.setDisable(false);
+        }else{stockButton.setDisable(true);}
     }
 
     @FXML
     void logOff(){
         Stage stage = (Stage) logOffButton.getScene().getWindow();
         stage.close();
+        User.USER = null;
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/LoginView.fxml"));
@@ -158,18 +165,19 @@ public class MainMenuController {
 
     @FXML
     void stockList() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/StockListView.fxml"));
-            loader.setController(new StockListController());
-            Parent pane = loader.load();
-            Stage dialogStage = new Stage();
-            dialogStage.initModality(Modality.APPLICATION_MODAL);
-            Scene scene = new Scene(pane);
-            dialogStage.setScene(scene);
-            dialogStage.showAndWait();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            stockButton.setDisable(false);
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/StockListView.fxml"));
+                loader.setController(new StockListController());
+                Parent pane = loader.load();
+                Stage dialogStage = new Stage();
+                dialogStage.initModality(Modality.APPLICATION_MODAL);
+                Scene scene = new Scene(pane);
+                dialogStage.setScene(scene);
+                dialogStage.showAndWait();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
     }
 
 }
