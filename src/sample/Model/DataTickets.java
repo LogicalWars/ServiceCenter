@@ -770,6 +770,21 @@ public class DataTickets {
     private ArrayList<String> nameList = new ArrayList<>();
     private ArrayList<Integer> amountList = new ArrayList<>();
     private ArrayList<Integer> priceList = new ArrayList<>();
+    private ArrayList<String> fullNameList = new ArrayList<>();
+    private ArrayList<String> phoneNumberList = new ArrayList<>();
+    private ArrayList<String> deviceList = new ArrayList<>();
+
+    public ArrayList<String> getDeviceList() {
+        return deviceList;
+    }
+
+    public ArrayList<String> getFullNameList() {
+        return fullNameList;
+    }
+
+    public ArrayList<String> getPhoneNumberList() {
+        return phoneNumberList;
+    }
 
     public ArrayList<String> getModelList() {
         return modelList;
@@ -810,6 +825,28 @@ public class DataTickets {
                 nameList.add(name);
                 amountList.add(amount);
                 priceList.add(price);
+            }
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void newTicketListRead(){
+        try {
+            DBProcessor dbProcessor = new DBProcessor();
+            Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
+            String query = "SELECT phoneNumber, fullName, device FROM ticket_data";
+            Statement stmt = conn.createStatement();
+            ResultSet res = stmt.executeQuery(query);
+            while (res.next()) {
+                long phoneNumber = res.getLong("phoneNumber");
+                String name = res.getString("fullName");
+                String device = res.getString("device");
+                fullNameList.add(name);
+                phoneNumberList.add(String.valueOf(phoneNumber));
+                deviceList.add(String.valueOf(device));
             }
             stmt.close();
             conn.close();

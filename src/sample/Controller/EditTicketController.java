@@ -13,7 +13,6 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sample.Enum.User;
@@ -253,6 +252,7 @@ public class EditTicketController {
 
 
     }
+
     private int idPrice(String text, List<Integer> idM){
         int id = 0;
         int idPrice = 0;
@@ -410,6 +410,26 @@ public class EditTicketController {
         i++;
         System.out.println(comboBox.getId());
         System.out.println(textField.getId());
+
+
+        if("comboBox_" + i != null){
+            int idNameModelTwo=0;
+            List<Integer> idModel = new ArrayList();
+            for(String s: dataTickets.getModelList()) {
+                if (s.equals(model.getText())){
+                    idModel.add(idNameModelTwo);
+                    comboBox.setPromptText("Имеется запчасть");
+                    comboBox.getItems().add(dataTickets.getNameList().get(idNameModelTwo));
+                }
+            idNameModelTwo++;
+        }
+        comboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+            textField.setText(String.valueOf(idPrice((String) newValue,idModel)));
+
+        });
+
+        }
+
     }
 
 }

@@ -55,23 +55,31 @@ public class NewTicketController {
     DataTickets dataTickets = new DataTickets();
     @FXML
     public void initialize() {
-        textPhone.textProperty().addListener((observable, oldValue, newValue) -> {
-            if(!newValue.matches("\\d*")){textPhone.setText(oldValue);}
-        });
+
         dataTickets.stockListDataRead();
         Set<String> set = new LinkedHashSet(dataTickets.getModelList());
         TextFields.bindAutoCompletion(textModel,set);
-    }
+
+        dataTickets.newTicketListRead();
+        Set<Integer> setPhone = new LinkedHashSet(dataTickets.getPhoneNumberList());
+        TextFields.bindAutoCompletion(textPhone,setPhone);
+        Set<String> setDevice = new LinkedHashSet(dataTickets.getDeviceList());
+        TextFields.bindAutoCompletion(textDevice,setDevice);
 
 
-    /**
-     * НЕОБХОДИМО ВВЕСТИ ДОБАВИТЬ В ЛОГИКУ ДАННЫЙ МЕТОД
-     **/
-    public void textColumns() {
-        String inputPriceStr = textPhone.getText();
-        int length = textPhone.getText().length();
-        final int MAX = 10;
-        if (inputPriceStr.matches("[0-9]*") && length < MAX) {
-        }
+        textPhone.textProperty().addListener((observable, oldValue, newValue) -> {
+            if(!newValue.matches("\\d*")){textPhone.setText(oldValue);}
+            int idPhoneNumber = 0;
+            for(String s : dataTickets.getPhoneNumberList()){
+                if(newValue.equals(s)){
+                    textFullName.setText(dataTickets.getFullNameList().get(idPhoneNumber));
+                    break;
+                }else{textFullName.setText("");}
+                idPhoneNumber++;
+            }
+
+        });
+
     }
+
 }
