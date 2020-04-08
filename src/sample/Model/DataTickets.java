@@ -138,7 +138,7 @@ public class DataTickets {
             DBProcessor dbProcessor = new DBProcessor();
             Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
             String create = "CALL `sp_getCreateNewTicketWrite`("+textPhone+ ", '"+textFullName+"', '" +textDevice+"', '"+textModel+"', '"+textDefect+"', '"+textNode+"', '"+textCondition+"', '"+LocalDate.now()+"');";
-            System.out.println(create);
+
             try (Statement stmt = conn.createStatement()) {
                 stmt.execute(create);
             } catch (SQLException e) {
