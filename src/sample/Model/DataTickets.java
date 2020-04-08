@@ -154,10 +154,7 @@ public class DataTickets {
     public void editTicketRead(int id) throws SQLException {
         DBProcessor dbProcessor = new DBProcessor();
         Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
-        String query = "SELECT ticket_data.*, status.`status` as `status` " +
-                "FROM ticket_data " +
-                "INNER JOIN status ON (ticket_data.`status_id` = status.`idStatus`) " +
-                "WHERE ticket_data.`numberTicket` =" + id;
+        String query = "CALL `sp_getDataTicket`("+id+");";
         Statement stmt = conn.createStatement();
         ResultSet res = stmt.executeQuery(query);
         while (res.next()) {
@@ -187,7 +184,7 @@ public class DataTickets {
 
     private ArrayList<String> allStatus = new ArrayList<>();
 
-    public ArrayList<String> getAllStatus() {
+    public ArrayList<String> getAllStatus () {
         return allStatus;
     }
 
@@ -195,7 +192,7 @@ public class DataTickets {
         try {
             DBProcessor dbProcessor = new DBProcessor();
             Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
-            String query = "SELECT * FROM `status`";
+            String query = "CALL `sp_getAllStatus`();";
             Statement stmt = conn.createStatement();
             ResultSet res = stmt.executeQuery(query);
             while (res.next()) {
@@ -214,19 +211,7 @@ public class DataTickets {
         try {
             DBProcessor dbProcessor = new DBProcessor();
             Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
-            String update = "UPDATE ticket_data " +
-                    "SET `phoneNumber` = " + phone + ", " +
-                    "`status_id` = " + status + ", " +
-                    "`fullName` = '" + fullName + "', " +
-                    "`device` ='" + device + "' , " +
-                    "`model` = '" + model + "', " +
-                    "`defect` = '" + defect + "', " +
-                    "`note` = '" + note + "', " +
-                    "`condition` = '" + condition + "'," +
-                    "`comment` = '" + comment + "'," +
-                    "`numberTicket` = '" + numberTicket + "'," +
-                    "`dateCloseTicket` = '" + LocalDate.now() + "'" +
-                    "WHERE `idTicket` = " + id;
+            String update = "CALL `sp_saveEditTicket`("+id+","+status+",'"+phone+"','"+fullName+"','"+device+"','"+model+"','"+defect+"','"+note+"','"+condition+"','"+comment+"',"+numberTicket+", '"+LocalDate.now()+"')";
             try (Statement stmt = conn.createStatement()) {
                 stmt.execute(update);
             } catch (SQLException e) {
