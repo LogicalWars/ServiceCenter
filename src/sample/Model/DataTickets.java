@@ -113,11 +113,7 @@ public class DataTickets {
         try {
             DBProcessor dbProcessor = new DBProcessor();
             Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
-            String query = "" +
-                    "SELECT ticket_data.*, status.`status` as `status` " +
-                    "FROM ticket_data " +
-                    "INNER JOIN status ON (ticket_data.`status_id` = status.`idStatus`) " +
-                    "ORDER BY `ticket_data`.`numberTicket` DESC;";
+            String query = "CALL `sp_getTicketList`();";
             Statement stmt = conn.createStatement();
             ResultSet res = stmt.executeQuery(query);
             while (res.next()) {
