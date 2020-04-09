@@ -626,26 +626,6 @@ public class DataTickets {
     }
 
 
-    /**ДЛЯ ЧЕГО ЭТОТ МЕТОД??*/
-    public void setValidUser(int userId){
-        try {
-            DBProcessor dbProcessor = new DBProcessor();
-            Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
-            String update = "UPDATE rules " +
-                    "SET `valid` = '" + 0 + "'" +
-                    "WHERE `userId` = " + userId;
-            try (Statement stmt = conn.createStatement()) {
-                stmt.execute(update);
-            } catch (SQLException e) {
-                System.out.println(e);
-                e.getErrorCode();
-            }
-            conn.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
     public ObservableList<StockList> getStockListData() {
         return stockListData;
     }
