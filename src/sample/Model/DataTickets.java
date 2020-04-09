@@ -2,6 +2,8 @@ package sample.Model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 import sample.Enum.User;
 
 import java.sql.Connection;
@@ -13,6 +15,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class DataTickets {
@@ -138,7 +141,7 @@ public class DataTickets {
             DBProcessor dbProcessor = new DBProcessor();
             Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
             String create = "CALL `sp_getCreateNewTicketWrite`("+textPhone+ ", '"+textFullName+"', '" +textDevice+"', '"+textModel+"', '"+textDefect+"', '"+textNode+"', '"+textCondition+"', '"+LocalDate.now()+"');";
-            System.out.println(create);
+
             try (Statement stmt = conn.createStatement()) {
                 stmt.execute(create);
             } catch (SQLException e) {
@@ -207,13 +210,20 @@ public class DataTickets {
         }
     }
 
-    public void saveEditTicketWrite(int id, int status, String phone, String fullName, String device, String model, String defect, String note, String condition, String comment, int numberTicket) {
+    public void saveEditTicketWrite(int id, int status, String phone, String fullName, String device, String model, String defect, String note, String condition, String comment, int numberTicket, List<ComboBox> nameSpare, List<TextField> price) {
         try {
             DBProcessor dbProcessor = new DBProcessor();
             Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
             String update = "CALL `sp_saveEditTicket`("+id+","+status+",'"+phone+"','"+fullName+"','"+device+"','"+model+"','"+defect+"','"+note+"','"+condition+"','"+comment+"',"+numberTicket+", '"+LocalDate.now()+"')";
+            String delete = "CALL `sp_getDeleteSpare`("+id+");";
+
             try (Statement stmt = conn.createStatement()) {
                 stmt.execute(update);
+                stmt.execute(delete);
+                for(int a=0; a<nameSpare.size();a++){
+                    System.out.println(nameSpare.get(a).getValue());
+                    stmt.execute("CALL `sp_getSaveSpare`("+id+",'"+nameSpare.get(a).getValue()+"',"+price.get(a).getText()+");");
+                }
             } catch (SQLException e) {
                 System.out.println(e);
                 e.getErrorCode();
