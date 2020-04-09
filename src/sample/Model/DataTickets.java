@@ -257,34 +257,9 @@ public class DataTickets {
                                 String numberTicketNew,
                                 int userId) {
         try {
-            LocalDateTime date = LocalDateTime.now();
             DBProcessor dbProcessor = new DBProcessor();
             Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
-            String create = "INSERT INTO `ticketLogs` (`date`," +
-                    " `idTicket`," +
-                    " `phoneNumberOld`," +
-                    " `phoneNumberNew`," +
-                    " `fullNameOld`," +
-                    " `fullNameNew`, " +
-                    " `statusOld`," +
-                    " `statusNew`," +
-                    " `deviceOld`," +
-                    " `deviceNew`," +
-                    " `modelOld`," +
-                    " `modelNew`," +
-                    " `defectOld`," +
-                    " `defectNew`," +
-                    " `noteOld`," +
-                    " `noteNew`," +
-                    " `conditionOld`," +
-                    " `conditionNew`," +
-                    " `commentOld`," +
-                    " `commentNew`," +
-                    " `numberTicketOld`," +
-                    " `numberTicketNew`," +
-                    " `userId`)" +
-                    "VALUES ('" + date + "'," +
-                    "'" + idTicket + "'," +
+            String create = "CALL sp_saveEditTicketLogs (" + idTicket + "," +
                     " '" + phoneNumberOld + "'," +
                     " '" + phoneNumberNew + "'," +
                     " '" + fullNameOld + "'," +
@@ -305,7 +280,8 @@ public class DataTickets {
                     " '" + commentNew + "'," +
                     " '" + numberTicketOld + "'," +
                     " '" + numberTicketNew + "'," +
-                    " '" + userId + "' )";
+                    " "  + userId + "," +
+                    "'"  + LocalDateTime.now() + "');";
             try (Statement stmt = conn.createStatement()) {
                 stmt.execute(create);
             } catch (SQLException e) {
@@ -322,11 +298,7 @@ public class DataTickets {
         try {
             DBProcessor dbProcessor = new DBProcessor();
             Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
-            String query = "SELECT ticketLogs.date, ticketLogs.id, rules.`login` as `login`" +
-                    "FROM ticketLogs " +
-                    "INNER JOIN ticket_data ON (ticketLogs.`idTicket` = ticket_data.`idTicket`) " +
-                    "INNER JOIN rules ON (ticketLogs.`userId` = rules.`userId`) " +
-                    "WHERE ticket_data.`idTicket` = '" + id + "' ORDER BY `id`";
+            String query = "CALL sp_getTicketLogs("+id+");";
             Statement stmt = conn.createStatement();
             ResultSet res = stmt.executeQuery(query);
             int idLogs = 1;
@@ -362,14 +334,12 @@ public class DataTickets {
             fieldsTicket.add(textValueLog);
         }
     }
+
     public void logDataRead(int id) {
         try {
             DBProcessor dbProcessor = new DBProcessor();
             Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
-            String query = "SELECT ticketLogs.* " +
-                    "FROM ticketLogs " +
-                    "INNER JOIN ticket_data ON (ticketLogs.`idTicket` = ticket_data.`idTicket`) " +
-                    "WHERE ticketLogs.`id` =" + id;
+            String query = "CALL sp_getLogData("+id+");";
             Statement stmt = conn.createStatement();
             ResultSet res = stmt.executeQuery(query);
             while (res.next()) {
@@ -426,9 +396,7 @@ public class DataTickets {
         try {
             DBProcessor dbProcessor = new DBProcessor();
             Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
-            String query = "SELECT ticketLogs.date " +
-                    "FROM ticketLogs " +
-                    "WHERE `id` =" + id;
+            String query = "CALL sp_getDateTimeLog("+id+");";
             Statement stmt = conn.createStatement();
             ResultSet res = stmt.executeQuery(query);
             while (res.next()) {
@@ -474,8 +442,7 @@ public class DataTickets {
         try {
             DBProcessor dbProcessor = new DBProcessor();
             Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
-            String query = "SELECT * " +
-                    "FROM print_pattern ";
+            String query = "CALL sp_getDataPatternPrint;";
             Statement stmt = conn.createStatement();
             ResultSet res = stmt.executeQuery(query);
             while (res.next()) {
@@ -516,21 +483,9 @@ public class DataTickets {
         try {
             DBProcessor dbProcessor = new DBProcessor();
             Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
-            String update = "UPDATE print_pattern " +
-                    "SET `labelTitle` = '" + labelTitle + "', " +
-                    "`labelRules` = '" + labelRules + "', " +
-                    "`labelSignAccept` = '" + labelSignAccept + "', " +
-                    "`labelSignPassed` ='" + labelSignPassed + "' , " +
-                    "`labelOrderTicket` = '" + labelOrderTicket + "', " +
-                    "`labelFullName` = '" + labelFullName + "', " +
-                    "`labelPhone` = '" + labelPhone + "', " +
-                    "`labelNote` = '" + labelNote + "', " +
-                    "`labelDate` = '" + labelDate + "', " +
-                    "`labelDevice` = '" + labelDevice + "'," +
-                    "`labelModel` = '" + labelModel + "'," +
-                    "`labelCondition` = '" + labelCondition + "'," +
-                    "`labelDefect` = '" + labelDefect + "'" +
-                    "WHERE `idPrint` = " + 1;
+            String update = "CALL sp_saveEditPatternPrint('"+labelTitle+"','"+labelRules+"', '"+labelSignAccept+"'," +
+                    "'"+labelSignPassed+"','"+labelOrderTicket+"', '"+labelFullName+"', '"+labelPhone+"', '"+labelNote+"'," +
+                    "'"+labelDate+"', '"+labelDevice+"', '"+labelModel+"', '"+labelCondition+"', '"+labelDefect+"', "+1+");";
             try (Statement stmt = conn.createStatement()) {
                 stmt.execute(update);
             } catch (SQLException e) {
@@ -543,14 +498,13 @@ public class DataTickets {
         }
     }
 
-    public Boolean allNumberTicket(int newNummberTicket) {
+    public Boolean allNumberTicket(int newNumberTicket) {
         Boolean b = true;
         ArrayList<Integer> arrayList = new ArrayList<>();
         try {
             DBProcessor dbProcessor = new DBProcessor();
             Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
-            String query = "SELECT numberTicket " +
-                    "FROM ticket_data ";
+            String query = "CALL sp_getAllNumberTicket();";
             Statement stmt = conn.createStatement();
             ResultSet res = stmt.executeQuery(query);
             while (res.next()) {
@@ -563,7 +517,7 @@ public class DataTickets {
             e.printStackTrace();
         }
         for (int a : arrayList) {
-            if (a == newNummberTicket) {
+            if (a == newNumberTicket) {
                 b = false;
             }
         }
@@ -588,7 +542,7 @@ public class DataTickets {
             loginList.clear();
             DBProcessor dbProcessor = new DBProcessor();
             Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
-            String query = "SELECT * FROM rules";
+            String query = "CALL sp_getUserList();";
             Statement stmt = conn.createStatement();
             ResultSet res = stmt.executeQuery(query);
             while (res.next()) {
@@ -620,16 +574,11 @@ public class DataTickets {
         allRulesData.add(new Rules(User.OPERATOR.name()));
     }
 
-    public void addNewUser(String name, String login, String password, String rules, int valid){
+        public void addNewUser(String name, String login, String password, String rules, int valid){
         try {
             DBProcessor dbProcessor = new DBProcessor();
             Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
-            String create = "INSERT INTO `rules` (`name`, `login`,`password`,`rules`, `valid`) " +
-                    "VALUES ('" + name + "'," +
-                    " '" + login + "'," +
-                    " '" + password + "'," +
-                    " '" + rules + "'," +
-                    " '" + valid + "')";
+            String create = "CALL sp_addNewUser('"+name+"', '"+login+"', '"+password+"', '"+rules+"', "+valid+");";
             try (Statement stmt = conn.createStatement()) {
             stmt.execute(create);
             } catch (SQLException e) {
@@ -643,17 +592,11 @@ public class DataTickets {
     }
 
 
-    public void userListWrite(int userId, String name, String login, String password, String rules, int valid){
+        public void userListWrite(int userId, String name, String login, String password, String rules, int valid){
         try {
             DBProcessor dbProcessor = new DBProcessor();
             Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
-            String update = "UPDATE rules " +
-                    "SET `name` = '" + name + "', " +
-                    "`login` = '" + login + "', " +
-                    "`password` = '" + password + "', " +
-                    "`rules` ='" + rules + "' , " +
-                    "`valid` = " + valid + " " +
-                    "WHERE `userId` = " + userId;
+            String update = "CALL sp_saveEditUser("+userId+", '"+name+"', '"+login+"', '"+password+"', '"+rules+"', "+valid+");";
             try (Statement stmt = conn.createStatement()) {
                 stmt.execute(update);
             } catch (SQLException e) {
@@ -679,10 +622,7 @@ public class DataTickets {
         try {
             DBProcessor dbProcessor = new DBProcessor();
             Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
-            String update = "UPDATE ticket_data " +
-                    "SET" +
-                    "`comment` = '" + text + "'" +
-                    "WHERE `numberTicket` = " + id;
+            String update = "CALL sp_saveComment('"+text+"', "+id+");";
             try (Statement stmt = conn.createStatement()) {
                 stmt.execute(update);
             } catch (SQLException e) {
@@ -695,6 +635,8 @@ public class DataTickets {
         }
     }
 
+
+    /**ДЛЯ ЧЕГО ЭТОТ МЕТОД??*/
     public void setValidUser(int userId){
         try {
             DBProcessor dbProcessor = new DBProcessor();
@@ -771,7 +713,7 @@ public class DataTickets {
         try {
             DBProcessor dbProcessor = new DBProcessor();
             Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
-            String query = "SELECT * FROM stock";
+            String query = "CALL sp_getStockList();";
             Statement stmt = conn.createStatement();
             ResultSet res = stmt.executeQuery(query);
             while (res.next()) {
@@ -798,7 +740,7 @@ public class DataTickets {
         try {
             DBProcessor dbProcessor = new DBProcessor();
             Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
-            String query = "SELECT phoneNumber, fullName, device FROM ticket_data";
+            String query = "CALL sp_getClientsData();";
             Statement stmt = conn.createStatement();
             ResultSet res = stmt.executeQuery(query);
             while (res.next()) {
@@ -820,11 +762,7 @@ public class DataTickets {
         try {
             DBProcessor dbProcessor = new DBProcessor();
             Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
-            String create = "INSERT INTO `stock` (`model`, `name`,`amount`,`price`) " +
-                    "VALUES ('" + model + "'," +
-                    " '" + name + "'," +
-                    " '" + amount + "'," +
-                    " '" + price + "')";
+            String create = "CALL sp_addNewElementStocks('"+model+"', '"+name+"', '"+amount+"', '"+price+"');";
             try (Statement stmt = conn.createStatement()) {
                 stmt.execute(create);
             } catch (SQLException e) {
@@ -841,12 +779,7 @@ public class DataTickets {
         try {
             DBProcessor dbProcessor = new DBProcessor();
             Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
-            String update = "UPDATE stock " +
-                    "SET `model` = '" + model + "', " +
-                    "`name` = '" + name + "', " +
-                    "`amount` = '" + amount + "', " +
-                    "`price` = " + price + " " +
-                    "WHERE `idElement` = " + id;
+            String update = "CALL sp_saveEditElementStocks('"+model+"', '"+name+"', '"+amount+"', '"+price+"', "+id+");";
             try (Statement stmt = conn.createStatement()) {
                 stmt.execute(update);
             } catch (SQLException e) {
