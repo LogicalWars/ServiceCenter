@@ -402,10 +402,8 @@ public class EditTicketController {
         HBox hBox = new HBox();
         Label label = new Label("Запчасть");
         ComboBox comboBox = new ComboBox();
-        comboBox.setId("comboBox_" + i);
         comboBox.setEditable(true);
         TextField textField = new TextField();
-        textField.setId("textField_" + i);
         hBox.getChildren().addAll(label, comboBox, textField);
         gridPane.add(hBox, 0, i);
         i++;
