@@ -253,6 +253,7 @@ public class EditTicketController {
 
     }
 
+
     private int idPrice(String text, List<Integer> idM){
         int id = 0;
         int idPrice = 0;
@@ -307,9 +308,12 @@ public class EditTicketController {
 
     @FXML
     public void saveEditTicket() {
+        listComboBox.add(elementComboBox);
+        listTextField.add(elementTextField);
         /**
          * Проверка id статуса из массива getAllStatus()
          */
+
         int idStatus = 1;
         int idStatusTrue = 0;
         for(String s: dataTickets.getAllStatus()){
@@ -321,10 +325,10 @@ public class EditTicketController {
         }
             if (statusComboBox.getSelectionModel().getSelectedIndex() + 1 != 0) {
                 dataTickets.saveEditTicketWrite(dataTickets.getIdTicket(), idStatusTrue, phone.getText(), fullName.getText(), device.getText(), model.getText(),
-                        defect.getText(), note.getText(), condition.getText(), comment.getText(), Integer.parseInt(numberTicketText.getText()));
+                        defect.getText(), note.getText(), condition.getText(), comment.getText(), Integer.parseInt(numberTicketText.getText()), listComboBox,listTextField);
             } else {
                 dataTickets.saveEditTicketWrite(dataTickets.getIdTicket(), Integer.parseInt(dataTickets.getIdStatusTicket()), phone.getText(), fullName.getText(), device.getText(), model.getText(),
-                        defect.getText(), note.getText(), condition.getText(), comment.getText(), Integer.parseInt(numberTicketText.getText()));
+                        defect.getText(), note.getText(), condition.getText(), comment.getText(), Integer.parseInt(numberTicketText.getText()), listComboBox,listTextField);
             }
         String getStatusComboBox;
 
@@ -357,7 +361,6 @@ public class EditTicketController {
                 String.valueOf(dataTickets.getNumberTicket()),
                 numberTicketText.getText(),
                 User.USER.ordinal()+1);
-
     }
     @FXML
     public void printPreview(){
@@ -395,6 +398,9 @@ public class EditTicketController {
     }
 
     private int i = 3;
+    List<ComboBox> listComboBox = new ArrayList<>();
+    List<TextField> listTextField = new ArrayList<>();
+
 
     @FXML
     void elementButton() {
@@ -408,9 +414,9 @@ public class EditTicketController {
         hBox.getChildren().addAll(label, comboBox, textField);
         gridPane.add(hBox, 0, i);
         i++;
-        System.out.println(comboBox.getId());
-        System.out.println(textField.getId());
 
+        listComboBox.add(comboBox);
+        listTextField.add(textField);
 
         if("comboBox_" + i != null){
             int idNameModelTwo=0;
