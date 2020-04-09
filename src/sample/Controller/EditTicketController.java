@@ -13,6 +13,7 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sample.Enum.User;
@@ -408,8 +409,6 @@ public class EditTicketController {
         hBox.getChildren().addAll(label, comboBox, textField);
         gridPane.add(hBox, 0, i);
         i++;
-        System.out.println(comboBox.getId());
-        System.out.println(textField.getId());
 
 
         if("comboBox_" + i != null){

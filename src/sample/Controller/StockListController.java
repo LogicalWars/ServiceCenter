@@ -147,6 +147,11 @@ public class StockListController {
         tableStockList.getItems().clear();
         dataTickets.stockListDataRead();
         tableStockList.setItems(dataTickets.getStockListData());
+        editMenu.setDisable(true);
+        modelTextField.clear();
+        nameTextField.clear();
+        amountTextField.clear();
+        priceTextField.clear();
     }
 
     private void checkStockNew(){
