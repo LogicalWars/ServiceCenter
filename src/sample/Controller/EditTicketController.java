@@ -1,5 +1,7 @@
 package sample.Controller;
 
+import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -443,6 +445,13 @@ public class EditTicketController {
         button.setText("-");
         button.setPrefWidth(25.0);
         button.setMinWidth(Region.USE_PREF_SIZE);
+        button.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                /**БЛОК КОДА ПО УДАЛЕНИЮ СТРОК*/
+            }
+        });
         hBox.getChildren().addAll(label, comboBox, textField, button);
         gridPane.add(hBox, 0, i);
         i++;
