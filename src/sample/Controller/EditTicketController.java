@@ -3,6 +3,8 @@ package sample.Controller;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -13,6 +15,8 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -22,6 +26,7 @@ import sample.Model.Print;
 import sample.Model.Status;
 import sample.Model.TicketLogs;
 
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -160,7 +165,9 @@ public class EditTicketController {
             return row;
         });
 
+        /**************************************************************************************************************/
 
+        /**ЧАТ*/
 
         KeyCodeCombination kComb = new KeyCodeCombination(KeyCode.ENTER, KeyCombination.SHIFT_DOWN);
         commentText.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -177,6 +184,8 @@ public class EditTicketController {
                 }
             }
         });
+
+        /***************************************************************************************************************/
 
 
 
@@ -235,6 +244,10 @@ public class EditTicketController {
                         statusComboBox.setDisable(true);break;
                 };break;
         }
+        /****************************************************************************************/
+
+        /**Работа с запчастями*/
+
         int idNameModel=0;
         List<Integer> idModel = new ArrayList();
         for(String s: dataTickets.getModelList()) {
@@ -251,6 +264,12 @@ public class EditTicketController {
 
         });
 
+
+        listComboBox.add(elementComboBox);
+        listTextField.add(elementTextField);
+
+
+        /********************************************************************************************/
 
     }
 
@@ -309,8 +328,6 @@ public class EditTicketController {
 
     @FXML
     public void saveEditTicket() {
-        listComboBox.add(elementComboBox);
-        listTextField.add(elementTextField);
         /**
          * Проверка id статуса из массива getAllStatus()
          */
@@ -403,14 +420,30 @@ public class EditTicketController {
     List<TextField> listTextField = new ArrayList<>();
 
 
+    /**ДОБАВИТЬ ЗАПЧАСТЬ*/
+
     @FXML
     void elementButton() {
         HBox hBox = new HBox();
+        hBox.setAlignment(Pos.CENTER_LEFT);
         Label label = new Label("Запчасть");
+        label.setPrefWidth(100.0);
+        label.setMinWidth(100.0);
+        hBox.setMargin(label, new Insets(0, 10, 0, 10));
         ComboBox comboBox = new ComboBox();
         comboBox.setEditable(true);
+        comboBox.setMaxWidth(1.7976931348623157E308);
+        hBox.setHgrow(comboBox, Priority.ALWAYS);
         TextField textField = new TextField();
-        hBox.getChildren().addAll(label, comboBox, textField);
+        textField.setPrefWidth(70.0);
+        textField.setMaxWidth(Region.USE_PREF_SIZE);
+        textField.setMinWidth(Region.USE_PREF_SIZE);
+        hBox.setMargin(textField, new Insets(0, 5, 0, 5));
+        Button button = new Button();
+        button.setText("-");
+        button.setPrefWidth(25.0);
+        button.setMinWidth(Region.USE_PREF_SIZE);
+        hBox.getChildren().addAll(label, comboBox, textField, button);
         gridPane.add(hBox, 0, i);
         i++;
 
