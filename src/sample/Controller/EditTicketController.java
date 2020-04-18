@@ -87,24 +87,21 @@ public class EditTicketController {
     @FXML
     private SplitPane editTicketViewPane;
     @FXML
-    private ComboBox<String> elementComboBox;
-    @FXML
-    private TextField elementTextField;
-    @FXML
-    private Button elementButton;
-    @FXML
     private GridPane gridPane;
+    @FXML
+    private Label haveSpareLabel;
 
     DataTickets dataTickets = new DataTickets();
-    List<ComboBox> listComboBox = new ArrayList<>();
-    List<TextField> listTextField = new ArrayList<>();
-    List<Integer> listValid = new ArrayList<>();
-    List<String> listNameSpare = new ArrayList<>();
+    private List<ComboBox> listComboBox = new ArrayList<>();
+    private List<TextField> listTextField = new ArrayList<>();
+    private List<Integer> listValid = new ArrayList<>();
+    private List<String> listNameSpare = new ArrayList<>();
+    private int idRowGridPane = 4;
+
+
     @FXML
     public void initialize() {
-        comment.setEditable(false);
 
-        comment.setScrollTop(Double.MAX_VALUE);
         try {
             dataTickets.editTicketRead(TicketListController.idRow);
         } catch (SQLException e) {
@@ -115,23 +112,7 @@ public class EditTicketController {
         dataTickets.ticketLogsRead(dataTickets.getIdTicket());
         dataTickets.getAllSparePartsRead(dataTickets.getIdTicket());
 
-        if(dataTickets.getListValidSpareParts().size()!=0) {
-            for (int in : dataTickets.getListValidSpareParts()) {
-                listValid.add(in);
-            }
-        }else{
-            listValid.add(0);
-        }
-
-        if(dataTickets.getListNameSpareParts().size()!=0) {
-            for (String s: dataTickets.getListNameSpareParts()){
-                listNameSpare.add(s);
-            }
-        }else{
-            listNameSpare.add("");
-        }
-
-
+        /*Заполнение данными API*/
 
         numberLog.setCellValueFactory(new PropertyValueFactory<>("idLog"));
         dateLog.setCellValueFactory(new PropertyValueFactory<>("dateLog"));
@@ -157,6 +138,8 @@ public class EditTicketController {
 
         saveButton.setDisable(true);
 
+        /*Слушатель на изменение № заявки (только цифры и уникальность)*/
+
         numberTicketText.textProperty().addListener((observable, oldValue, newValue) -> {
             if(!newValue.matches("\\d*")){numberTicketText.setText(oldValue);}
             if(!dataTickets.allNumberTicket(StringToInt(numberTicketText.getText()))) {
@@ -164,10 +147,13 @@ public class EditTicketController {
             }
             check();
         });
+
+        /*Слушатели с проверками на элементы API*/
+
         phone.textProperty().addListener((observable, oldValue, newValue) -> check());
         fullName.textProperty().addListener((observable, oldValue, newValue) -> check());
         device.textProperty().addListener((observable, oldValue, newValue) -> check());
-        model.textProperty().addListener((observable, oldValue, newValue) -> check());
+        model.textProperty().addListener((observable, oldValue, newValue) -> {check();changeModel();});
         defect.textProperty().addListener((observable, oldValue, newValue) -> check());
         note.textProperty().addListener((observable, oldValue, newValue) -> check());
         condition.textProperty().addListener((observable, oldValue, newValue) -> check());
@@ -175,6 +161,8 @@ public class EditTicketController {
         statusComboBox.valueProperty().addListener((observable, oldValue, newValue) -> check());
         repairPrice.textProperty().addListener((observable, oldValue, newValue) ->{
             if(!newValue.matches("\\d*")){repairPrice.setText(oldValue);}});
+
+        /*Слушатель на открытие логов*/
 
         tableLogs.setRowFactory(tv -> {
             TableRow<TicketLogs> row = new TableRow<>();
@@ -189,9 +177,10 @@ public class EditTicketController {
             return row;
         });
 
-        /**************************************************************************************************************/
+        /*ЧАТ*/
 
-        /**ЧАТ*/
+        comment.setEditable(false);
+        comment.setScrollTop(Double.MAX_VALUE);
 
         KeyCodeCombination kComb = new KeyCodeCombination(KeyCode.ENTER, KeyCombination.SHIFT_DOWN);
         commentText.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -209,9 +198,7 @@ public class EditTicketController {
             }
         });
 
-        /***************************************************************************************************************/
-
-
+        /*Ограничения доступа по Ролям*/
 
         switch (status.getText()){
             case "Диагностика":
@@ -221,7 +208,7 @@ public class EditTicketController {
                                   statusComboBox.getItems().remove(0);break;
                     case OPERATOR: numberTicketText.setDisable(true);
                                    statusComboBox.setDisable(true);break;
-                };break;
+                }break;
             case "На согласовании":
                 switch (User.USER){
                     case ADMIN:;break;
@@ -230,154 +217,54 @@ public class EditTicketController {
                         statusComboBox.getItems().remove(3);
                         statusComboBox.getItems().remove(0,2);break;
 
-                };break;
+                }break;
             case "Согласованно":
+            case "Отказ от ремонта":
                 switch (User.USER){
                     case MASTER:  setEditableNumPhoNamDevModDefConNot();
                                   statusComboBox.getItems().remove(4,6);
                                   statusComboBox.getItems().remove(0,3);break;
                     case OPERATOR: setEditableNumPhoNamDevModDefConNot();
                                    statusComboBox.setDisable(true);break;
-                };break;
+                }break;
             case "Готов":
                 switch (User.USER){
                     case MASTER:  setEditableNumPhoNamDevModDefConNot();
                         statusComboBox.getItems().remove(0,6);
                         break;
                     case OPERATOR: setEditableNumPhoNamDevModDefConNot();break;
-                };break;
-            case "Отказ от ремонта":
-                switch (User.USER){
-                    case MASTER:  setEditableNumPhoNamDevModDefConNot();
-                        statusComboBox.getItems().remove(4,6);
-                        statusComboBox.getItems().remove(0,3);break;
-                    case OPERATOR: setEditableNumPhoNamDevModDefConNot();
-                        statusComboBox.setDisable(true);break;
-                };break;
+                }break;
             case "Готов к выдаче":
                 switch (User.USER){
                     case ADMIN:;break;
                     default:setEditableNumPhoNamDevModDefConNot();
                         statusComboBox.getItems().remove(6);
                         statusComboBox.getItems().remove(0,5);break;
-                };break;
+                }break;
             case "Выдан":
                 switch (User.USER){
                     case ADMIN:;break;
                     default:setEditableNumPhoNamDevModDefConNot();
                         statusComboBox.setDisable(true);break;
-                };break;
+                }break;
         }
-        /****************************************************************************************/
 
-        /**Работа с запчастями*/
-
-        int idNameModel=0;
-        List<Integer> idModel = new ArrayList();
-        for(String s: dataTickets.getModelList()) {
-            if (s.equals(model.getText())){
-                idModel.add(idNameModel);
-                elementComboBox.setPromptText("Имеется запчасть");
-                elementComboBox.getItems().add(dataTickets.getNameList().get(idNameModel));
-            }
-            idNameModel++;
-        }
-        elementComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
-           elementTextField.setText(String.valueOf(idPrice(newValue,idModel)));
-           listNameSpare.set(0,String.valueOf(newValue));
-        });
-        elementTextField.textProperty().addListener((observable, oldValue, newValue) ->{
-            if(!newValue.matches("\\d*")){elementTextField.setText(oldValue);}
-            checkPrice(listTextField,repairPrice.getText());
-        });
-        repairPrice.textProperty().addListener((observable, oldValue, newValue) ->{
-            checkPrice(listTextField,repairPrice.getText());
-        });
-
-
-        listComboBox.add(elementComboBox);
-        listTextField.add(elementTextField);
+        /*Работа с запчастями*/
 
         if(dataTickets.getListNameSpareParts().size()>0) {
             stockRead(dataTickets.getListNameSpareParts(), dataTickets.getListPriceSpareParts() , dataTickets.getListValidSpareParts());
         }
-        checkPrice(listTextField,repairPrice.getText());
-        /********************************************************************************************/
+        calculationPrice(listTextField,repairPrice.getText());
 
+        changeModel();
     }
 
-
-    private int idPrice(String text, List<Integer> idM){
-        int id = 0;
-        int idPrice = 0;
-        for(String s: dataTickets.getNameList()) {
-                for(int i: idM){
-                    if(i == id){
-                        if (s.equals(text)){
-                            dataTickets.getNameList().indexOf(model.getText());
-                            idPrice = dataTickets.getPriceList().get(id);
-                        }
-                    }
-                }
-
-            id++;
-        }
-        return idPrice;
-    }
-
-    @FXML
-    private void printed() throws IOException {
-        Print print = new Print();
-        print.printed();
-    }
-
-    private void check() {
-        int numberTicketC =String.valueOf(dataTickets.getNumberTicket()).compareTo(numberTicketText.getText());
-        int phoneC = dataTickets.getPhoneNumber().compareTo(phone.getText());
-        int conditionC = dataTickets.getConditionTicket().compareTo(condition.getText());
-        int fullNameC = dataTickets.getFullName().compareTo(fullName.getText());
-        int deviceC = dataTickets.getDeviceTicket().compareTo(device.getText());
-        int modelC = dataTickets.getModelTicket().compareTo(model.getText());
-        int defectC = dataTickets.getDefectTicket().compareTo(defect.getText());
-        int noteC = dataTickets.getNoteTicket().compareTo(note.getText());
-        int commentC = dataTickets.getCommentTicket().compareTo(comment.getText());
-        String statusD = "null";
-        int statusC = statusD.compareTo(String.valueOf(statusComboBox.getValue()));
-        if (numberTicketC == 0 && phoneC == 0 && conditionC == 0 && fullNameC == 0 && deviceC == 0 && modelC == 0 && defectC == 0 && noteC == 0 && statusC == 0 && commentC == 0) {
-            saveButton.setDisable(true);
-        } else {
-            saveButton.setDisable(false);
-        }
-    }
-
-    private void checkPrice(List<TextField> listSpare, String repairPrice){
-        int sp = 0;
-        int rp = 0;
-        for(int i=0; i<listSpare.size(); i++){
-            if(!listSpare.get(i).getText().equals("")){sp = sp + Integer.parseInt(listSpare.get(i).getText());}
-        }
-
-
-        if(!repairPrice.equals("")){rp = Integer.parseInt(repairPrice);}
-        int sum = sp + rp;
-        totalPrice.setText(String.valueOf(sum));
-    }
-    private int StringToInt(String inputString){
-        try{
-            return Integer.parseInt(inputString);
-        }catch(NumberFormatException ex){
-            return 0; // при пустой строке вернем "0"
-        }
-    }
-
-    int idStatus;
+    /**Метод отрабатывает при нажатии на кнопку Save*/
 
     @FXML
     public void saveEditTicket() {
+
         updateValid(dataTickets.getListNameSpareParts(),listNameSpare,listValid);
-        /**
-         * Проверка id статуса из массива getAllStatus()
-         */
 
         int idStatus = 1;
         int idStatusTrue = 0;
@@ -388,13 +275,13 @@ public class EditTicketController {
                 idStatusTrue =idStatus;
             }
         }
-            if (statusComboBox.getSelectionModel().getSelectedIndex() + 1 != 0) {
-                dataTickets.saveEditTicketWrite(dataTickets.getIdTicket(), idStatusTrue, phone.getText(), fullName.getText(), device.getText(), model.getText(),
-                        defect.getText(), note.getText(), condition.getText(), comment.getText(), Integer.parseInt(numberTicketText.getText()), listComboBox,listTextField, Integer.parseInt(repairPrice.getText()), listValid);
-            } else {
-                dataTickets.saveEditTicketWrite(dataTickets.getIdTicket(), Integer.parseInt(dataTickets.getIdStatusTicket()), phone.getText(), fullName.getText(), device.getText(), model.getText(),
-                        defect.getText(), note.getText(), condition.getText(), comment.getText(), Integer.parseInt(numberTicketText.getText()), listComboBox,listTextField, Integer.parseInt(repairPrice.getText()), listValid);
-            }
+        if (statusComboBox.getSelectionModel().getSelectedIndex() + 1 != 0) {
+            dataTickets.saveEditTicketWrite(dataTickets.getIdTicket(), idStatusTrue, phone.getText(), fullName.getText(), device.getText(), model.getText(),
+                    defect.getText(), note.getText(), condition.getText(), comment.getText(), Integer.parseInt(numberTicketText.getText()), listComboBox,listTextField, Integer.parseInt(repairPrice.getText()), listValid);
+        } else {
+            dataTickets.saveEditTicketWrite(dataTickets.getIdTicket(), Integer.parseInt(dataTickets.getIdStatusTicket()), phone.getText(), fullName.getText(), device.getText(), model.getText(),
+                    defect.getText(), note.getText(), condition.getText(), comment.getText(), Integer.parseInt(numberTicketText.getText()), listComboBox,listTextField, Integer.parseInt(repairPrice.getText()), listValid);
+        }
         String getStatusComboBox;
 
         if (statusComboBox.getValue() == null) {
@@ -427,6 +314,16 @@ public class EditTicketController {
                 numberTicketText.getText(),
                 User.USER.ordinal()+1);
     }
+
+    /**ДОБАВИТЬ ЗАПЧАСТЬ*/
+
+    @FXML
+    public void addSparePart() {
+        addNewSparePart(gridPane, listComboBox, listTextField, listValid, listNameSpare, dataTickets.getListPriceSpareParts(), 0, false);
+    }
+
+    /**Метод отрабатывает при нажатии на кнопку Предварительный просмотр*/
+
     @FXML
     public void printPreview(){
         try {
@@ -442,6 +339,87 @@ public class EditTicketController {
             e.printStackTrace();
         }
     }
+
+    /**Вывод на печать*/
+
+    @FXML
+    private void printed() throws IOException {
+        Print print = new Print();
+        print.printed();
+    }
+
+    /**Определяет idЦены, возвращает int
+     * @param text - наименование запчасти
+     * @param idM - массив цен*/
+
+    private int idPrice(String text, List<Integer> idM){
+        int id = 0;
+        int idPrice = 0;
+        for(String s: dataTickets.getNameList()) {
+                for(int i: idM){
+                    if(i == id){
+                        if (s.equals(text)){
+                            dataTickets.getNameList().indexOf(model.getText());
+                            idPrice = dataTickets.getPriceList().get(id);
+                        }
+                    }
+                }
+
+            id++;
+        }
+        return idPrice;
+    }
+
+    /**Проверка полей для включения кнопки Save*/
+
+    private void check() {
+        int numberTicketC =String.valueOf(dataTickets.getNumberTicket()).compareTo(numberTicketText.getText());
+        int phoneC = dataTickets.getPhoneNumber().compareTo(phone.getText());
+        int conditionC = dataTickets.getConditionTicket().compareTo(condition.getText());
+        int fullNameC = dataTickets.getFullName().compareTo(fullName.getText());
+        int deviceC = dataTickets.getDeviceTicket().compareTo(device.getText());
+        int modelC = dataTickets.getModelTicket().compareTo(model.getText());
+        int defectC = dataTickets.getDefectTicket().compareTo(defect.getText());
+        int noteC = dataTickets.getNoteTicket().compareTo(note.getText());
+        int commentC = dataTickets.getCommentTicket().compareTo(comment.getText());
+        String statusD = "null";
+        int statusC = statusD.compareTo(String.valueOf(statusComboBox.getValue()));
+        if (numberTicketC == 0 && phoneC == 0 && conditionC == 0 && fullNameC == 0 && deviceC == 0 && modelC == 0 && defectC == 0 && noteC == 0 && statusC == 0 && commentC == 0) {
+            saveButton.setDisable(true);
+        } else {
+            saveButton.setDisable(false);
+        }
+    }
+
+    /**Расчет обшей цены
+     * @param listSpare - коллекция цен запчастей
+     * @param repairPrice - цена ремонта*/
+
+    private void calculationPrice(List<TextField> listSpare, String repairPrice){
+        int sp = 0;
+        int rp = 0;
+        for(int i=0; i<listSpare.size(); i++){
+            if(!listSpare.get(i).getText().equals("")){sp = sp + Integer.parseInt(listSpare.get(i).getText());}
+        }
+
+
+        if(!repairPrice.equals("")){rp = Integer.parseInt(repairPrice);}
+        int sum = sp + rp;
+        totalPrice.setText(String.valueOf(sum));
+    }
+
+    /**При пустой строке возвращает 0, иначе число
+     * @param inputString - строка*/
+    private int StringToInt(String inputString){
+        try{
+            return Integer.parseInt(inputString);
+        }catch(NumberFormatException ex){
+            return 0; // при пустой строке вернем "0"
+        }
+    }
+
+    /**Метод выключает элементы и изменяет стилистику*/
+
     private void setEditableNumPhoNamDevModDefConNot(){
         numberTicketText.setEditable(false);
         phone.setEditable(false);
@@ -459,178 +437,54 @@ public class EditTicketController {
         model.setStyle("-fx-text-fill: rgba(116,32,0,0.91)");
         condition.setStyle("-fx-text-fill: rgba(116,32,0,0.91)");
         note.setStyle("-fx-text-fill: rgba(116,32,0,0.91)");
-
     }
 
-    private int i = 4;
-
-
-    /**ДОБАВИТЬ ЗАПЧАСТЬ*/
-    @FXML
-    void elementButton() {
-        HBox hBox = new HBox();
-        hBox.setAlignment(Pos.CENTER_LEFT);
-        Label label = new Label("Запчасть");
-        label.setPrefWidth(100.0);
-        label.setMinWidth(100.0);
-        hBox.setMargin(label, new Insets(0, 10, 0, 10));
-        ComboBox comboBox = new ComboBox();
-        comboBox.setEditable(true);
-        comboBox.setMaxWidth(1.7976931348623157E308);
-        hBox.setHgrow(comboBox, Priority.ALWAYS);
-        TextField textField = new TextField();
-        textField.setPrefWidth(70.0);
-        textField.setMaxWidth(Region.USE_PREF_SIZE);
-        textField.setMinWidth(Region.USE_PREF_SIZE);
-        hBox.setMargin(textField, new Insets(0, 5, 0, 5));
-        Button button = new Button();
-        button.setText("-");
-        button.setPrefWidth(25.0);
-        button.setMinWidth(Region.USE_PREF_SIZE);
-
-        hBox.getChildren().addAll(label, comboBox, textField, button);
-        gridPane.add(hBox, 0, i);
-        i++;
-        listComboBox.add(comboBox);
-        listTextField.add(textField);
-        listValid.add(0);
-        listNameSpare.add("");
-        button.setOnMouseClicked(event -> {
-            deleteRow(gridPane, gridPane.getRowIndex(hBox));
-            i--;
-            listComboBox.remove(gridPane.getRowIndex(hBox)-3);
-            listTextField.remove(gridPane.getRowIndex(hBox)-3);
-            listValid.remove(gridPane.getRowIndex(hBox)-3);
-            listNameSpare.remove(gridPane.getRowIndex(hBox)-3);
-            checkPrice(listTextField, repairPrice.getText());
-        }
-    );
-        textField.textProperty().addListener((observable, oldValue, newValue) -> {
-            checkPrice(listTextField, repairPrice.getText());
-        });
-
-        if("comboBox_" + i != null){
-            int idNameModelTwo=0;
-            List<Integer> idModel = new ArrayList();
-            for(String s: dataTickets.getModelList()) {
-                if (s.equals(model.getText())){
-                    idModel.add(idNameModelTwo);
-                    comboBox.setPromptText("Имеется запчасть");
-                    comboBox.getItems().add(dataTickets.getNameList().get(idNameModelTwo));
-                }
-            idNameModelTwo++;
-        }
-        comboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
-            textField.setText(String.valueOf(idPrice((String) newValue,idModel)));
-            listNameSpare.set(gridPane.getRowIndex(hBox)-3, String.valueOf(newValue));
-        });
-        }
-        textField.textProperty().addListener((observable, oldValue, newValue) -> {
-        });
-
-
-    }
-    private int searchNameSpareId(List<String> name, String text){
-        int i = 0;
-        int id =0;
-        for (String s:name){
-            if(s.equals(text)){ id = i;}
-            i++;
-        }
-        return id;
-    }
+    /**Метод удаления запчасти
+     * @param grid - объект gridPane
+     * @param row - id строки grid*/
 
     private void deleteRow(GridPane grid, final int row) {
         Set<Node> deleteNodes = new HashSet<>();
         for (Node child : grid.getChildren()) {
-            // get index from child
             Integer rowIndex = GridPane.getRowIndex(child);
-            // handle null values for index=0
             int r = rowIndex == null ? 0 : rowIndex;
             if (r > row) {
-                // decrement rows for rows after the deleted row
                 GridPane.setRowIndex(child, r-1);
             } else if (r == row) {
-                // collect matching rows for deletion
                 deleteNodes.add(child);
             }
         }
-        // remove nodes from row
         grid.getChildren().removeAll(deleteNodes);
-        if(dataTickets.getListNameSpareParts().size()> row-3){
-            if(listValid.get(row-3) != 0){
-                dataTickets.setUpdateAmountSpare(model.getText(), dataTickets.getListNameSpareParts().get(row-3));
-                dataTickets.getListNameSpareParts().remove(row-3);
+        if(dataTickets.getListNameSpareParts().size()> row-4){
+            if(listValid.get(row-4) != 0){
+                dataTickets.setUpdateAmountSpare(model.getText(), dataTickets.getListNameSpareParts().get(row-4));
+                dataTickets.getListNameSpareParts().remove(row-4);
             }
         }
     }
 
+    /**Отрисовка запчастей при загрузки с базы
+     * @param name - коллекция наименования запчастей
+     * @param price - коллекция цен запчастей
+     * @param valid - коллекция валидности запчастей*/
+
     private void stockRead(List<String> name, List<String> price, List<Integer> valid){
-        elementComboBox.setValue(name.get(0));
-        elementTextField.setText(price.get(0));
-     for(int idR = 1; idR<name.size(); idR++){
-        HBox hBox = new HBox();
-        hBox.setAlignment(Pos.CENTER_LEFT);
-        Label label = new Label("Запчасть");
-        label.setPrefWidth(100.0);
-        label.setMinWidth(100.0);
-        hBox.setMargin(label, new Insets(0, 10, 0, 10));
-        ComboBox comboBox = new ComboBox();
-        comboBox.setEditable(true);
-        comboBox.setMaxWidth(1.7976931348623157E308);
-        comboBox.setValue(name.get(idR));
-        hBox.setHgrow(comboBox, Priority.ALWAYS);
-        TextField textField = new TextField();
-        textField.setPrefWidth(70.0);
-        textField.setMaxWidth(Region.USE_PREF_SIZE);
-        textField.setMinWidth(Region.USE_PREF_SIZE);
-        textField.setText(price.get(idR));
-        hBox.setMargin(textField, new Insets(0, 5, 0, 5));
-        Button button = new Button();
-        button.setText("-");
-        button.setPrefWidth(25.0);
-        button.setMinWidth(Region.USE_PREF_SIZE);
-        button.setOnMouseClicked(event -> {
-                deleteRow(gridPane, gridPane.getRowIndex(hBox));
-                i--;
 
-                listComboBox.remove(gridPane.getRowIndex(hBox)-3);
-                listTextField.remove(gridPane.getRowIndex(hBox)-3);
-                listValid.remove(gridPane.getRowIndex(hBox)-3);
-                listNameSpare.remove(gridPane.getRowIndex(hBox)-3);
-                checkPrice(listTextField,repairPrice.getText());
-
-        });
-        hBox.getChildren().addAll(label, comboBox, textField, button);
-        gridPane.add(hBox, 0, i);
-        i++;
-         listComboBox.add(comboBox);
-         listTextField.add(textField);
-         textField.textProperty().addListener((observable, oldValue, newValue) -> {
-             checkPrice(listTextField, repairPrice.getText());
-         });
-         if("comboBox_" + i != null){
-             int idNameModelTwo=0;
-             List<Integer> idModel = new ArrayList();
-             for(String s: dataTickets.getModelList()) {
-                 if (s.equals(model.getText())){
-                     idModel.add(idNameModelTwo);
-                     comboBox.setPromptText("Имеется запчасть");
-                     comboBox.getItems().add(dataTickets.getNameList().get(idNameModelTwo));
-                 }
-                 idNameModelTwo++;}
-             comboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
-                 textField.setText(String.valueOf(idPrice((String) newValue,idModel)));
-                 listNameSpare.set(gridPane.getRowIndex(hBox)-3, String.valueOf(newValue));
-             });
-         }
-         textField.textProperty().addListener((observable, oldValue, newValue) -> {
-
-         });
-
-     }
+        listValid.addAll(dataTickets.getListValidSpareParts());
+        listNameSpare.addAll(dataTickets.getListNameSpareParts());
+        for(int idR = 0; idR<name.size(); idR++) {
+            addNewSparePart(gridPane, listComboBox, listTextField, listValid, listNameSpare, price, idR, true);
+        }
 
     }
+
+
+    /**Метод изменяет валидность запчастей, сравнивая с данными из BD
+     * @param name_DB - коллекция наименования запчастей из BD*
+     * @param name_API - коллекция наименования запчастей с API*
+     * @param listValid_API - валидация запчастей с API*/
+
+
     private void updateValid(List<String> name_DB, List<String> name_API, List<Integer> listValid_API){
         Set<String> uniqueName = new LinkedHashSet<>(); //Коллекция уникальных значений в списке name_API
         ArrayList<ArrayList<Integer>> listNameNumbers = new ArrayList<>();
@@ -680,6 +534,10 @@ public class EditTicketController {
         }
     }
 
+    /**Подсчет кол-ва совпадний в коллекции, возвращает int
+     * @param name - коллекция наименования запчастей*
+     * @param text - наименование запчасти*/
+
     private int amountInList(List<String> name, String text){
         int i=0;
         for(String s:name){
@@ -688,6 +546,90 @@ public class EditTicketController {
         return i;
     }
 
+    /**Меняет Label на наличие запчастей*/
 
+    private void changeModel(){
+        for(String s: dataTickets.getModelList()) {
+            if (s.equals(model.getText())){
+                haveSpareLabel.setText("Имеется запчасть");
+                break;
+            }else{
+                haveSpareLabel.setText("");
+            }
+        }
+    }
+
+    private void addNewSparePart(GridPane grid, List<ComboBox> listComboBox, List<TextField> listTextField, List<Integer> listValid, List<String> listNameSpare, List<String> price, int idR, boolean readFromDB){
+
+        HBox hBox = new HBox();
+        hBox.setAlignment(Pos.CENTER_LEFT);
+        Label label = new Label("Запчасть");
+        label.setPrefWidth(100.0);
+        label.setMinWidth(100.0);
+        hBox.setMargin(label, new Insets(0, 10, 0, 10));
+        ComboBox comboBox = new ComboBox();
+        comboBox.setEditable(true);
+        comboBox.setMaxWidth(1.7976931348623157E308);
+        hBox.setHgrow(comboBox, Priority.ALWAYS);
+        TextField textField = new TextField();
+        textField.setPrefWidth(70.0);
+        textField.setMaxWidth(Region.USE_PREF_SIZE);
+        textField.setMinWidth(Region.USE_PREF_SIZE);
+        hBox.setMargin(textField, new Insets(0, 5, 0, 5));
+        Button button = new Button();
+        button.setText("-");
+        button.setPrefWidth(25.0);
+        button.setMinWidth(Region.USE_PREF_SIZE);
+        hBox.getChildren().addAll(label, comboBox, textField, button);
+        grid.add(hBox, 0, idRowGridPane);
+        idRowGridPane++;
+
+
+        if(readFromDB){
+            comboBox.setValue(listNameSpare.get(idR));
+            textField.setText(price.get(idR));
+            listComboBox.add(comboBox);
+            listTextField.add(textField);
+        }else{
+            listComboBox.add(comboBox);
+            listTextField.add(textField);
+            listValid.add(0);
+            listNameSpare.add("");
+        }
+
+
+
+
+        /*слушатель на кнопку "удалить запчасть"*/
+
+        button.setOnMouseClicked(event -> {
+                    deleteRow(grid, grid.getRowIndex(hBox));
+                    idRowGridPane--;
+                    listComboBox.remove(grid.getRowIndex(hBox)-4);
+
+                    listTextField.remove(grid.getRowIndex(hBox)-4);
+                    listValid.remove(grid.getRowIndex(hBox)-4);
+                    listNameSpare.remove(grid.getRowIndex(hBox)-4);
+                    calculationPrice(listTextField, repairPrice.getText());
+                }
+        );
+        textField.textProperty().addListener((observable, oldValue, newValue) -> {
+            calculationPrice(listTextField, repairPrice.getText());
+        });
+
+        int idNameModelTwo=0;
+        List<Integer> idModel = new ArrayList();
+        for(String s: dataTickets.getModelList()) {
+            if (s.equals(model.getText())){
+                idModel.add(idNameModelTwo);
+                comboBox.getItems().add(dataTickets.getNameList().get(idNameModelTwo));
+            }
+            idNameModelTwo++;
+        }
+        comboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+            textField.setText(String.valueOf(idPrice((String) newValue,idModel)));
+            listNameSpare.set(grid.getRowIndex(hBox)-4, String.valueOf(newValue));
+        });
+    }
 
 }
