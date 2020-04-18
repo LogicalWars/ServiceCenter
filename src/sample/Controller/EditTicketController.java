@@ -470,6 +470,7 @@ public class EditTicketController {
 
     private void stockRead(List<String> name, List<String> price, List<Integer> valid){
 
+
         listValid.addAll(dataTickets.getListValidSpareParts());
         listNameSpare.addAll(dataTickets.getListNameSpareParts());
         for(int idR = 0; idR<name.size(); idR++) {
