@@ -74,19 +74,19 @@ public class UserListController {
                     statusButton = 1;
                     selectIndex = row.getIndex() + 1;
                     editMenu.setDisable(false);
-                    loginTextField.setText(dataTickets.getUserListData().get(row.getIndex()).getLogin());
-                    nameTextField.setText(dataTickets.getUserListData().get(row.getIndex()).getName());
-                    passwordTextField.setText(dataTickets.getUserListData().get(row.getIndex()).getPassword());
+                    loginTextField.setText(tableUserList.getSelectionModel().getSelectedItem().getLogin());
+                    nameTextField.setText(tableUserList.getSelectionModel().getSelectedItem().getName());
+                    passwordTextField.setText(tableUserList.getSelectionModel().getSelectedItem().getPassword());
                     Rules idR = null;
                     for(Rules s: dataTickets.getAllRulesData()){
                         String S = String.valueOf(s);
-                        if(S.equals(dataTickets.getUserListData().get(row.getIndex()).getRules())){
+                        if(S.equals(tableUserList.getSelectionModel().getSelectedItem().getRules())){
                             idR = s;
                         }
                     }
                     rulesComboBox.setValue(idR);
                     boolean checkValid = true;
-                    if(dataTickets.getUserListData().get(row.getIndex()).getValid().equals("Блокирован")) checkValid = false;
+                    if(tableUserList.getSelectionModel().getSelectedItem().getValid().equals("Блокирован")) checkValid = false;
                     validCheckBox.setSelected(checkValid);
                 }
             });

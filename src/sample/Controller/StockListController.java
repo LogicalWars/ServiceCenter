@@ -1,8 +1,5 @@
 package sample.Controller;
 
-import javafx.beans.InvalidationListener;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -13,7 +10,9 @@ import org.controlsfx.control.textfield.TextFields;
 import sample.Model.DataTickets;
 import sample.Model.StockList;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 public class StockListController {
@@ -67,9 +66,6 @@ public class StockListController {
     private void initialize(){
 
         editMenu.setDisable(true);
-
-
-
         dataTickets.stockListDataRead();
         priceTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             check();
@@ -82,8 +78,8 @@ public class StockListController {
 
         TextFields.bindAutoCompletion(modelTextField,searchModel(modelTextField.getText(), 0));
 
-         modelTextField.textProperty().addListener((observable, oldValue, newValue) -> { check();});
-         nameTextField.textProperty().addListener((observable, oldValue, newValue) -> { check();});
+        modelTextField.textProperty().addListener((observable, oldValue, newValue) -> { check();});
+        nameTextField.textProperty().addListener((observable, oldValue, newValue) -> { check();});
         search.textProperty().addListener((observable, oldValue, newValue) -> { search();});
 
         elementId.setCellValueFactory(new PropertyValueFactory<>("elementId"));
@@ -99,13 +95,12 @@ public class StockListController {
                 if (mouseEvent.getClickCount() == 2 && (!row.isEmpty())) {
                     selectIndex = row.getIndex() + 1;
                     editMenu.setDisable(false);
-//                    System.out.println(modelComboBox.getValue());
-                    nameTextField.setText(dataTickets.getStockListData().get(row.getIndex()).getName());
-                    amountTextField.setText(String.valueOf(dataTickets.getStockListData().get(row.getIndex()).getAmount()));
-                    priceTextField.setText(String.valueOf(dataTickets.getStockListData().get(row.getIndex()).getPrice()));
+                    nameTextField.setText(tableStockList.getSelectionModel().getSelectedItem().getName());
+                    amountTextField.setText(String.valueOf(tableStockList.getSelectionModel().getSelectedItem().getAmount()));
+                    priceTextField.setText(String.valueOf(tableStockList.getSelectionModel().getSelectedItem().getPrice()));
                     saveButton.setDisable(true);
                     checkButton = 2 ;
-                    modelTextField.setText(dataTickets.getStockListData().get(row.getIndex()).getModel());
+                    modelTextField.setText(tableStockList.getSelectionModel().getSelectedItem().getModel());
                 }
             });
             return row;
@@ -154,9 +149,32 @@ public class StockListController {
         priceTextField.clear();
     }
 
+private  boolean checkButton(){
+    List<String> nameList = new ArrayList<>();
+    int i=0;
+    boolean checkButton = true;
+    for(String m: dataTickets.getModelList()){
+        if(modelTextField.getText().equals(m)){
+            nameList.add(dataTickets.getNameList().get(i));
+        }
+        i++;
+    }
+    for(String name: nameList){
+        if(name.equals(nameTextField.getText())){
+            checkButton = false;
+        }
+
+    }
+    return checkButton;
+}
+
     private void checkStockNew(){
         if(amountTextField.getText().length() >0 && priceTextField.getText().length()>0 && nameTextField.getText().length()>0 && modelTextField.getText().length()>0){
-            saveButton.setDisable(false);
+            if(checkButton()){
+                saveButton.setDisable(false);
+            }else{
+                saveButton.setDisable(true);
+            }
         }else{
             saveButton.setDisable(true);
         }
@@ -165,12 +183,17 @@ public class StockListController {
     }
     private void checkStockUpdate(){
         if(amountTextField.getText().length() >0 && priceTextField.getText().length()>0 && nameTextField.getText().length()>0 && modelTextField.getText().length()>0){
-            updateButton.setDisable(false);
+            if(checkButton()){
+                updateButton.setDisable(false);
+            }else{
+                updateButton.setDisable(true);
+            }
         }else{
             updateButton.setDisable(true);
         }
     }
     private void check(){
+
         if (checkButton == 1){
             checkStockNew();
         }else if(checkButton == 2){

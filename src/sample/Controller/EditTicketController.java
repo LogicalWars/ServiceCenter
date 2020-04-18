@@ -593,7 +593,6 @@ public class EditTicketController {
         button.setOnMouseClicked(event -> {
                 deleteRow(gridPane, gridPane.getRowIndex(hBox));
                 i--;
-
                 listComboBox.remove(gridPane.getRowIndex(hBox)-3);
                 listTextField.remove(gridPane.getRowIndex(hBox)-3);
                 listValid.remove(gridPane.getRowIndex(hBox)-3);
