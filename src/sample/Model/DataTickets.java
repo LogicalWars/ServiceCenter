@@ -53,6 +53,7 @@ public class DataTickets {
     private String conditionTicket;
     private String idStatusTicket;
     private String commentTicket;
+    private String repairPriceTicket;
 
     public String getDateCloseTicket() {
         return dateCloseTicket;
@@ -107,6 +108,9 @@ public class DataTickets {
         return noteTicket;
     }
 
+    public String getRepairPriceTicket() {
+        return repairPriceTicket;
+    }
 
     public String getConditionTicket() {
         return conditionTicket;
@@ -176,6 +180,8 @@ public class DataTickets {
             conditionTicket = checkNull(res.getString("condition"));
             idStatusTicket = checkNull(res.getString("status_id"));
             commentTicket = checkNull(res.getString("comment"));
+            repairPriceTicket = checkNull(res.getString("repairPrice"));
+
 
             if(statusTicket.equals("Выдан")) {
                 LocalDate dateClose = LocalDate.parse(res.getString("dateCloseTicket"));
@@ -210,19 +216,20 @@ public class DataTickets {
         }
     }
 
-    public void saveEditTicketWrite(int id, int status, String phone, String fullName, String device, String model, String defect, String note, String condition, String comment, int numberTicket, List<ComboBox> nameSpare, List<TextField> price) {
+    public void saveEditTicketWrite(int id, int status, String phone, String fullName, String device, String model, String defect, String note, String condition, String comment, int numberTicket, List<ComboBox> nameSpare, List<TextField> price , int repairPrice, List<Integer> validSpare) {
         try {
             DBProcessor dbProcessor = new DBProcessor();
             Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
-            String update = "CALL `sp_saveEditTicket`("+id+","+status+",'"+phone+"','"+fullName+"','"+device+"','"+model+"','"+defect+"','"+note+"','"+condition+"','"+comment+"',"+numberTicket+", '"+LocalDate.now()+"')";
-            String delete = "CALL `sp_getDeleteSpare`("+id+");";
+            String update = "CALL `sp_saveEditTicket`("+id+","+status+",'"+phone+"','"+fullName+"','"+device+"','"+model+"','"+defect+"','"+note+"','"+condition+"','"+comment+"',"+numberTicket+", '"+LocalDate.now()+"', "+repairPrice+" )";
+
+           String delete = "CALL `sp_getDeleteSpare`("+id+");";
 
             try (Statement stmt = conn.createStatement()) {
                 stmt.execute(update);
                 stmt.execute(delete);
                 for(int a=0; a<nameSpare.size();a++){
-                    System.out.println(nameSpare.get(a).getValue());
-                    stmt.execute("CALL `sp_getSaveSpare`("+id+",'"+nameSpare.get(a).getValue()+"',"+price.get(a).getText()+");");
+                    stmt.execute("CALL `sp_getSaveSpare`("+id+",'"+nameSpare.get(a).getValue()+"',"+price.get(a).getText()+", "+validSpare.get(a)+");");
+                    stmt.execute("CALL `sp_updateAmount`();");
                 }
             } catch (SQLException e) {
                 System.out.println(e);
@@ -762,6 +769,67 @@ public class DataTickets {
             String update = "CALL sp_saveEditElementStocks('"+model+"', '"+name+"', '"+amount+"', '"+price+"', "+id+");";
             try (Statement stmt = conn.createStatement()) {
                 stmt.execute(update);
+            } catch (SQLException e) {
+                System.out.println(e);
+                e.getErrorCode();
+            }
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    private List<String> listNameSpareParts = new ArrayList<>();
+
+    public List<String> getListNameSpareParts() {
+        return listNameSpareParts;
+    }
+
+    public void setListNameSpareParts(List<String> listNameSpareParts) {
+        this.listNameSpareParts = listNameSpareParts;
+    }
+
+    public List<String> getListPriceSpareParts() {
+        return listPriceSpareParts;
+    }
+
+    private List<String> listPriceSpareParts = new ArrayList<>();
+
+    public List<Integer> getListValidSpareParts() {
+        return listValidSpareParts;
+    }
+
+    private List<Integer> listValidSpareParts = new ArrayList<>();
+
+
+
+    public void getAllSparePartsRead(int id){
+        try {
+            DBProcessor dbProcessor = new DBProcessor();
+            Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
+            String update = "CALL sp_getAllSpareParts("+id+");";
+            Statement stmt = conn.createStatement();
+            ResultSet res = stmt.executeQuery(update);
+            while (res.next()) {
+                String name = res.getString("name");
+                String price = res.getString("price");
+                int valid = res.getInt("validate");
+                listNameSpareParts.add(name);
+                listPriceSpareParts.add(price);
+                listValidSpareParts.add(valid);
+            }
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setUpdateAmountSpare(String model, String name){
+        try {
+            DBProcessor dbProcessor = new DBProcessor();
+            Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
+            try (Statement stmt = conn.createStatement()) {
+                stmt.execute("CALL sp_editAmountStock('"+model+"', '"+name+"');");
             } catch (SQLException e) {
                 System.out.println(e);
                 e.getErrorCode();

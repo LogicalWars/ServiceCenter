@@ -1,12 +1,11 @@
 package sample.Controller;
 
-import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -19,7 +18,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
-import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sample.Enum.User;
@@ -28,11 +26,9 @@ import sample.Model.Print;
 import sample.Model.Status;
 import sample.Model.TicketLogs;
 
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class EditTicketController {
 
@@ -100,6 +96,10 @@ public class EditTicketController {
     private GridPane gridPane;
 
     DataTickets dataTickets = new DataTickets();
+    List<ComboBox> listComboBox = new ArrayList<>();
+    List<TextField> listTextField = new ArrayList<>();
+    List<Integer> listValid = new ArrayList<>();
+    List<String> listNameSpare = new ArrayList<>();
     @FXML
     public void initialize() {
         comment.setEditable(false);
@@ -113,6 +113,25 @@ public class EditTicketController {
         dataTickets.statusUploadRead();
         dataTickets.stockListDataRead();
         dataTickets.ticketLogsRead(dataTickets.getIdTicket());
+        dataTickets.getAllSparePartsRead(dataTickets.getIdTicket());
+
+        if(dataTickets.getListValidSpareParts().size()!=0) {
+            for (int in : dataTickets.getListValidSpareParts()) {
+                listValid.add(in);
+            }
+        }else{
+            listValid.add(0);
+        }
+
+        if(dataTickets.getListNameSpareParts().size()!=0) {
+            for (String s: dataTickets.getListNameSpareParts()){
+                listNameSpare.add(s);
+            }
+        }else{
+            listNameSpare.add("");
+        }
+
+
 
         numberLog.setCellValueFactory(new PropertyValueFactory<>("idLog"));
         dateLog.setCellValueFactory(new PropertyValueFactory<>("dateLog"));
@@ -133,6 +152,7 @@ public class EditTicketController {
         date.setText(dataTickets.getDateCreateTicket());
         dateClose.setText(dataTickets.getDateCloseTicket());
         statusComboBox.setItems(dataTickets.getStatusUpload());
+        repairPrice.setText(dataTickets.getRepairPriceTicket());
         tableLogs.setItems(dataTickets.getTicketLogs());
 
         saveButton.setDisable(true);
@@ -153,6 +173,8 @@ public class EditTicketController {
         condition.textProperty().addListener((observable, oldValue, newValue) -> check());
         comment.textProperty().addListener((observable, oldValue, newValue) -> check());
         statusComboBox.valueProperty().addListener((observable, oldValue, newValue) -> check());
+        repairPrice.textProperty().addListener((observable, oldValue, newValue) ->{
+            if(!newValue.matches("\\d*")){repairPrice.setText(oldValue);}});
 
         tableLogs.setRowFactory(tv -> {
             TableRow<TicketLogs> row = new TableRow<>();
@@ -260,17 +282,26 @@ public class EditTicketController {
             }
             idNameModel++;
         }
-
         elementComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
            elementTextField.setText(String.valueOf(idPrice(newValue,idModel)));
-
+           listNameSpare.set(0,String.valueOf(newValue));
+        });
+        elementTextField.textProperty().addListener((observable, oldValue, newValue) ->{
+            if(!newValue.matches("\\d*")){elementTextField.setText(oldValue);}
+            checkPrice(listTextField,repairPrice.getText());
+        });
+        repairPrice.textProperty().addListener((observable, oldValue, newValue) ->{
+            checkPrice(listTextField,repairPrice.getText());
         });
 
 
         listComboBox.add(elementComboBox);
         listTextField.add(elementTextField);
 
-
+        if(dataTickets.getListNameSpareParts().size()>0) {
+            stockRead(dataTickets.getListNameSpareParts(), dataTickets.getListPriceSpareParts() , dataTickets.getListValidSpareParts());
+        }
+        checkPrice(listTextField,repairPrice.getText());
         /********************************************************************************************/
 
     }
@@ -318,6 +349,19 @@ public class EditTicketController {
             saveButton.setDisable(false);
         }
     }
+
+    private void checkPrice(List<TextField> listSpare, String repairPrice){
+        int sp = 0;
+        int rp = 0;
+        for(int i=0; i<listSpare.size(); i++){
+            if(!listSpare.get(i).getText().equals("")){sp = sp + Integer.parseInt(listSpare.get(i).getText());}
+        }
+
+
+        if(!repairPrice.equals("")){rp = Integer.parseInt(repairPrice);}
+        int sum = sp + rp;
+        totalPrice.setText(String.valueOf(sum));
+    }
     private int StringToInt(String inputString){
         try{
             return Integer.parseInt(inputString);
@@ -330,6 +374,7 @@ public class EditTicketController {
 
     @FXML
     public void saveEditTicket() {
+        updateValid(dataTickets.getListNameSpareParts(),listNameSpare,listValid);
         /**
          * Проверка id статуса из массива getAllStatus()
          */
@@ -345,10 +390,10 @@ public class EditTicketController {
         }
             if (statusComboBox.getSelectionModel().getSelectedIndex() + 1 != 0) {
                 dataTickets.saveEditTicketWrite(dataTickets.getIdTicket(), idStatusTrue, phone.getText(), fullName.getText(), device.getText(), model.getText(),
-                        defect.getText(), note.getText(), condition.getText(), comment.getText(), Integer.parseInt(numberTicketText.getText()), listComboBox,listTextField);
+                        defect.getText(), note.getText(), condition.getText(), comment.getText(), Integer.parseInt(numberTicketText.getText()), listComboBox,listTextField, Integer.parseInt(repairPrice.getText()), listValid);
             } else {
                 dataTickets.saveEditTicketWrite(dataTickets.getIdTicket(), Integer.parseInt(dataTickets.getIdStatusTicket()), phone.getText(), fullName.getText(), device.getText(), model.getText(),
-                        defect.getText(), note.getText(), condition.getText(), comment.getText(), Integer.parseInt(numberTicketText.getText()), listComboBox,listTextField);
+                        defect.getText(), note.getText(), condition.getText(), comment.getText(), Integer.parseInt(numberTicketText.getText()), listComboBox,listTextField, Integer.parseInt(repairPrice.getText()), listValid);
             }
         String getStatusComboBox;
 
@@ -417,13 +462,10 @@ public class EditTicketController {
 
     }
 
-    private int i = 3;
-    List<ComboBox> listComboBox = new ArrayList<>();
-    List<TextField> listTextField = new ArrayList<>();
+    private int i = 4;
 
 
     /**ДОБАВИТЬ ЗАПЧАСТЬ*/
-
     @FXML
     void elementButton() {
         HBox hBox = new HBox();
@@ -445,19 +487,27 @@ public class EditTicketController {
         button.setText("-");
         button.setPrefWidth(25.0);
         button.setMinWidth(Region.USE_PREF_SIZE);
-        button.setOnAction(new EventHandler<ActionEvent>() {
 
-            @Override
-            public void handle(ActionEvent event) {
-                /**БЛОК КОДА ПО УДАЛЕНИЮ СТРОК*/
-            }
-        });
         hBox.getChildren().addAll(label, comboBox, textField, button);
         gridPane.add(hBox, 0, i);
         i++;
-
         listComboBox.add(comboBox);
         listTextField.add(textField);
+        listValid.add(0);
+        listNameSpare.add("");
+        button.setOnMouseClicked(event -> {
+            deleteRow(gridPane, gridPane.getRowIndex(hBox));
+            i--;
+            listComboBox.remove(gridPane.getRowIndex(hBox)-3);
+            listTextField.remove(gridPane.getRowIndex(hBox)-3);
+            listValid.remove(gridPane.getRowIndex(hBox)-3);
+            listNameSpare.remove(gridPane.getRowIndex(hBox)-3);
+            checkPrice(listTextField, repairPrice.getText());
+        }
+    );
+        textField.textProperty().addListener((observable, oldValue, newValue) -> {
+            checkPrice(listTextField, repairPrice.getText());
+        });
 
         if("comboBox_" + i != null){
             int idNameModelTwo=0;
@@ -472,11 +522,172 @@ public class EditTicketController {
         }
         comboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
             textField.setText(String.valueOf(idPrice((String) newValue,idModel)));
-
+            listNameSpare.set(gridPane.getRowIndex(hBox)-3, String.valueOf(newValue));
+        });
+        }
+        textField.textProperty().addListener((observable, oldValue, newValue) -> {
         });
 
-        }
 
     }
+    private int searchNameSpareId(List<String> name, String text){
+        int i = 0;
+        int id =0;
+        for (String s:name){
+            if(s.equals(text)){ id = i;}
+            i++;
+        }
+        return id;
+    }
+
+    private void deleteRow(GridPane grid, final int row) {
+        Set<Node> deleteNodes = new HashSet<>();
+        for (Node child : grid.getChildren()) {
+            // get index from child
+            Integer rowIndex = GridPane.getRowIndex(child);
+            // handle null values for index=0
+            int r = rowIndex == null ? 0 : rowIndex;
+            if (r > row) {
+                // decrement rows for rows after the deleted row
+                GridPane.setRowIndex(child, r-1);
+            } else if (r == row) {
+                // collect matching rows for deletion
+                deleteNodes.add(child);
+            }
+        }
+        // remove nodes from row
+        grid.getChildren().removeAll(deleteNodes);
+        if(dataTickets.getListNameSpareParts().size()> row-3){
+            if(listValid.get(row-3) != 0){
+                dataTickets.setUpdateAmountSpare(model.getText(), dataTickets.getListNameSpareParts().get(row-3));
+                dataTickets.getListNameSpareParts().remove(row-3);
+            }
+        }
+    }
+
+    private void stockRead(List<String> name, List<String> price, List<Integer> valid){
+        elementComboBox.setValue(name.get(0));
+        elementTextField.setText(price.get(0));
+     for(int idR = 1; idR<name.size(); idR++){
+        HBox hBox = new HBox();
+        hBox.setAlignment(Pos.CENTER_LEFT);
+        Label label = new Label("Запчасть");
+        label.setPrefWidth(100.0);
+        label.setMinWidth(100.0);
+        hBox.setMargin(label, new Insets(0, 10, 0, 10));
+        ComboBox comboBox = new ComboBox();
+        comboBox.setEditable(true);
+        comboBox.setMaxWidth(1.7976931348623157E308);
+        comboBox.setValue(name.get(idR));
+        hBox.setHgrow(comboBox, Priority.ALWAYS);
+        TextField textField = new TextField();
+        textField.setPrefWidth(70.0);
+        textField.setMaxWidth(Region.USE_PREF_SIZE);
+        textField.setMinWidth(Region.USE_PREF_SIZE);
+        textField.setText(price.get(idR));
+        hBox.setMargin(textField, new Insets(0, 5, 0, 5));
+        Button button = new Button();
+        button.setText("-");
+        button.setPrefWidth(25.0);
+        button.setMinWidth(Region.USE_PREF_SIZE);
+        button.setOnMouseClicked(event -> {
+                deleteRow(gridPane, gridPane.getRowIndex(hBox));
+                i--;
+
+                listComboBox.remove(gridPane.getRowIndex(hBox)-3);
+                listTextField.remove(gridPane.getRowIndex(hBox)-3);
+                listValid.remove(gridPane.getRowIndex(hBox)-3);
+                listNameSpare.remove(gridPane.getRowIndex(hBox)-3);
+                checkPrice(listTextField,repairPrice.getText());
+
+        });
+        hBox.getChildren().addAll(label, comboBox, textField, button);
+        gridPane.add(hBox, 0, i);
+        i++;
+         listComboBox.add(comboBox);
+         listTextField.add(textField);
+         textField.textProperty().addListener((observable, oldValue, newValue) -> {
+             checkPrice(listTextField, repairPrice.getText());
+         });
+         if("comboBox_" + i != null){
+             int idNameModelTwo=0;
+             List<Integer> idModel = new ArrayList();
+             for(String s: dataTickets.getModelList()) {
+                 if (s.equals(model.getText())){
+                     idModel.add(idNameModelTwo);
+                     comboBox.setPromptText("Имеется запчасть");
+                     comboBox.getItems().add(dataTickets.getNameList().get(idNameModelTwo));
+                 }
+                 idNameModelTwo++;}
+             comboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+                 textField.setText(String.valueOf(idPrice((String) newValue,idModel)));
+                 listNameSpare.set(gridPane.getRowIndex(hBox)-3, String.valueOf(newValue));
+             });
+         }
+         textField.textProperty().addListener((observable, oldValue, newValue) -> {
+
+         });
+
+     }
+
+    }
+    private void updateValid(List<String> name_DB, List<String> name_API, List<Integer> listValid_API){
+        Set<String> uniqueName = new LinkedHashSet<>(); //Коллекция уникальных значений в списке name_API
+        ArrayList<ArrayList<Integer>> listNameNumbers = new ArrayList<>();
+        /*Заполнение мнимых коллекций*/
+        int i=0;
+        for (String d: name_API) {
+            if(uniqueName.add(d)){
+                listNameNumbers.add(new ArrayList<>());
+                int y=0;
+                for (String s: uniqueName) {
+                    if(s.equals(d)){
+                        listNameNumbers.get(y).add(i);
+                    }
+                    y++;
+                }
+            }else{
+                int y=0;
+                for (String s: uniqueName) {
+                    if(s.equals(d)){
+                        listNameNumbers.get(y).add(i);
+                    }
+                    y++;
+                }
+            }
+            i++;
+        }
+        /*Корректировка списка валидации*/
+        int k=0;
+        for (String s: uniqueName){
+            int amount = amountInList(name_DB, s);
+            if(amount!=0) {
+                int l=0;
+                for (int j: listNameNumbers.get(k)) {
+                    if(amount>l){
+                        listValid_API.set(j, 1);
+                    }else{
+                        listValid_API.set(j, 0);
+                    }
+                    l++;
+                }
+            }else{
+                for(int j: listNameNumbers.get(k)) {
+                    listValid_API.set(j, 0);
+                }
+            }
+            k++;
+        }
+    }
+
+    private int amountInList(List<String> name, String text){
+        int i=0;
+        for(String s:name){
+            if(s.equals(text))i++;
+        }
+        return i;
+    }
+
+
 
 }
