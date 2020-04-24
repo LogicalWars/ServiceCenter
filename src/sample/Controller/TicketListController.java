@@ -10,7 +10,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import sample.Model.DataTickets;
 import sample.Model.Tickets;
 
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class TicketListController {
 
@@ -68,40 +71,33 @@ public class TicketListController {
     }
 
 
-    public ObservableList<Tickets> search(String text){
+    public void search(String text){
         int i=0;
-        ObservableList<Tickets> list0 = FXCollections.observableArrayList();
-        ObservableList<Tickets> list = FXCollections.observableArrayList();
-        ObservableList<Tickets> list1 = FXCollections.observableArrayList();
-        ObservableList<Tickets> list2 = FXCollections.observableArrayList();
-        for(String s: dataTickets.getPhoneSeachList() ){
-            if(s.contains(text)){
-                list0.add(new Tickets(Integer.parseInt(dataTickets.getIdSeachList().get(i)),dataTickets.getPhoneSeachList().get(i), dataTickets.getFullNameSeachList().get(i),dataTickets.getDateSeachList().get(i),dataTickets.getStatusSeachList().get(i)));
-            }
-            i++;}
         int y=0;
-        for(String d: dataTickets.getIdSeachList()){
-            if(d.contains(text)){
-                list1.add(new Tickets(Integer.parseInt(dataTickets.getIdSeachList().get(y)),dataTickets.getPhoneSeachList().get(y), dataTickets.getFullNameSeachList().get(y),dataTickets.getDateSeachList().get(y),dataTickets.getStatusSeachList().get(y)));
-            }
-            y++;
-
-        }
         int z=0;
-        for(String f: dataTickets.getFullNameSeachList()){
+        ObservableList<Tickets> list = FXCollections.observableArrayList();
+        Set<Tickets> l = new HashSet<>();
+        list.clear();
+        l.clear();
+        l.addAll(searchArray(dataTickets.getIdSeachList(),text));
+        l.addAll(searchArray(dataTickets.getPhoneSeachList(),text));
+        l.addAll(searchArray(dataTickets.getFullNameSeachList(),text));
+        list.addAll(l);
+        Collections.sort(list);
+        tableTickets.getItems().clear();
+        tableTickets.setItems(list);
+
+    }
+    private Set<Tickets> searchArray (List<String> list, String text){
+        Set<Tickets> l = new HashSet<>();
+        int z=0;
+        for(String f: list){
             if(f.contains(text)){
-                list1.add(new Tickets(Integer.parseInt(dataTickets.getIdSeachList().get(z)),dataTickets.getPhoneSeachList().get(z), dataTickets.getFullNameSeachList().get(z),dataTickets.getDateSeachList().get(z),dataTickets.getStatusSeachList().get(z)));
+                l.add(new Tickets(Integer.parseInt(dataTickets.getIdSeachList().get(z)),dataTickets.getPhoneSeachList().get(z), dataTickets.getFullNameSeachList().get(z),dataTickets.getDateSeachList().get(z),dataTickets.getStatusSeachList().get(z)));
             }
             z++;
         }
-        HashSet<Tickets> l = new HashSet<>();
-        l.addAll(list0);
-        l.addAll(list1);
-        l.addAll(list2);
-        list.addAll(l);
-        tableTickets.getItems().clear();
-        tableTickets.setItems(list);
-        return list;
+        return l;
     }
 
 

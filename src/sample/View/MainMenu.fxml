@@ -8,95 +8,81 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
 <BorderPane fx:id="paneMainContent" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" styleClass="border-pane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
 
-   <top>
-      <MenuBar BorderPane.alignment="CENTER">
-        <menus>
-          <Menu mnemonicParsing="false" styleClass="label-menu" text="Меню">
-            <items>
-              <MenuItem fx:id="ticketListButton" mnemonicParsing="false" onAction="#ticketList" text="Заявки" />
-                  <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem fx:id="stockButton" mnemonicParsing="false" onAction="#stockList" text="Склад" />
-                  <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" text="Отчеты" />
-            </items>
-          </Menu>
-            <Menu mnemonicParsing="false" text="Настройки">
-              <items>
-                <MenuItem mnemonicParsing="false" text="Настройки" />
-                  <MenuItem mnemonicParsing="false" onAction="#userList" text="Пользователи" />
-              </items>
-            </Menu>
-            <Menu mnemonicParsing="false" text="Печать">
-              <items>
-                  <MenuItem fx:id="printPattern" mnemonicParsing="false" onAction="#editPrintPattern" text="Шаблон" />
-              </items>
-            </Menu>
-        </menus>
-      </MenuBar>
-   </top>
-   <bottom>
-      <HBox alignment="CENTER_LEFT" BorderPane.alignment="CENTER">
-         <children>
-            <Label fx:id="infoLeft" alignment="CENTER_RIGHT" cache="true" cacheHint="QUALITY" depthTest="DISABLE" text="Информация" textAlignment="CENTER">
-               <HBox.margin>
-                  <Insets bottom="5.0" left="10.0" top="5.0" />
-               </HBox.margin>
-               <padding>
-                  <Insets left="10.0" right="10.0" />
-               </padding></Label>
-            <Pane HBox.hgrow="ALWAYS" />
-            <Label fx:id="user" text="Пользователь">
-               <HBox.margin>
-                  <Insets right="10.0" />
-               </HBox.margin></Label>
-            <Button fx:id="logOffButton" mnemonicParsing="false" onAction="#logOff" text="Выйти" />
-         </children>
-         <BorderPane.margin>
-            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-         </BorderPane.margin>
-      </HBox>
-   </bottom>
-   <right>
-      <VBox alignment="TOP_CENTER" BorderPane.alignment="TOP_CENTER">
-         <BorderPane.margin>
-            <Insets left="5.0" right="5.0" top="5.0" />
-         </BorderPane.margin>
-         <children>
-          <Button fx:id="createNewTicketButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#newTicket" text="Создать заявку" textAlignment="CENTER">
-               <font>
-                  <Font size="18.0" />
-               </font>
-               <VBox.margin>
-                  <Insets bottom="10.0" />
-               </VBox.margin>
-            </Button>
-            <TextField fx:id="searchTextField" prefHeight="25.0" prefWidth="134.0" promptText="Поиск">
-               <VBox.margin>
-                  <Insets bottom="5.0" />
-               </VBox.margin>
-            </TextField>
-            <HBox>
-               <children>
-                  <Button mnemonicParsing="false" text="Поиск" />
-               </children>
-               <VBox.margin>
-                  <Insets bottom="5.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox>
-               <children>
-                  <Button mnemonicParsing="false" text="Расширенный поиск" />
-               </children>
-            </HBox>
-         </children>
-      </VBox>
-   </right>
+    <top>
+        <VBox BorderPane.alignment="CENTER">
+            <children>
+                <MenuBar>
+                    <menus>
+                        <Menu mnemonicParsing="false" styleClass="label-menu" text="Меню">
+                            <items>
+                                <MenuItem fx:id="ticketListButton" mnemonicParsing="false" onAction="#ticketList" text="Заявки" />
+                                <SeparatorMenuItem mnemonicParsing="false" />
+                                <MenuItem fx:id="stockButton" mnemonicParsing="false" onAction="#stockList" text="Склад" />
+                                <SeparatorMenuItem mnemonicParsing="false" />
+                                <MenuItem mnemonicParsing="false" text="Отчеты" />
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Настройки">
+                            <items>
+                                <MenuItem mnemonicParsing="false" text="Настройки" />
+                                <MenuItem mnemonicParsing="false" onAction="#userList" text="Пользователи" />
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Печать">
+                            <items>
+                                <MenuItem fx:id="printPattern" mnemonicParsing="false" onAction="#editPrintPattern" text="Шаблон" />
+                            </items>
+                        </Menu>
+                    </menus>
+                </MenuBar>
+                <AnchorPane>
+                    <children>
+                        <Button fx:id="createNewTicketButton" focusTraversable="false" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#newTicket" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <HBox fx:id="searchToolBox" alignment="CENTER_LEFT" layoutX="357.0" layoutY="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <children>
+                                <TextField fx:id="searchTextField" focusTraversable="false" prefHeight="30.0" prefWidth="200.0" promptText="Поиск">
+                                    <HBox.margin>
+                                        <Insets />
+                                    </HBox.margin>
+                                </TextField>
+                            </children>
+                        </HBox>
+                    </children>
+                    <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                    </padding>
+                </AnchorPane>
+            </children>
+        </VBox>
+    </top>
+    <bottom>
+        <HBox alignment="CENTER_LEFT" BorderPane.alignment="CENTER">
+            <children>
+                <Label fx:id="infoLeft" alignment="CENTER_RIGHT" cache="true" cacheHint="QUALITY" depthTest="DISABLE" text="Информация" textAlignment="CENTER">
+                    <HBox.margin>
+                        <Insets bottom="5.0" left="10.0" top="5.0" />
+                    </HBox.margin>
+                    <padding>
+                        <Insets left="10.0" right="10.0" />
+                    </padding></Label>
+                <Pane HBox.hgrow="ALWAYS" />
+                <Label fx:id="user" text="Пользователь">
+                    <HBox.margin>
+                        <Insets right="10.0" />
+                    </HBox.margin></Label>
+                <Button fx:id="logOffButton" mnemonicParsing="false" onAction="#logOff" text="Выйти" />
+            </children>
+            <BorderPane.margin>
+                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+            </BorderPane.margin>
+        </HBox>
+    </bottom>
 </BorderPane>

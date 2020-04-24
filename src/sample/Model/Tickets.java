@@ -5,7 +5,7 @@ import javafx.beans.property.SimpleStringProperty;
 
 import java.util.Date;
 
-public class Tickets {
+public class Tickets implements Comparable<Tickets> {
     private SimpleIntegerProperty idTicket;             //№ заявки
     private SimpleStringProperty phoneNumber;           //Номер телефона
     private SimpleStringProperty fullName;              //ФИО
@@ -36,4 +36,34 @@ public class Tickets {
     public String getStatusTicket(){return statusTicket.get();}
     public void setStatus(String value){statusTicket.set(value);}
 
+    @Override
+    public boolean equals(Object o) {
+        // 1
+        if (this == o) {
+            return true;
+        }
+
+        // 2
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+
+        }
+
+        // 3
+        Tickets t = (Tickets) o;
+        return idTicket.getValue() == t.idTicket.getValue() &&
+               phoneNumber.getValue().equals(t.phoneNumber.getValue()) &&
+               fullName.getValue().equals(t.fullName.getValue())&&
+                dateCreateTicket.getValue().equals(dateCreateTicket.getValue())&&
+                statusTicket.getValue().equals(statusTicket.getValue());
+    }
+    @Override
+    public int hashCode() {
+        return (545353534);
+    }
+
+    @Override
+    public int compareTo(Tickets tickets) {
+        return tickets.getIdTicket() - this.getIdTicket();
+    }
 }

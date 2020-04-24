@@ -8,7 +8,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sample.Enum.User;
@@ -30,7 +32,12 @@ public class MainMenuController {
     @FXML
     private MenuItem stockButton;
     @FXML
+    private Button createNewTicketButton;
+    @FXML
     private TextField searchTextField;
+    @FXML
+    private HBox searchToolBox;
+
 
     TicketListController ticketListController;
     @FXML
@@ -43,9 +50,16 @@ public class MainMenuController {
             stockButton.setDisable(false);
         }else{stockButton.setDisable(true);}
 
+
         searchTextField.textProperty().addListener((observableValue, oldValue, newValue) -> {
         ticketListController.search(newValue);
          });
+
+
+        ImageView iconsAdd = new ImageView("sample/View/icons/add.png");
+        iconsAdd.setFitHeight(20);
+        iconsAdd.setFitWidth(20);
+        createNewTicketButton.graphicProperty().setValue(iconsAdd);
     }
 
     @FXML
@@ -82,6 +96,7 @@ public class MainMenuController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        searchToolBox.setVisible(false);
     }
 
     @FXML
@@ -96,6 +111,7 @@ public class MainMenuController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        searchToolBox.setVisible(true);
     }
 
 
@@ -113,6 +129,7 @@ public class MainMenuController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        searchToolBox.setVisible(false);
     }
 
 
