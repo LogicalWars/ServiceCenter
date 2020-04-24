@@ -14,12 +14,13 @@ public enum User {
 
     public static User USER;
     public static String loginUser;
+    public static int userID;
 
     public static void getUserRole(String login, String password){
         try {
             DBProcessor dbProcessor = new DBProcessor();
             Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
-            String query = "SELECT `rules`, `login` " +
+            String query = "SELECT `rules`, `login`, `userID` " +
                     "FROM `rules` WHERE " +
                     "`login` = '" + login + "'" +
                     "AND " +
@@ -31,6 +32,7 @@ public enum User {
             while (res.next()) {
                 String rulesString = res.getString("rules");
                 loginUser = res.getString("login");
+                userID = res.getInt("userID");
                 if(USER == null) {
                     if (rulesString.equals(ADMIN.name())) {
                         USER = ADMIN;

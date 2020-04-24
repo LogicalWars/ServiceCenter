@@ -78,7 +78,7 @@
                   <Insets bottom="10.0" />
                </VBox.margin>
             </Button>
-            <TextField prefHeight="25.0" prefWidth="134.0" promptText="Поиск">
+            <TextField fx:id="searchTextField" prefHeight="25.0" prefWidth="134.0" promptText="Поиск">
                <VBox.margin>
                   <Insets bottom="5.0" />
                </VBox.margin>

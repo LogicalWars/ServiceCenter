@@ -126,7 +126,7 @@
                               <TextField fx:id="model" HBox.hgrow="ALWAYS" />
                            </children>
                         </HBox>
-                        <Button mnemonicParsing="false" onAction="#addSparePart" text="Добавить запчасть" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                        <Button fx:id="addSparePart" mnemonicParsing="false" onAction="#addSparePart" text="Добавить запчасть" GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <GridPane.margin>
                               <Insets left="10.0" />
                            </GridPane.margin>

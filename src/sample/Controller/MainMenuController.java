@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -28,15 +29,23 @@ public class MainMenuController {
     private Button logOffButton;
     @FXML
     private MenuItem stockButton;
+    @FXML
+    private TextField searchTextField;
 
+    TicketListController ticketListController;
     @FXML
     public void initialize() {
+
         ticketList();
         infoLeft.setText(new DBProcessor().resultConnection());
         user.setText(User.loginUser);
         if(User.USER == User.ADMIN || User.USER == User.MASTER) {
             stockButton.setDisable(false);
         }else{stockButton.setDisable(true);}
+
+        searchTextField.textProperty().addListener((observableValue, oldValue, newValue) -> {
+        ticketListController.search(newValue);
+         });
     }
 
     @FXML
@@ -82,7 +91,7 @@ public class MainMenuController {
             loader.setController(new TicketListController());
             Parent newPane = loader.load();
             paneMainContent.setCenter(newPane);
-            TicketListController ticketListController = loader.getController();
+            ticketListController = loader.getController();
             ticketListController.setMainMenuController(this);
         } catch (IOException e) {
             e.printStackTrace();

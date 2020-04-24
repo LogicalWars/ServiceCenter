@@ -116,6 +116,32 @@ public class DataTickets {
         return conditionTicket;
     }
 
+    private ArrayList<String> phoneSeachList = new ArrayList<>();
+    private ArrayList<String> fullNameSeachList = new ArrayList<>();
+    private ArrayList<String> idSeachList = new ArrayList<>();
+    private ArrayList<String> dateSeachList = new ArrayList<>();
+    private ArrayList<String> statusSeachList = new ArrayList<>();
+
+    public ArrayList<String> getIdSeachList() {
+        return idSeachList;
+    }
+
+    public ArrayList<String> getDateSeachList() {
+        return dateSeachList;
+    }
+
+    public ArrayList<String> getStatusSeachList() {
+        return statusSeachList;
+    }
+
+    public ArrayList<String> getPhoneSeachList() {
+        return phoneSeachList;
+    }
+
+    public ArrayList<String> getFullNameSeachList() {
+        return fullNameSeachList;
+    }
+
     public void dataTicketsRead() {
         try {
             DBProcessor dbProcessor = new DBProcessor();
@@ -131,6 +157,12 @@ public class DataTickets {
                 DateTimeFormatter shortDateTime = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
                 String status = res.getString("status");
                 ticketsData.add(new Tickets(id, p, name, shortDateTime.format(date1), status));
+                idSeachList.add(String.valueOf(id));
+                phoneSeachList.add(p);
+                fullNameSeachList.add(name);
+                dateSeachList.add( shortDateTime.format(date1));
+                statusSeachList.add(status);
+
             }
             stmt.close();
             conn.close();
@@ -263,42 +295,45 @@ public class DataTickets {
                                 String numberTicketOld,
                                 String numberTicketNew,
                                 int userId) {
-        try {
-            DBProcessor dbProcessor = new DBProcessor();
-            Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
-            String create = "CALL sp_saveEditTicketLogs (" + idTicket + "," +
-                    " '" + phoneNumberOld + "'," +
-                    " '" + phoneNumberNew + "'," +
-                    " '" + fullNameOld + "'," +
-                    " '" + fullNameNew + "'," +
-                    " '" + statusOld + "'," +
-                    " '" + statusNew + "'," +
-                    " '" + deviceOld + "'," +
-                    " '" + deviceNew + "'," +
-                    " '" + modelOld + "'," +
-                    " '" + modelNew + "'," +
-                    " '" + defectOld + "'," +
-                    " '" + defectNew + "'," +
-                    " '" + noteOld + "'," +
-                    " '" + noteNew + "'," +
-                    " '" + conditionOld + "'," +
-                    " '" + conditionNew + "'," +
-                    " '" + commentOld + "'," +
-                    " '" + commentNew + "'," +
-                    " '" + numberTicketOld + "'," +
-                    " '" + numberTicketNew + "'," +
-                    " "  + userId + "," +
-                    "'"  + LocalDateTime.now() + "');";
-            try (Statement stmt = conn.createStatement()) {
-                stmt.execute(create);
-            } catch (SQLException e) {
-                System.out.println(e);
-                e.getErrorCode();
-            }
-            conn.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+       if(User.OPERATOR == User.USER){
+           try {
+               DBProcessor dbProcessor = new DBProcessor();
+               Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
+
+               String create = "CALL sp_saveEditTicketLogs (" + idTicket + "," +
+                       " '" + phoneNumberOld + "'," +
+                       " '" + phoneNumberNew + "'," +
+                       " '" + fullNameOld + "'," +
+                       " '" + fullNameNew + "'," +
+                       " '" + statusOld + "'," +
+                       " '" + statusNew + "'," +
+                       " '" + deviceOld + "'," +
+                       " '" + deviceNew + "'," +
+                       " '" + modelOld + "'," +
+                       " '" + modelNew + "'," +
+                       " '" + defectOld + "'," +
+                       " '" + defectNew + "'," +
+                       " '" + noteOld + "'," +
+                       " '" + noteNew + "'," +
+                       " '" + conditionOld + "'," +
+                       " '" + conditionNew + "'," +
+                       " '" + commentOld + "'," +
+                       " '" + commentNew + "'," +
+                       " '" + numberTicketOld + "'," +
+                       " '" + numberTicketNew + "'," +
+                       " "  + userId + "," +
+                       "'"  + LocalDateTime.now() + "');";
+               try (Statement stmt = conn.createStatement()) {
+                   stmt.execute(create);
+               } catch (SQLException e) {
+                   System.out.println(e);
+                   e.getErrorCode();
+               }
+               conn.close();
+           } catch (SQLException e) {
+               e.printStackTrace();
+           }
+       }
     }
 
     public void ticketLogsRead(int id) {
@@ -314,7 +349,7 @@ public class DataTickets {
                 String i = res.getString("date");
                 LocalDateTime date1 = LocalDateTime.parse(i, formatter);
                 DateTimeFormatter fr = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
-                String userLogin = res.getString("login");
+                String userLogin = res.getString("name");
                 int idLog = res.getInt("id");
                 ticketLogs.add(new TicketLogs(idLogs, date1.format(fr), idLog, userLogin));
                 idLogs++;

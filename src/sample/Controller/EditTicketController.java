@@ -90,6 +90,8 @@ public class EditTicketController {
     private GridPane gridPane;
     @FXML
     private Label haveSpareLabel;
+    @FXML
+    private Button addSparePart;
 
     DataTickets dataTickets = new DataTickets();
     private List<ComboBox> listComboBox = new ArrayList<>();
@@ -248,12 +250,25 @@ public class EditTicketController {
                         statusComboBox.setDisable(true);break;
                 }break;
         }
+        if(User.USER == User.OPERATOR){
+            repairPrice.setEditable(false);
+            repairPrice.setStyle("-fx-text-fill: rgba(116,32,0,0.91)");
+            addSparePart.setDisable(true);
+
+        }
 
         /*Работа с запчастями*/
 
         if(dataTickets.getListNameSpareParts().size()>0) {
             stockRead(dataTickets.getListNameSpareParts(), dataTickets.getListPriceSpareParts() , dataTickets.getListValidSpareParts());
         }
+        repairPrice.textProperty().addListener((observableValue, oldValue, newValue) -> {
+            calculationPrice(listTextField,repairPrice.getText());
+            if(oldValue == null){
+                oldValue = " ";
+                if(!oldValue.equals(newValue)){saveButton.setDisable(false);}
+            }else{if(!oldValue.equals(newValue)){saveButton.setDisable(false);}}
+        });
         calculationPrice(listTextField,repairPrice.getText());
 
         changeModel();
@@ -312,7 +327,7 @@ public class EditTicketController {
                 comment.getText(),
                 String.valueOf(dataTickets.getNumberTicket()),
                 numberTicketText.getText(),
-                User.USER.ordinal()+1);
+                User.userID);
     }
 
     /**ДОБАВИТЬ ЗАПЧАСТЬ*/
@@ -612,10 +627,16 @@ public class EditTicketController {
                     listValid.remove(grid.getRowIndex(hBox)-4);
                     listNameSpare.remove(grid.getRowIndex(hBox)-4);
                     calculationPrice(listTextField, repairPrice.getText());
+                    saveButton.setDisable(false);
                 }
         );
         textField.textProperty().addListener((observable, oldValue, newValue) -> {
             calculationPrice(listTextField, repairPrice.getText());
+            if(oldValue == null){
+                oldValue =" ";
+                if(!oldValue.equals(newValue)){saveButton.setDisable(false);}
+            }else{if(!oldValue.equals(newValue)){saveButton.setDisable(false);}}
+
         });
 
         int idNameModelTwo=0;
@@ -630,7 +651,22 @@ public class EditTicketController {
         comboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
             textField.setText(String.valueOf(idPrice((String) newValue,idModel)));
             listNameSpare.set(grid.getRowIndex(hBox)-4, String.valueOf(newValue));
+            if(oldValue == null){
+                oldValue = " ";
+                if(!oldValue.equals(newValue)){saveButton.setDisable(false);}
+            }else{if(!oldValue.equals(newValue)){saveButton.setDisable(false);}}
+
         });
+
+        if(User.USER == User.OPERATOR){
+            comboBox.setEditable(false);
+            comboBox.setDisable(true);
+            comboBox.setStyle("-fx-text-fill: rgba(116,32,0,0.91)");
+            textField.setEditable(false);
+            textField.setDisable(true);
+            textField.setStyle("-fx-text-fill: rgba(116,32,0,0.91)");
+            button.setDisable(true);
+        }
     }
 
 }
