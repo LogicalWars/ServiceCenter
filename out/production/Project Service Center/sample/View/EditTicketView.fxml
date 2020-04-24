@@ -97,13 +97,13 @@
                         </HBox>
                         <HBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="212.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <children>
-                              <Label fx:id="totalPrice" prefHeight="17.0" prefWidth="100.0" />
-                              <Label prefHeight="17.0" text="руб." />
                               <Label prefHeight="17.0" prefWidth="100.0" text="Общая цена">
                                  <HBox.margin>
                                     <Insets left="10.0" right="10.0" />
                                  </HBox.margin>
                               </Label>
+                              <Label fx:id="totalPrice" prefHeight="17.0" prefWidth="100.0" />
+                              <Label prefHeight="17.0" text="руб." />
                            </children>
                         </HBox>
                         <HBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="180.0" GridPane.columnIndex="1">

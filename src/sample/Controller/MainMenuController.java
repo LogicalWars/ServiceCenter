@@ -7,7 +7,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sample.Enum.User;
@@ -28,6 +31,12 @@ public class MainMenuController {
     private Button logOffButton;
     @FXML
     private MenuItem stockButton;
+    @FXML
+    private Button createNewTicketButton;
+    @FXML
+    private TextField searchTextField;
+    @FXML
+    private HBox searchToolBox;
 
     @FXML
     public void initialize() {
@@ -37,6 +46,12 @@ public class MainMenuController {
         if(User.USER == User.ADMIN || User.USER == User.MASTER) {
             stockButton.setDisable(false);
         }else{stockButton.setDisable(true);}
+
+
+        ImageView iconsAdd = new ImageView("sample/View/icons/add.png");
+        iconsAdd.setFitHeight(20);
+        iconsAdd.setFitWidth(20);
+        createNewTicketButton.graphicProperty().setValue(iconsAdd);
     }
 
     @FXML
@@ -73,6 +88,7 @@ public class MainMenuController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        searchToolBox.setVisible(false);
     }
 
     @FXML
@@ -87,6 +103,7 @@ public class MainMenuController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        searchToolBox.setVisible(true);
     }
 
 
@@ -104,6 +121,7 @@ public class MainMenuController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        searchToolBox.setVisible(false);
     }
 
 
