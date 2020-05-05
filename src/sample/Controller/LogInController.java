@@ -14,6 +14,8 @@ import sample.Model.DataTickets;
 
 import java.io.IOException;
 
+import static sample.Model.DataTickets.isOnline;
+
 public class LogInController {
 
     @FXML
@@ -25,6 +27,11 @@ public class LogInController {
 
     @FXML
     public void logInButton() {
+        try {
+            System.out.println(isOnline());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         User.getUserRole(user.getText(), password.getText());
         if (User.USER != null) {
             Stage stage = (Stage) user.getScene().getWindow();

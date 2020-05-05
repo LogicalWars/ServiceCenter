@@ -7,6 +7,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import sample.Model.DB_Read.ListOfTickets;
+import sample.Model.DB_Read.TicketData;
 import sample.Model.DataTickets;
 import sample.Model.Tickets;
 
@@ -16,7 +18,7 @@ import java.util.List;
 import java.util.Set;
 
 public class TicketListController {
-
+    ListOfTickets listOfTickets = new ListOfTickets();
     public static int idRow;
     private MainMenuController mainMenuController;
 
@@ -42,7 +44,8 @@ public class TicketListController {
 
     @FXML
     private void initialize() {
-        dataTickets.dataTicketsRead();
+        ListOfTickets listOfTickets = new ListOfTickets();
+        listOfTickets.dataTicketsRead();
 
         idTicket.setCellValueFactory(new PropertyValueFactory<>("idTicket"));
         phoneNumber.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
@@ -64,12 +67,11 @@ public class TicketListController {
 
             return row;
         });
-        tableTickets.setItems(dataTickets.getTicketsData());
+        tableTickets.setItems(listOfTickets.getTicketsData());
 
 
 
     }
-
 
     public void search(String text){
         int i=0;
@@ -79,9 +81,9 @@ public class TicketListController {
         Set<Tickets> l = new HashSet<>();
         list.clear();
         l.clear();
-        l.addAll(searchArray(dataTickets.getIdSeachList(),text));
-        l.addAll(searchArray(dataTickets.getPhoneSeachList(),text));
-        l.addAll(searchArray(dataTickets.getFullNameSeachList(),text));
+        l.addAll(searchArray(listOfTickets.getIdSeachList(),text));
+        l.addAll(searchArray(listOfTickets.getPhoneSeachList(),text));
+        l.addAll(searchArray(listOfTickets.getFullNameSeachList(),text));
         list.addAll(l);
         Collections.sort(list);
         tableTickets.getItems().clear();
@@ -93,7 +95,7 @@ public class TicketListController {
         int z=0;
         for(String f: list){
             if(f.contains(text)){
-                l.add(new Tickets(Integer.parseInt(dataTickets.getIdSeachList().get(z)),dataTickets.getPhoneSeachList().get(z), dataTickets.getFullNameSeachList().get(z),dataTickets.getDateSeachList().get(z),dataTickets.getStatusSeachList().get(z)));
+                l.add(new Tickets(Integer.parseInt(listOfTickets.getIdSeachList().get(z)),listOfTickets.getPhoneSeachList().get(z), listOfTickets.getFullNameSeachList().get(z),listOfTickets.getDateSeachList().get(z),listOfTickets.getStatusSeachList().get(z)));
             }
             z++;
         }

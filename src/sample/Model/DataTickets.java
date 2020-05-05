@@ -6,6 +6,9 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import sample.Enum.User;
 
+import javax.naming.Context;
+import java.io.IOException;
+import java.net.*;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,17 +23,8 @@ import java.util.List;
 
 public class DataTickets {
 
-    private ObservableList<Tickets> ticketsData = FXCollections.observableArrayList();
 
-    public ObservableList<Tickets> getTicketsData() {
-        return ticketsData;
-    }
 
-    private ObservableList<Status> statusUpload = FXCollections.observableArrayList();
-
-    public ObservableList<Status> getStatusUpload() {
-        return statusUpload;
-    }
 
     private ObservableList<TicketLogs> ticketLogs = FXCollections.observableArrayList();
 
@@ -39,21 +33,9 @@ public class DataTickets {
     }
 
 
-    private int idTicket;
-    private int numberTicket;
-    private String phoneNumber;
-    private String fullName;
-    private String dateCreateTicket;
+
     private String dateCloseTicket;
-    private String statusTicket;
-    private String deviceTicket;
-    private String defectTicket;
-    private String modelTicket;
-    private String noteTicket;
-    private String conditionTicket;
-    private String idStatusTicket;
-    private String commentTicket;
-    private String repairPriceTicket;
+
 
     public String getDateCloseTicket() {
         return dateCloseTicket;
@@ -62,115 +44,8 @@ public class DataTickets {
         this.dateCloseTicket = dateCloseTicket;
     }
 
-    public String getCommentTicket() {return commentTicket;}
 
-    public String getIdStatusTicket() {
-        return idStatusTicket;
-    }
 
-    public int getIdTicket() {
-        return idTicket;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public String getDateCreateTicket() {
-        return dateCreateTicket;
-    }
-
-    public String getStatusTicket() {
-        return statusTicket;
-    }
-
-    public String getDeviceTicket() {
-        return deviceTicket;
-    }
-
-    public String getDefectTicket() {
-        return defectTicket;
-    }
-
-    public String getModelTicket() {
-        return modelTicket;
-    }
-
-    public int getNumberTicket() {
-        return numberTicket;
-    }
-
-    public String getNoteTicket() {
-        return noteTicket;
-    }
-
-    public String getRepairPriceTicket() {
-        return repairPriceTicket;
-    }
-
-    public String getConditionTicket() {
-        return conditionTicket;
-    }
-
-    private ArrayList<String> phoneSeachList = new ArrayList<>();
-    private ArrayList<String> fullNameSeachList = new ArrayList<>();
-    private ArrayList<String> idSeachList = new ArrayList<>();
-    private ArrayList<String> dateSeachList = new ArrayList<>();
-    private ArrayList<String> statusSeachList = new ArrayList<>();
-
-    public ArrayList<String> getIdSeachList() {
-        return idSeachList;
-    }
-
-    public ArrayList<String> getDateSeachList() {
-        return dateSeachList;
-    }
-
-    public ArrayList<String> getStatusSeachList() {
-        return statusSeachList;
-    }
-
-    public ArrayList<String> getPhoneSeachList() {
-        return phoneSeachList;
-    }
-
-    public ArrayList<String> getFullNameSeachList() {
-        return fullNameSeachList;
-    }
-
-    public void dataTicketsRead() {
-        try {
-            DBProcessor dbProcessor = new DBProcessor();
-            Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
-            String query = "CALL `sp_getTicketList`();";
-            Statement stmt = conn.createStatement();
-            ResultSet res = stmt.executeQuery(query);
-            while (res.next()) {
-                int id = res.getInt("numberTicket");
-                String p = res.getString("phoneNumber");
-                String name = res.getString("fullName");
-                LocalDate date1 = LocalDate.parse(res.getString("dateCreateTicket"));
-                DateTimeFormatter shortDateTime = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
-                String status = res.getString("status");
-                ticketsData.add(new Tickets(id, p, name, shortDateTime.format(date1), status));
-                idSeachList.add(String.valueOf(id));
-                phoneSeachList.add(p);
-                fullNameSeachList.add(name);
-                dateSeachList.add( shortDateTime.format(date1));
-                statusSeachList.add(status);
-
-            }
-            stmt.close();
-            conn.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-    }
 
     public void createNewTicketWrite(String textPhone, String textFullName, String textDevice, String textModel, String textDefect, String textNode, String textCondition) {
         try {
@@ -190,63 +65,10 @@ public class DataTickets {
         }
     }
 
-    public void editTicketRead(int id) throws SQLException {
-        DBProcessor dbProcessor = new DBProcessor();
-        Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
-        String query = "CALL `sp_getDataTicket`("+id+");";
-        Statement stmt = conn.createStatement();
-        ResultSet res = stmt.executeQuery(query);
-        while (res.next()) {
-            idTicket = res.getInt("idTicket");
-            numberTicket = res.getInt("numberTicket");
-            phoneNumber = checkNull(res.getString("phoneNumber"));
-            fullName = checkNull(res.getString("fullName"));
-            LocalDate date = LocalDate.parse(res.getString("dateCreateTicket"));
-            DateTimeFormatter shortDateTime = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
-            dateCreateTicket = checkNull(shortDateTime.format(date));
-            statusTicket = checkNull(res.getString("status"));
-            deviceTicket = checkNull(res.getString("device"));
-            defectTicket = checkNull(res.getString("defect"));
-            modelTicket = checkNull(res.getString("model"));
-            noteTicket = checkNull(res.getString("note"));
-            conditionTicket = checkNull(res.getString("condition"));
-            idStatusTicket = checkNull(res.getString("status_id"));
-            commentTicket = checkNull(res.getString("comment"));
-            repairPriceTicket = checkNull(res.getString("repairPrice"));
 
 
-            if(statusTicket.equals("Выдан")) {
-                LocalDate dateClose = LocalDate.parse(res.getString("dateCloseTicket"));
-                DateTimeFormatter shortDateClose = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
-                dateCloseTicket = shortDateClose.format(dateClose);
-            }
-        }
-    }
 
-    private ArrayList<String> allStatus = new ArrayList<>();
 
-    public ArrayList<String> getAllStatus () {
-        return allStatus;
-    }
-
-    public void statusUploadRead() {
-        try {
-            DBProcessor dbProcessor = new DBProcessor();
-            Connection conn = dbProcessor.getConnection(DBProcessor.getURL(), DBProcessor.getUSER(), DBProcessor.getPASS());
-            String query = "CALL `sp_getAllStatus`();";
-            Statement stmt = conn.createStatement();
-            ResultSet res = stmt.executeQuery(query);
-            while (res.next()) {
-                String status = checkNull(res.getString("status"));
-                statusUpload.add(new Status(status));
-                allStatus.add(status);
-            }
-            stmt.close();
-            conn.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
     public void saveEditTicketWrite(int id, int status, String phone, String fullName, String device, String model, String defect, String note, String condition, String comment, int numberTicket, List<ComboBox> nameSpare, List<TextField> price , int repairPrice, List<Integer> validSpare) {
         try {
@@ -875,4 +697,16 @@ public class DataTickets {
         }
     }
 
+    public static boolean isOnline() throws Exception {
+        InetAddress in = InetAddress.getByName("google.com");
+        System.out.println(in.isReachable(1000) ? "Host is reachable" : "Host is NOT reachable");
+        return in.isReachable(1000);
+//        URL urltype = new URL("http://ru.stackoverflow.com/");
+//        HttpURLConnection con = (HttpURLConnection) urltype.openConnection();
+//        System.out.println(con.getResponseCode()+"   "+ HttpURLConnection.HTTP_OK);
+//        if (con.getResponseCode() == HttpURLConnection.HTTP_OK){
+//
+//        }
+//        return con.getResponseCode() == HttpURLConnection.HTTP_OK;
+    }
 }

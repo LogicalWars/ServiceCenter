@@ -2,6 +2,7 @@ package sample.Controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import sample.Model.DB_Read.TicketData;
 import sample.Model.DataTickets;
 
 import java.sql.SQLException;
@@ -105,31 +106,32 @@ public class PrintTableController {
     @FXML
     public void initialize() {
         DataTickets dataTickets = new DataTickets();
+        TicketData ticketData = new TicketData();
         try {
-            dataTickets.editTicketRead(TicketListController.idRow);
+            ticketData.editTicketRead(TicketListController.idRow);
         } catch (
                 SQLException e) {
             e.printStackTrace();
         }
-        nameTicket.setText(String.valueOf(dataTickets.getNumberTicket()));
-        fullName.setText(dataTickets.getFullName());
-        phone.setText(dataTickets.getPhoneNumber());
-        note.setText(dataTickets.getNoteTicket());
-        date.setText(dataTickets.getDateCreateTicket());
-        device.setText(dataTickets.getDeviceTicket());
-        defect.setText(dataTickets.getDefectTicket());
-        model.setText(dataTickets.getModelTicket());
-        condition.setText(dataTickets.getConditionTicket());
+        nameTicket.setText(String.valueOf(ticketData.getNumberTicket()));
+        fullName.setText(ticketData.getFullName());
+        phone.setText(ticketData.getPhoneNumber());
+        note.setText(ticketData.getNoteTicket());
+        date.setText(ticketData.getDateCreateTicket());
+        device.setText(ticketData.getDeviceTicket());
+        defect.setText(ticketData.getDefectTicket());
+        model.setText(ticketData.getModelTicket());
+        condition.setText(ticketData.getConditionTicket());
 
-        nameTicket1.setText(String.valueOf(dataTickets.getNumberTicket()));
-        fullName1.setText(dataTickets.getFullName());
-        phone1.setText(dataTickets.getPhoneNumber());
-        note1.setText(dataTickets.getNoteTicket());
-        date1.setText(dataTickets.getDateCreateTicket());
-        device1.setText(dataTickets.getDeviceTicket());
-        defect1.setText(dataTickets.getDefectTicket());
-        model1.setText(dataTickets.getModelTicket());
-        condition1.setText(dataTickets.getConditionTicket());
+        nameTicket1.setText(String.valueOf(ticketData.getNumberTicket()));
+        fullName1.setText(ticketData.getFullName());
+        phone1.setText(ticketData.getPhoneNumber());
+        note1.setText(ticketData.getNoteTicket());
+        date1.setText(ticketData.getDateCreateTicket());
+        device1.setText(ticketData.getDeviceTicket());
+        defect1.setText(ticketData.getDefectTicket());
+        model1.setText(ticketData.getModelTicket());
+        condition1.setText(ticketData.getConditionTicket());
 
 
         dataTickets.editPatternPrintRead();

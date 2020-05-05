@@ -21,6 +21,8 @@ import javafx.scene.layout.Region;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sample.Enum.User;
+import sample.Model.DB_Read.ListOfStatus;
+import sample.Model.DB_Read.TicketData;
 import sample.Model.DataTickets;
 import sample.Model.Print;
 import sample.Model.Status;
@@ -94,25 +96,26 @@ public class EditTicketController {
     private Button addSparePart;
 
     DataTickets dataTickets = new DataTickets();
+    ListOfStatus listOfStatus = new ListOfStatus();
     private List<ComboBox> listComboBox = new ArrayList<>();
     private List<TextField> listTextField = new ArrayList<>();
     private List<Integer> listValid = new ArrayList<>();
     private List<String> listNameSpare = new ArrayList<>();
     private int idRowGridPane = 4;
-
+    TicketData ticketData = new TicketData();
 
     @FXML
     public void initialize() {
 
         try {
-            dataTickets.editTicketRead(TicketListController.idRow);
+            ticketData.editTicketRead(TicketListController.idRow);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        dataTickets.statusUploadRead();
+        listOfStatus.statusUploadRead();
         dataTickets.stockListDataRead();
-        dataTickets.ticketLogsRead(dataTickets.getIdTicket());
-        dataTickets.getAllSparePartsRead(dataTickets.getIdTicket());
+        dataTickets.ticketLogsRead(ticketData.getIdTicket());
+        dataTickets.getAllSparePartsRead(ticketData.getIdTicket());
 
         /*Заполнение данными API*/
 
@@ -120,22 +123,22 @@ public class EditTicketController {
         dateLog.setCellValueFactory(new PropertyValueFactory<>("dateLog"));
         user.setCellValueFactory(new PropertyValueFactory<>("user"));
 
-        numberTicket.setText(String.valueOf(dataTickets.getNumberTicket()));
-        numberTicketText.setText(String.valueOf(dataTickets.getNumberTicket()));
-        phone.setText(dataTickets.getPhoneNumber());
-        fullName.setText(dataTickets.getFullName());
-        device.setText(dataTickets.getDeviceTicket());
-        model.setText(dataTickets.getModelTicket());
-        defect.setText(dataTickets.getDefectTicket());
-        note.setText(dataTickets.getNoteTicket());
-        condition.setText(dataTickets.getConditionTicket());
-        comment.setText(dataTickets.getCommentTicket());
+        numberTicket.setText(String.valueOf(ticketData.getNumberTicket()));
+        numberTicketText.setText(String.valueOf(ticketData.getNumberTicket()));
+        phone.setText(ticketData.getPhoneNumber());
+        fullName.setText(ticketData.getFullName());
+        device.setText(ticketData.getDeviceTicket());
+        model.setText(ticketData.getModelTicket());
+        defect.setText(ticketData.getDefectTicket());
+        note.setText(ticketData.getNoteTicket());
+        condition.setText(ticketData.getConditionTicket());
+        comment.setText(ticketData.getCommentTicket());
         comment.appendText("");
-        status.setText(dataTickets.getStatusTicket());
-        date.setText(dataTickets.getDateCreateTicket());
+        status.setText(ticketData.getStatusTicket());
+        date.setText(ticketData.getDateCreateTicket());
         dateClose.setText(dataTickets.getDateCloseTicket());
-        statusComboBox.setItems(dataTickets.getStatusUpload());
-        repairPrice.setText(dataTickets.getRepairPriceTicket());
+        statusComboBox.setItems(listOfStatus.getStatusUpload());
+        repairPrice.setText(ticketData.getRepairPriceTicket());
         tableLogs.setItems(dataTickets.getTicketLogs());
 
         saveButton.setDisable(true);
@@ -283,7 +286,7 @@ public class EditTicketController {
 
         int idStatus = 1;
         int idStatusTrue = 0;
-        for(String s: dataTickets.getAllStatus()){
+        for(String s: listOfStatus.getAllStatus()){
             if (!s.equals(String.valueOf(statusComboBox.getValue()))){
                 idStatus++;
             }else{
@@ -291,41 +294,41 @@ public class EditTicketController {
             }
         }
         if (statusComboBox.getSelectionModel().getSelectedIndex() + 1 != 0) {
-            dataTickets.saveEditTicketWrite(dataTickets.getIdTicket(), idStatusTrue, phone.getText(), fullName.getText(), device.getText(), model.getText(),
+            dataTickets.saveEditTicketWrite(ticketData.getIdTicket(), idStatusTrue, phone.getText(), fullName.getText(), device.getText(), model.getText(),
                     defect.getText(), note.getText(), condition.getText(), comment.getText(), Integer.parseInt(numberTicketText.getText()), listComboBox,listTextField, Integer.parseInt(repairPrice.getText()), listValid);
         } else {
-            dataTickets.saveEditTicketWrite(dataTickets.getIdTicket(), Integer.parseInt(dataTickets.getIdStatusTicket()), phone.getText(), fullName.getText(), device.getText(), model.getText(),
+            dataTickets.saveEditTicketWrite(ticketData.getIdTicket(), Integer.parseInt(ticketData.getIdStatusTicket()), phone.getText(), fullName.getText(), device.getText(), model.getText(),
                     defect.getText(), note.getText(), condition.getText(), comment.getText(), Integer.parseInt(numberTicketText.getText()), listComboBox,listTextField, Integer.parseInt(repairPrice.getText()), listValid);
         }
         String getStatusComboBox;
 
         if (statusComboBox.getValue() == null) {
-            getStatusComboBox = dataTickets.getStatusTicket();
+            getStatusComboBox = ticketData.getStatusTicket();
         } else {
             getStatusComboBox = String.valueOf(statusComboBox.getValue());
         }
 
         mainMenuController.ticketList();
-        dataTickets.ticketLogsWrite(dataTickets.getIdTicket(),
-                dataTickets.getPhoneNumber(),
+        dataTickets.ticketLogsWrite(ticketData.getIdTicket(),
+                ticketData.getPhoneNumber(),
                 phone.getText(),
-                dataTickets.getFullName(),
+                ticketData.getFullName(),
                 fullName.getText(),
-                dataTickets.getStatusTicket(),
+                ticketData.getStatusTicket(),
                 getStatusComboBox,
-                dataTickets.getDeviceTicket(),
+                ticketData.getDeviceTicket(),
                 device.getText(),
-                dataTickets.getModelTicket(),
+                ticketData.getModelTicket(),
                 model.getText(),
-                dataTickets.getDefectTicket(),
+                ticketData.getDefectTicket(),
                 defect.getText(),
-                dataTickets.getNoteTicket(),
+                ticketData.getNoteTicket(),
                 note.getText(),
-                dataTickets.getConditionTicket(),
+                ticketData.getConditionTicket(),
                 condition.getText(),
-                dataTickets.getCommentTicket(),
+                ticketData.getCommentTicket(),
                 comment.getText(),
-                String.valueOf(dataTickets.getNumberTicket()),
+                String.valueOf(ticketData.getNumberTicket()),
                 numberTicketText.getText(),
                 User.userID);
     }
@@ -388,15 +391,15 @@ public class EditTicketController {
     /**Проверка полей для включения кнопки Save*/
 
     private void check() {
-        int numberTicketC =String.valueOf(dataTickets.getNumberTicket()).compareTo(numberTicketText.getText());
-        int phoneC = dataTickets.getPhoneNumber().compareTo(phone.getText());
-        int conditionC = dataTickets.getConditionTicket().compareTo(condition.getText());
-        int fullNameC = dataTickets.getFullName().compareTo(fullName.getText());
-        int deviceC = dataTickets.getDeviceTicket().compareTo(device.getText());
-        int modelC = dataTickets.getModelTicket().compareTo(model.getText());
-        int defectC = dataTickets.getDefectTicket().compareTo(defect.getText());
-        int noteC = dataTickets.getNoteTicket().compareTo(note.getText());
-        int commentC = dataTickets.getCommentTicket().compareTo(comment.getText());
+        int numberTicketC =String.valueOf(ticketData.getNumberTicket()).compareTo(numberTicketText.getText());
+        int phoneC = ticketData.getPhoneNumber().compareTo(phone.getText());
+        int conditionC = ticketData.getConditionTicket().compareTo(condition.getText());
+        int fullNameC = ticketData.getFullName().compareTo(fullName.getText());
+        int deviceC = ticketData.getDeviceTicket().compareTo(device.getText());
+        int modelC = ticketData.getModelTicket().compareTo(model.getText());
+        int defectC = ticketData.getDefectTicket().compareTo(defect.getText());
+        int noteC = ticketData.getNoteTicket().compareTo(note.getText());
+        int commentC = ticketData.getCommentTicket().compareTo(comment.getText());
         String statusD = "null";
         int statusC = statusD.compareTo(String.valueOf(statusComboBox.getValue()));
         if (numberTicketC == 0 && phoneC == 0 && conditionC == 0 && fullNameC == 0 && deviceC == 0 && modelC == 0 && defectC == 0 && noteC == 0 && statusC == 0 && commentC == 0) {
