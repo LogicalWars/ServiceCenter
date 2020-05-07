@@ -6,6 +6,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import org.controlsfx.control.textfield.TextFields;
+import sample.Model.DB_Read.ListOfStock;
+import sample.Model.DB_Read.NewTicketData;
 import sample.Model.DataTickets;
 
 import java.sql.SQLException;
@@ -52,27 +54,28 @@ public class NewTicketController {
         }
 
     }
-    DataTickets dataTickets = new DataTickets();
+    ListOfStock listOfStock = new ListOfStock();
+    NewTicketData newTicketData = new NewTicketData();
     @FXML
     public void initialize() {
 
-        dataTickets.stockListDataRead();
-        Set<String> set = new LinkedHashSet(dataTickets.getModelList());
+        listOfStock.stockListDataRead();
+        Set<String> set = new LinkedHashSet(listOfStock.getModelList());
         TextFields.bindAutoCompletion(textModel,set);
 
-        dataTickets.newTicketListRead();
-        Set<Integer> setPhone = new LinkedHashSet(dataTickets.getPhoneNumberList());
+        newTicketData.newTicketListRead();
+        Set<Integer> setPhone = new LinkedHashSet(newTicketData.getPhoneNumberList());
         TextFields.bindAutoCompletion(textPhone,setPhone);
-        Set<String> setDevice = new LinkedHashSet(dataTickets.getDeviceList());
+        Set<String> setDevice = new LinkedHashSet(newTicketData.getDeviceList());
         TextFields.bindAutoCompletion(textDevice,setDevice);
 
 
         textPhone.textProperty().addListener((observable, oldValue, newValue) -> {
             if(!newValue.matches("\\d*")){textPhone.setText(oldValue);}
             int idPhoneNumber = 0;
-            for(String s : dataTickets.getPhoneNumberList()){
+            for(String s : newTicketData.getPhoneNumberList()){
                 if(newValue.equals(s)){
-                    textFullName.setText(dataTickets.getFullNameList().get(idPhoneNumber));
+                    textFullName.setText(newTicketData.getFullNameList().get(idPhoneNumber));
                     break;
                 }else{textFullName.setText("");}
                 idPhoneNumber++;

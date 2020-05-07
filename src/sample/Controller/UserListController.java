@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
+import sample.Model.DB_Read.ListOfUser;
 import sample.Model.DataTickets;
 import sample.Model.Rules;
 import sample.Model.UserData;
@@ -43,16 +44,19 @@ public class UserListController {
     private Button updateButton;
 
     DataTickets dataTickets = new DataTickets();
+    ListOfUser listOfUser = new ListOfUser();
     int selectIndex;
     int statusButton = 0;
+
     @FXML
     void initialize(){
         updateButton.setDisable(true);
-        dataTickets.UserListDataRead();
-        dataTickets.allRules();
+        listOfUser.UserListDataRead();
+        listOfUser.allRules();
         saveButton.setDisable(true);
         editMenu.setDisable(true);
         validCheckBox.setSelected(true);
+
         userId.setCellValueFactory(new PropertyValueFactory<>("userId"));
         login.setCellValueFactory(new PropertyValueFactory<>("login"));
         password.setCellValueFactory(new PropertyValueFactory<>("password"));
@@ -60,8 +64,8 @@ public class UserListController {
         name.setCellValueFactory(new PropertyValueFactory<>("name"));
         valid.setCellValueFactory(new PropertyValueFactory<>("valid"));
 
-        tableUserList.setItems(dataTickets.getUserListData());
-        rulesComboBox.setItems(dataTickets.getAllRulesData());
+        tableUserList.setItems(listOfUser.getUserListData());
+        rulesComboBox.setItems(listOfUser.getAllRulesData());
         nameTextField.textProperty().addListener((observable, oldValue, newValue) -> {test();});
         loginTextField.textProperty().addListener((observable, oldValue, newValue) -> {test();});
         passwordTextField.textProperty().addListener((observable, oldValue, newValue) -> {test();});
@@ -78,7 +82,7 @@ public class UserListController {
                     nameTextField.setText(tableUserList.getSelectionModel().getSelectedItem().getName());
                     passwordTextField.setText(tableUserList.getSelectionModel().getSelectedItem().getPassword());
                     Rules idR = null;
-                    for(Rules s: dataTickets.getAllRulesData()){
+                    for(Rules s: listOfUser.getAllRulesData()){
                         String S = String.valueOf(s);
                         if(S.equals(tableUserList.getSelectionModel().getSelectedItem().getRules())){
                             idR = s;
@@ -101,15 +105,15 @@ public class UserListController {
         if(validCheckBox.isSelected()) isValid = 1;
         dataTickets.addNewUser(nameTextField.getText(), loginTextField.getText(), passwordTextField.getText(), String.valueOf(rulesComboBox.getValue()), isValid);
         tableUserList.getItems().clear();
-        dataTickets.UserListDataRead();
-        tableUserList.setItems(dataTickets.getUserListData());
+        listOfUser.UserListDataRead();
+        tableUserList.setItems(listOfUser.getUserListData());
         editMenu.setDisable(true);
         nameTextField.clear();
         loginTextField.clear();
         passwordTextField.clear();
         rulesComboBox.getItems().clear();
-        dataTickets.allRules();
-        rulesComboBox.setItems(dataTickets.getAllRulesData());
+        listOfUser.allRules();
+        rulesComboBox.setItems(listOfUser.getAllRulesData());
         statusButton = 0;
 
 
@@ -123,37 +127,37 @@ public class UserListController {
         loginTextField.clear();
         passwordTextField.clear();
         rulesComboBox.getItems().clear();
-        dataTickets.allRules();
-        rulesComboBox.setItems(dataTickets.getAllRulesData());
+        listOfUser.allRules();
+        rulesComboBox.setItems(listOfUser.getAllRulesData());
         updateButton.setDisable(true);
 
 
     }
+
     @FXML
     private void userListWrite(){
         int isValid = 0;
         if(validCheckBox.isSelected()) isValid = 1;
-        dataTickets.userListWrite(dataTickets.getUserListData().get(selectIndex-1).getUserId(),nameTextField.getText(),loginTextField.getText(), passwordTextField.getText(),String.valueOf(rulesComboBox.getValue()),isValid);
+        dataTickets.userListWrite(listOfUser.getUserListData().get(selectIndex-1).getUserId(),nameTextField.getText(),loginTextField.getText(), passwordTextField.getText(),String.valueOf(rulesComboBox.getValue()),isValid);
         tableUserList.getItems().clear();
-        dataTickets.UserListDataRead();
-        tableUserList.setItems(dataTickets.getUserListData());
+        listOfUser.UserListDataRead();
+        tableUserList.setItems(listOfUser.getUserListData());
         editMenu.setDisable(true);
         nameTextField.clear();
         loginTextField.clear();
         passwordTextField.clear();
         rulesComboBox.getItems().clear();
-        dataTickets.allRules();
-        rulesComboBox.setItems(dataTickets.getAllRulesData());
+        listOfUser.allRules();
+        rulesComboBox.setItems(listOfUser.getAllRulesData());
         statusButton = 0;
     }
-
 
     private void checkTextFields(){
         String rulesString = "null";
         int statusCheck = rulesString.compareTo(String.valueOf(rulesComboBox.getValue()));
 
         boolean checkLogin = true;
-        for (String s: dataTickets.getLoginList()){
+        for (String s: listOfUser.getLoginList()){
             if (s.equals(loginTextField.getText())){
                 checkLogin = false;
             }
@@ -172,18 +176,15 @@ public class UserListController {
             String sDelete= null;
             ArrayList<String> loginListCheck = new ArrayList<>();
             loginListCheck.clear();
-            for (String s:dataTickets.getLoginList()){
+            for (String s:listOfUser.getLoginList()){
                 loginListCheck.add(s);
             }
 
-            for(String s:dataTickets.getLoginList() ){
-                if(s.equals(dataTickets.getUserListData().get(selectIndex-1).getLogin())){
-                    loginListCheck.remove(loginListCheck.indexOf(dataTickets.getUserListData().get(selectIndex-1).getLogin()));
+            for(String s:listOfUser.getLoginList() ){
+                if(s.equals(listOfUser.getUserListData().get(selectIndex-1).getLogin())){
+                    loginListCheck.remove(loginListCheck.indexOf(listOfUser.getUserListData().get(selectIndex-1).getLogin()));
                 }
             }
-
-
-
                 for (String s: loginListCheck){
                     if (s.equals(loginTextField.getText())){
                         checkLogin = false;
@@ -194,13 +195,9 @@ public class UserListController {
                 }else{
                     updateButton.setDisable(true);
                 }
-
-
         }else{
             updateButton.setDisable(true);
         }
-
-
     }
     private void test(){
         if (statusButton == 1){

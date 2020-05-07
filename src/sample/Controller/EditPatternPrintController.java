@@ -11,6 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import sample.Model.DB_Read.PatternPrint;
 import sample.Model.DataTickets;
 
 public class EditPatternPrintController {
@@ -54,25 +55,23 @@ public class EditPatternPrintController {
     private Label signPassedLabel;
 
     DataTickets dataTickets = new DataTickets();
-
+    PatternPrint patternPrint = new PatternPrint();
     @FXML
     public void initialize() {
-
-        dataTickets.editPatternPrintRead();
-
-        titleLabel.setText(dataTickets.getPrintPatternData().get(0));
-        rulesLabel.setText(dataTickets.getPrintPatternData().get(1));
-        signAcceptLabel.setText(dataTickets.getPrintPatternData().get(2));
-        signPassedLabel.setText(dataTickets.getPrintPatternData().get(3));
-        orderLabel.setText(dataTickets.getPrintPatternData().get(4));
-        fullNameLabel.setText(dataTickets.getPrintPatternData().get(5));
-        phoneLabel.setText(dataTickets.getPrintPatternData().get(6));
-        noteLabel.setText(dataTickets.getPrintPatternData().get(7));
-        dateLabel.setText(dataTickets.getPrintPatternData().get(8));
-        deviceLabel.setText(dataTickets.getPrintPatternData().get(9));
-        modelLabel.setText(dataTickets.getPrintPatternData().get(10));
-        conditionLabel.setText(dataTickets.getPrintPatternData().get(11));
-        defectLabel.setText(dataTickets.getPrintPatternData().get(12));
+        patternPrint.editPatternPrintRead();
+        titleLabel.setText(patternPrint.getPrintPatternData().get(0));
+        rulesLabel.setText(patternPrint.getPrintPatternData().get(1));
+        signAcceptLabel.setText(patternPrint.getPrintPatternData().get(2));
+        signPassedLabel.setText(patternPrint.getPrintPatternData().get(3));
+        orderLabel.setText(patternPrint.getPrintPatternData().get(4));
+        fullNameLabel.setText(patternPrint.getPrintPatternData().get(5));
+        phoneLabel.setText(patternPrint.getPrintPatternData().get(6));
+        noteLabel.setText(patternPrint.getPrintPatternData().get(7));
+        dateLabel.setText(patternPrint.getPrintPatternData().get(8));
+        deviceLabel.setText(patternPrint.getPrintPatternData().get(9));
+        modelLabel.setText(patternPrint.getPrintPatternData().get(10));
+        conditionLabel.setText(patternPrint.getPrintPatternData().get(11));
+        defectLabel.setText(patternPrint.getPrintPatternData().get(12));
 
         Font font = new Font("Regular", 11);
 

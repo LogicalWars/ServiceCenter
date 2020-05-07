@@ -2,6 +2,7 @@ package sample.Controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import sample.Model.DB_Read.PatternPrint;
 import sample.Model.DB_Read.TicketData;
 import sample.Model.DataTickets;
 
@@ -99,10 +100,11 @@ public class PrintTableController {
     @FXML
     private Label signPassedLabel1;
     private PrintPreviewController printPreviewController;
+
     public void setPrintPreviewController(PrintPreviewController printPreviewController) {
         this.printPreviewController = printPreviewController;
     }
-
+    PatternPrint patternPrint =  new PatternPrint();
     @FXML
     public void initialize() {
         DataTickets dataTickets = new DataTickets();
@@ -134,34 +136,34 @@ public class PrintTableController {
         condition1.setText(ticketData.getConditionTicket());
 
 
-        dataTickets.editPatternPrintRead();
-        titleLabel.setText(dataTickets.getPrintPatternData().get(0));
-        rulesLabel.setText(dataTickets.getPrintPatternData().get(1));
-        signAcceptLabel.setText(dataTickets.getPrintPatternData().get(2));
-        signPassedLabel.setText(dataTickets.getPrintPatternData().get(3));
-        orderLabel.setText(dataTickets.getPrintPatternData().get(4));
-        fullNameLabel.setText(dataTickets.getPrintPatternData().get(5));
-        phoneLabel.setText(dataTickets.getPrintPatternData().get(6));
-        noteLabel.setText(dataTickets.getPrintPatternData().get(7));
-        dateLabel.setText(dataTickets.getPrintPatternData().get(8));
-        deviceLabel.setText(dataTickets.getPrintPatternData().get(9));
-        modelLabel.setText(dataTickets.getPrintPatternData().get(10));
-        conditionLabel.setText(dataTickets.getPrintPatternData().get(11));
-        defectLabel.setText(dataTickets.getPrintPatternData().get(12));
+        patternPrint.editPatternPrintRead();
+        titleLabel.setText(patternPrint.getPrintPatternData().get(0));
+        rulesLabel.setText(patternPrint.getPrintPatternData().get(1));
+        signAcceptLabel.setText(patternPrint.getPrintPatternData().get(2));
+        signPassedLabel.setText(patternPrint.getPrintPatternData().get(3));
+        orderLabel.setText(patternPrint.getPrintPatternData().get(4));
+        fullNameLabel.setText(patternPrint.getPrintPatternData().get(5));
+        phoneLabel.setText(patternPrint.getPrintPatternData().get(6));
+        noteLabel.setText(patternPrint.getPrintPatternData().get(7));
+        dateLabel.setText(patternPrint.getPrintPatternData().get(8));
+        deviceLabel.setText(patternPrint.getPrintPatternData().get(9));
+        modelLabel.setText(patternPrint.getPrintPatternData().get(10));
+        conditionLabel.setText(patternPrint.getPrintPatternData().get(11));
+        defectLabel.setText(patternPrint.getPrintPatternData().get(12));
 
-        titleLabel1.setText(dataTickets.getPrintPatternData().get(0));
-        rulesLabel1.setText(dataTickets.getPrintPatternData().get(1));
-        signAcceptLabel1.setText(dataTickets.getPrintPatternData().get(2));
-        signPassedLabel1.setText(dataTickets.getPrintPatternData().get(3));
-        orderLabel1.setText(dataTickets.getPrintPatternData().get(4));
-        fullNameLabel1.setText(dataTickets.getPrintPatternData().get(5));
-        phoneLabel.setText(dataTickets.getPrintPatternData().get(6));
-        noteLabel1.setText(dataTickets.getPrintPatternData().get(7));
-        dateLabel1.setText(dataTickets.getPrintPatternData().get(8));
-        deviceLabel1.setText(dataTickets.getPrintPatternData().get(9));
-        modelLabel1.setText(dataTickets.getPrintPatternData().get(10));
-        conditionLabel1.setText(dataTickets.getPrintPatternData().get(11));
-        defectLabel1.setText(dataTickets.getPrintPatternData().get(12));
+        titleLabel1.setText(patternPrint.getPrintPatternData().get(0));
+        rulesLabel1.setText(patternPrint.getPrintPatternData().get(1));
+        signAcceptLabel1.setText(patternPrint.getPrintPatternData().get(2));
+        signPassedLabel1.setText(patternPrint.getPrintPatternData().get(3));
+        orderLabel1.setText(patternPrint.getPrintPatternData().get(4));
+        fullNameLabel1.setText(patternPrint.getPrintPatternData().get(5));
+        phoneLabel.setText(patternPrint.getPrintPatternData().get(6));
+        noteLabel1.setText(patternPrint.getPrintPatternData().get(7));
+        dateLabel1.setText(patternPrint.getPrintPatternData().get(8));
+        deviceLabel1.setText(patternPrint.getPrintPatternData().get(9));
+        modelLabel1.setText(patternPrint.getPrintPatternData().get(10));
+        conditionLabel1.setText(patternPrint.getPrintPatternData().get(11));
+        defectLabel1.setText(patternPrint.getPrintPatternData().get(12));
 
     }
 

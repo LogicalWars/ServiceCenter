@@ -8,6 +8,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import sample.Model.DB_Read.TicketLogData;
 import sample.Model.DataTickets;
 import sample.Model.TicketLogs;
 
@@ -36,11 +37,11 @@ public class DialogLogsController {
     private Button okButton;
 
     DataTickets dataTickets = new DataTickets();
-
+    TicketLogData ticketLogData = new TicketLogData();
     @FXML
     public void initialize() {
+        ticketLogData.logDataRead(EditTicketController.idLogs);
 
-        dataTickets.logDataRead(EditTicketController.idLogs);
 
         field.setCellValueFactory(new PropertyValueFactory<>("field"));
         oldValue.setCellValueFactory(new PropertyValueFactory<>("oldValue"));
@@ -63,7 +64,7 @@ public class DialogLogsController {
             text.wrappingWidthProperty().bind(oldValue.widthProperty());
             return cell;
         });
-        tableLogData.setItems(dataTickets.getTicketLogsData());
+        tableLogData.setItems(ticketLogData.getTicketLogsData());
     }
 
     @FXML

@@ -6,6 +6,8 @@ import javafx.beans.property.SimpleStringProperty;
 public class TicketLogs {
 
 
+
+
     public int getIdLog() {
         return idLog.get();
     }
@@ -96,6 +98,4 @@ public class TicketLogs {
         this.oldValue = oldValue;
         this.newValue = newValue;
     }
-
-
 }

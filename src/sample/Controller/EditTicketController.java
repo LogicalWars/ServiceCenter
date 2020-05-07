@@ -21,8 +21,7 @@ import javafx.scene.layout.Region;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sample.Enum.User;
-import sample.Model.DB_Read.ListOfStatus;
-import sample.Model.DB_Read.TicketData;
+import sample.Model.DB_Read.*;
 import sample.Model.DataTickets;
 import sample.Model.Print;
 import sample.Model.Status;
@@ -97,13 +96,15 @@ public class EditTicketController {
 
     DataTickets dataTickets = new DataTickets();
     ListOfStatus listOfStatus = new ListOfStatus();
+    ListOfLogs listOfLogs = new ListOfLogs();
     private List<ComboBox> listComboBox = new ArrayList<>();
     private List<TextField> listTextField = new ArrayList<>();
     private List<Integer> listValid = new ArrayList<>();
     private List<String> listNameSpare = new ArrayList<>();
     private int idRowGridPane = 4;
     TicketData ticketData = new TicketData();
-
+    ListOfStock listOfStock = new ListOfStock();
+    ListOfSpareParts listOfSpareParts = new ListOfSpareParts();
     @FXML
     public void initialize() {
 
@@ -113,9 +114,9 @@ public class EditTicketController {
             e.printStackTrace();
         }
         listOfStatus.statusUploadRead();
-        dataTickets.stockListDataRead();
-        dataTickets.ticketLogsRead(ticketData.getIdTicket());
-        dataTickets.getAllSparePartsRead(ticketData.getIdTicket());
+        listOfStock.stockListDataRead();
+        listOfLogs.ticketLogsRead(ticketData.getIdTicket());
+        listOfSpareParts.getAllSparePartsRead(ticketData.getIdTicket());
 
         /*Заполнение данными API*/
 
@@ -139,7 +140,7 @@ public class EditTicketController {
         dateClose.setText(dataTickets.getDateCloseTicket());
         statusComboBox.setItems(listOfStatus.getStatusUpload());
         repairPrice.setText(ticketData.getRepairPriceTicket());
-        tableLogs.setItems(dataTickets.getTicketLogs());
+        tableLogs.setItems(new ListOfLogs().getTicketLogs());
 
         saveButton.setDisable(true);
 
@@ -262,8 +263,8 @@ public class EditTicketController {
 
         /*Работа с запчастями*/
 
-        if(dataTickets.getListNameSpareParts().size()>0) {
-            stockRead(dataTickets.getListNameSpareParts(), dataTickets.getListPriceSpareParts() , dataTickets.getListValidSpareParts());
+        if(listOfSpareParts.getListNameSpareParts().size()>0) {
+            stockRead(listOfSpareParts.getListNameSpareParts(), listOfSpareParts.getListPriceSpareParts() , listOfSpareParts.getListValidSpareParts());
         }
         repairPrice.textProperty().addListener((observableValue, oldValue, newValue) -> {
             calculationPrice(listTextField,repairPrice.getText());
@@ -282,7 +283,7 @@ public class EditTicketController {
     @FXML
     public void saveEditTicket() {
 
-        updateValid(dataTickets.getListNameSpareParts(),listNameSpare,listValid);
+        updateValid(listOfSpareParts.getListNameSpareParts(),listNameSpare,listValid);
 
         int idStatus = 1;
         int idStatusTrue = 0;
@@ -337,7 +338,7 @@ public class EditTicketController {
 
     @FXML
     public void addSparePart() {
-        addNewSparePart(gridPane, listComboBox, listTextField, listValid, listNameSpare, dataTickets.getListPriceSpareParts(), 0, false);
+        addNewSparePart(gridPane, listComboBox, listTextField, listValid, listNameSpare, listOfSpareParts.getListPriceSpareParts(), 0, false);
     }
 
     /**Метод отрабатывает при нажатии на кнопку Предварительный просмотр*/
@@ -373,12 +374,12 @@ public class EditTicketController {
     private int idPrice(String text, List<Integer> idM){
         int id = 0;
         int idPrice = 0;
-        for(String s: dataTickets.getNameList()) {
+        for(String s: listOfStock.getNameList()) {
                 for(int i: idM){
                     if(i == id){
                         if (s.equals(text)){
-                            dataTickets.getNameList().indexOf(model.getText());
-                            idPrice = dataTickets.getPriceList().get(id);
+                            listOfStock.getNameList().indexOf(model.getText());
+                            idPrice = listOfStock.getPriceList().get(id);
                         }
                     }
                 }
@@ -473,10 +474,10 @@ public class EditTicketController {
             }
         }
         grid.getChildren().removeAll(deleteNodes);
-        if(dataTickets.getListNameSpareParts().size()> row-4){
+        if(listOfSpareParts.getListNameSpareParts().size()> row-4){
             if(listValid.get(row-4) != 0){
-                dataTickets.setUpdateAmountSpare(model.getText(), dataTickets.getListNameSpareParts().get(row-4));
-                dataTickets.getListNameSpareParts().remove(row-4);
+                dataTickets.setUpdateAmountSpare(model.getText(), listOfSpareParts.getListNameSpareParts().get(row-4));
+                listOfSpareParts.getListNameSpareParts().remove(row-4);
             }
         }
     }
@@ -489,8 +490,8 @@ public class EditTicketController {
     private void stockRead(List<String> name, List<String> price, List<Integer> valid){
 
 
-        listValid.addAll(dataTickets.getListValidSpareParts());
-        listNameSpare.addAll(dataTickets.getListNameSpareParts());
+        listValid.addAll(listOfSpareParts.getListValidSpareParts());
+        listNameSpare.addAll(listOfSpareParts.getListNameSpareParts());
         for(int idR = 0; idR<name.size(); idR++) {
             addNewSparePart(gridPane, listComboBox, listTextField, listValid, listNameSpare, price, idR, true);
         }
@@ -568,7 +569,7 @@ public class EditTicketController {
     /**Меняет Label на наличие запчастей*/
 
     private void changeModel(){
-        for(String s: dataTickets.getModelList()) {
+        for(String s: listOfStock.getModelList()) {
             if (s.equals(model.getText())){
                 haveSpareLabel.setText("Имеется запчасть");
                 break;
@@ -644,10 +645,10 @@ public class EditTicketController {
 
         int idNameModelTwo=0;
         List<Integer> idModel = new ArrayList();
-        for(String s: dataTickets.getModelList()) {
+        for(String s: listOfStock.getModelList()) {
             if (s.equals(model.getText())){
                 idModel.add(idNameModelTwo);
-                comboBox.getItems().add(dataTickets.getNameList().get(idNameModelTwo));
+                comboBox.getItems().add(listOfStock.getNameList().get(idNameModelTwo));
             }
             idNameModelTwo++;
         }

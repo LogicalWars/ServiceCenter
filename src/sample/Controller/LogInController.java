@@ -24,9 +24,15 @@ public class LogInController {
     private PasswordField password;
     @FXML
     private Label errorPass;
+    @FXML
+    public void initialize(){
+        password.setText("1");
+        user.setText("1");
 
+    }
     @FXML
     public void logInButton() {
+
         try {
             System.out.println(isOnline());
         } catch (Exception e) {
@@ -36,7 +42,6 @@ public class LogInController {
         if (User.USER != null) {
             Stage stage = (Stage) user.getScene().getWindow();
             stage.close();
-
 
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/MainMenu.fxml"));

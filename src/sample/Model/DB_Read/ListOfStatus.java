@@ -31,7 +31,7 @@ public class ListOfStatus {
             Statement stmt = conn.createStatement();
             ResultSet res = stmt.executeQuery(query);
             while (res.next()) {
-                String status = checkNull(res.getString("status"));
+                String status = checkNull(res.getString("IFNULL(status.status,\"\")"));
                 statusUpload.add(new Status(status));
                 allStatus.add(status);
             }

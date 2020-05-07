@@ -15,6 +15,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sample.Enum.User;
 import sample.Model.DBProcessor;
+import sample.Model.DB_Read.TicketLogData;
 import sample.Model.DataTickets;
 
 import java.io.IOException;
@@ -143,7 +144,7 @@ public class MainMenuController {
             DialogLogsController dialogLogsController = loader.getController();
             dialogLogsController.setMainMenuController(this);
             Stage dialogStage = new Stage();
-            dialogStage.setTitle(dataTickets.getDateTimeLogRead(EditTicketController.idLogs) + "  ");
+            dialogStage.setTitle(new TicketLogData().getDateTimeLogRead(EditTicketController.idLogs) + "  ");
             dialogStage.initModality(Modality.APPLICATION_MODAL);
             Scene scene = new Scene(pane);
             dialogStage.setScene(scene);

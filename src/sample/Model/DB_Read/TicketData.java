@@ -1,7 +1,6 @@
 package sample.Model.DB_Read;
 
 import sample.Model.DBProcessor;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -88,35 +87,29 @@ public class TicketData {
         Statement stmt = conn.createStatement();
         ResultSet res = stmt.executeQuery(query);
         while (res.next()) {
-            idTicket = res.getInt("idTicket");
-            numberTicket = res.getInt("numberTicket");
-            phoneNumber = checkNull(res.getString("phoneNumber"));
-            fullName = checkNull(res.getString("fullName"));
-            LocalDate date = LocalDate.parse(res.getString("dateCreateTicket"));
+            idTicket = res.getInt("IFNULL(ticket_data.idTicket,\"\")");
+            numberTicket = res.getInt("IFNULL(ticket_data.numberTicket,\"\")");
+            phoneNumber = res.getString("IFNULL(ticket_data.phoneNumber,\"\")");
+            LocalDate date = LocalDate.parse(res.getString("IFNULL(ticket_data.dateCreateTicket,\"\")"));
             DateTimeFormatter shortDateTime = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
-            dateCreateTicket = checkNull(shortDateTime.format(date));
-            statusTicket = checkNull(res.getString("status"));
-            deviceTicket = checkNull(res.getString("device"));
-            defectTicket = checkNull(res.getString("defect"));
-            modelTicket = checkNull(res.getString("model"));
-            noteTicket = checkNull(res.getString("note"));
-            conditionTicket = checkNull(res.getString("condition"));
-            idStatusTicket = checkNull(res.getString("status_id"));
-            commentTicket = checkNull(res.getString("comment"));
-            repairPriceTicket = checkNull(res.getString("repairPrice"));
-
+            dateCreateTicket = shortDateTime.format(date);
+            fullName = res.getString("IFNULL(ticket_data.fullName,\"\")");
+            statusTicket = res.getString("status");
+            deviceTicket = res.getString("IFNULL(ticket_data.device,\"\")");
+            defectTicket = res.getString("IFNULL(ticket_data.defect,\"\")");
+            modelTicket = res.getString("IFNULL(ticket_data.model,\"\")");
+            noteTicket = res.getString("IFNULL(ticket_data.note,\"\")");
+            conditionTicket = res.getString("IFNULL(ticket_data.condition,\"\")");
+            idStatusTicket = res.getString("IFNULL(ticket_data.status_id,\"\")");
+            commentTicket = res.getString("IFNULL(ticket_data.comment,\"\")");
+            repairPriceTicket = res.getString("IFNULL(ticket_data.repairPrice,\"\")");
 
             if(statusTicket.equals("Выдан")) {
-                LocalDate dateClose = LocalDate.parse(res.getString("dateCloseTicket"));
+                LocalDate dateClose = LocalDate.parse(res.getString("IFNULL(ticket_data.dateCloseTicket,\"\")"));
                 DateTimeFormatter shortDateClose = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
                 dateCloseTicket = shortDateClose.format(dateClose);
             }
         }
     }
 
-    private String checkNull(String field){
-        if(field == null){
-            return "";
-        }else{return field;}
-    }
 }

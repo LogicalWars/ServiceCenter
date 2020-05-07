@@ -7,6 +7,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import org.controlsfx.control.textfield.TextFields;
+import sample.Model.DB_Read.ListOfStock;
 import sample.Model.DataTickets;
 import sample.Model.StockList;
 
@@ -59,6 +60,7 @@ public class StockListController {
     private Button saveButton;
 
     DataTickets dataTickets = new DataTickets();
+    ListOfStock listOfStock = new ListOfStock();
     int selectIndex;
     int checkButton = 0;
 
@@ -66,7 +68,7 @@ public class StockListController {
     private void initialize(){
 
         editMenu.setDisable(true);
-        dataTickets.stockListDataRead();
+        listOfStock.stockListDataRead();
         priceTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             check();
             if(!newValue.matches("\\d*")){priceTextField.setText(oldValue);}
@@ -87,7 +89,7 @@ public class StockListController {
         name.setCellValueFactory(new PropertyValueFactory<>("name"));
         amount.setCellValueFactory(new PropertyValueFactory<>("amount"));
         price.setCellValueFactory(new PropertyValueFactory<>("price"));
-        tableStockList.setItems(dataTickets.getStockListData());
+        tableStockList.setItems(listOfStock.getStockListData());
 
         tableStockList.setRowFactory(tv -> {
             TableRow<StockList> row = new TableRow<>();
@@ -113,8 +115,8 @@ public class StockListController {
         dataTickets.addNewElementWrite(modelTextField.getText(), nameTextField.getText(), Integer.valueOf(amountTextField.getText()), Integer.valueOf(priceTextField.getText()));
         editMenu.setDisable(true);
         tableStockList.getItems().clear();
-        dataTickets.stockListDataRead();
-        tableStockList.setItems(dataTickets.getStockListData());
+        listOfStock.stockListDataRead();
+        tableStockList.setItems(listOfStock.getStockListData());
         modelTextField.clear();
         nameTextField.clear();
         amountTextField.clear();
@@ -138,10 +140,10 @@ public class StockListController {
 
     @FXML
     void updateButton() {
-        dataTickets.stockListWrite(dataTickets.getStockListData().get(selectIndex-1).getElementId(),modelTextField.getText(), nameTextField.getText(), Integer.valueOf(amountTextField.getText()), Integer.valueOf(priceTextField.getText()));
+        dataTickets.stockListWrite(listOfStock.getStockListData().get(selectIndex-1).getElementId(),modelTextField.getText(), nameTextField.getText(), Integer.valueOf(amountTextField.getText()), Integer.valueOf(priceTextField.getText()));
         tableStockList.getItems().clear();
-        dataTickets.stockListDataRead();
-        tableStockList.setItems(dataTickets.getStockListData());
+        listOfStock.stockListDataRead();
+        tableStockList.setItems(listOfStock.getStockListData());
         editMenu.setDisable(true);
         modelTextField.clear();
         nameTextField.clear();
@@ -153,9 +155,9 @@ private  boolean checkButton(){
     List<String> nameList = new ArrayList<>();
     int i=0;
     boolean checkButton = true;
-    for(String m: dataTickets.getModelList()){
+    for(String m: listOfStock.getModelList()){
         if(modelTextField.getText().equals(m)){
-            nameList.add(dataTickets.getNameList().get(i));
+            nameList.add(listOfStock.getNameList().get(i));
         }
         i++;
     }
@@ -204,13 +206,13 @@ private  boolean checkButton(){
         int i=0;
         ObservableList<StockList> stockList = FXCollections.observableArrayList();
         if(valid == 1 ){
-            for(String s: dataTickets.getModelList()){
+            for(String s: listOfStock.getModelList()){
             if(s.contains(text)){
-                stockList.add(new StockList(dataTickets.getElementIdList().get(i), dataTickets.getModelList().get(i), dataTickets.getNameList().get(i), dataTickets.getAmountList().get(i), dataTickets.getPriceList().get(i)));
+                stockList.add(new StockList(listOfStock.getElementIdList().get(i), listOfStock.getModelList().get(i), listOfStock.getNameList().get(i), listOfStock.getAmountList().get(i), listOfStock.getPriceList().get(i)));
             }
             i++;}
         }else if(0 == valid){
-            Set<String> set = new LinkedHashSet(dataTickets.getModelList());
+            Set<String> set = new LinkedHashSet(listOfStock.getModelList());
                 for(String s: set){
                     if(s.contains(text)){
                         stockList.add(new StockList(s));
