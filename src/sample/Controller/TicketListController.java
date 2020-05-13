@@ -10,6 +10,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import sample.Model.DB_Read.ListOfTickets;
 import sample.Model.DB_Read.TicketData;
 import sample.Model.DataTickets;
+import sample.Model.HotKeys;
 import sample.Model.Tickets;
 
 import java.util.Collections;
@@ -41,7 +42,6 @@ public class TicketListController {
 
 
     DataTickets dataTickets = new DataTickets();
-
     @FXML
     private void initialize() {
         ListOfTickets listOfTickets = new ListOfTickets();
@@ -60,7 +60,6 @@ public class TicketListController {
                     int selectIndex = row.getIndex();
                     Tickets selectTickets = tableTickets.getItems().get(selectIndex);
                     idRow = selectTickets.getIdTicket();
-                    System.out.println(idRow);
                     mainMenuController.editTicket();
                 }
             });

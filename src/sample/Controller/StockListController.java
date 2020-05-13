@@ -82,7 +82,7 @@ public class StockListController {
 
         modelTextField.textProperty().addListener((observable, oldValue, newValue) -> { check();});
         nameTextField.textProperty().addListener((observable, oldValue, newValue) -> { check();});
-        search.textProperty().addListener((observable, oldValue, newValue) -> { search();});
+        search.textProperty().addListener((observable, oldValue, newValue) -> {search();});
 
         elementId.setCellValueFactory(new PropertyValueFactory<>("elementId"));
         model.setCellValueFactory(new PropertyValueFactory<>("model"));
@@ -140,6 +140,7 @@ public class StockListController {
 
     @FXML
     void updateButton() {
+        listOfStock.stockListDataRead();
         dataTickets.stockListWrite(listOfStock.getStockListData().get(selectIndex-1).getElementId(),modelTextField.getText(), nameTextField.getText(), Integer.valueOf(amountTextField.getText()), Integer.valueOf(priceTextField.getText()));
         tableStockList.getItems().clear();
         listOfStock.stockListDataRead();
@@ -150,29 +151,43 @@ public class StockListController {
         amountTextField.clear();
         priceTextField.clear();
     }
-
-private  boolean checkButton(){
+//Проверка для включения кнопок Сохранить(valid = 0)/Обновить
+    private  boolean checkButton(int valid){
     List<String> nameList = new ArrayList<>();
     int i=0;
     boolean checkButton = true;
+//заполнение листа именами
     for(String m: listOfStock.getModelList()){
         if(modelTextField.getText().equals(m)){
             nameList.add(listOfStock.getNameList().get(i));
         }
         i++;
     }
+    if(valid == 0){
+//проверка уникального имени
     for(String name: nameList){
         if(name.equals(nameTextField.getText())){
             checkButton = false;
         }
 
     }
+    }else{
+//проверка уникального имени без того, которое собираемся обновить
+    nameList.remove(tableStockList.getSelectionModel().getSelectedItem().getName());
+        for(String name: nameList){
+            if(name.equals(nameTextField.getText())){
+                checkButton = false;
+            }
+
+        }
+    }
+
     return checkButton;
 }
 
     private void checkStockNew(){
         if(amountTextField.getText().length() >0 && priceTextField.getText().length()>0 && nameTextField.getText().length()>0 && modelTextField.getText().length()>0){
-            if(checkButton()){
+            if(checkButton(0)){
                 saveButton.setDisable(false);
             }else{
                 saveButton.setDisable(true);
@@ -180,12 +195,10 @@ private  boolean checkButton(){
         }else{
             saveButton.setDisable(true);
         }
-
-
     }
     private void checkStockUpdate(){
         if(amountTextField.getText().length() >0 && priceTextField.getText().length()>0 && nameTextField.getText().length()>0 && modelTextField.getText().length()>0){
-            if(checkButton()){
+            if(checkButton(1)){
                 updateButton.setDisable(false);
             }else{
                 updateButton.setDisable(true);
@@ -209,9 +222,13 @@ private  boolean checkButton(){
             for(String s: listOfStock.getModelList()){
             if(s.contains(text)){
                 stockList.add(new StockList(listOfStock.getElementIdList().get(i), listOfStock.getModelList().get(i), listOfStock.getNameList().get(i), listOfStock.getAmountList().get(i), listOfStock.getPriceList().get(i)));
+
             }
-            i++;}
+            i++;
+            }
+            return stockList;
         }else if(0 == valid){
+            System.out.println("valid = 0");
             Set<String> set = new LinkedHashSet(listOfStock.getModelList());
                 for(String s: set){
                     if(s.contains(text)){
@@ -219,13 +236,14 @@ private  boolean checkButton(){
                     }
                 i++;
                 }
-
             }
-    return stockList;
+        return stockList;
     }
 
     private void search(){
         tableStockList.getItems().clear();
         tableStockList.setItems(searchModel(search.getText(), 1));
+
+
     }
 }

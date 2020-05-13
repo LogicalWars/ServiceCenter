@@ -1,5 +1,6 @@
 package sample.Controller;
 
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,17 +22,15 @@ import javafx.scene.layout.Region;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sample.Enum.User;
+import sample.Model.*;
 import sample.Model.DB_Read.*;
-import sample.Model.DataTickets;
-import sample.Model.Print;
-import sample.Model.Status;
-import sample.Model.TicketLogs;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.*;
 
-public class EditTicketController {
+public class EditTicketController{
+
 
     public static int idLogs;
 
@@ -40,6 +39,7 @@ public class EditTicketController {
     public void setMainMenuController(MainMenuController mainMenuController) {
         this.mainMenuController = mainMenuController;
     }
+
 
     @FXML
     private Label numberTicket;
@@ -93,10 +93,13 @@ public class EditTicketController {
     private Label haveSpareLabel;
     @FXML
     private Button addSparePart;
+    @FXML
+    public Button printButton;
 
     DataTickets dataTickets = new DataTickets();
     ListOfStatus listOfStatus = new ListOfStatus();
     ListOfLogs listOfLogs = new ListOfLogs();
+
     private List<ComboBox> listComboBox = new ArrayList<>();
     private List<TextField> listTextField = new ArrayList<>();
     private List<Integer> listValid = new ArrayList<>();
@@ -105,6 +108,8 @@ public class EditTicketController {
     TicketData ticketData = new TicketData();
     ListOfStock listOfStock = new ListOfStock();
     ListOfSpareParts listOfSpareParts = new ListOfSpareParts();
+
+
     @FXML
     public void initialize() {
 
@@ -362,10 +367,11 @@ public class EditTicketController {
     /**Вывод на печать*/
 
     @FXML
-    private void printed() throws IOException {
+    public void printed() throws IOException {
         Print print = new Print();
         print.printed();
     }
+
 
     /**Определяет idЦены, возвращает int
      * @param text - наименование запчасти
@@ -391,7 +397,7 @@ public class EditTicketController {
 
     /**Проверка полей для включения кнопки Save*/
 
-    private void check() {
+    public boolean check() {
         int numberTicketC =String.valueOf(ticketData.getNumberTicket()).compareTo(numberTicketText.getText());
         int phoneC = ticketData.getPhoneNumber().compareTo(phone.getText());
         int conditionC = ticketData.getConditionTicket().compareTo(condition.getText());
@@ -405,9 +411,11 @@ public class EditTicketController {
         int statusC = statusD.compareTo(String.valueOf(statusComboBox.getValue()));
         if (numberTicketC == 0 && phoneC == 0 && conditionC == 0 && fullNameC == 0 && deviceC == 0 && modelC == 0 && defectC == 0 && noteC == 0 && statusC == 0 && commentC == 0) {
             saveButton.setDisable(true);
-        } else {
+            } else {
             saveButton.setDisable(false);
+            return true;
         }
+        return false;
     }
 
     /**Расчет обшей цены

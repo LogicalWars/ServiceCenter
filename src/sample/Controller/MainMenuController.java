@@ -1,7 +1,10 @@
 package sample.Controller;
 
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -9,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
@@ -17,8 +21,14 @@ import sample.Enum.User;
 import sample.Model.DBProcessor;
 import sample.Model.DB_Read.TicketLogData;
 import sample.Model.DataTickets;
+import sample.Model.HotKeys;
 
+import javax.management.ListenerNotFoundException;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyListener;
 import java.io.IOException;
+
+import static com.sun.java.accessibility.util.AWTEventMonitor.addKeyListener;
 
 public class MainMenuController {
 
@@ -33,14 +43,18 @@ public class MainMenuController {
     @FXML
     private MenuItem stockButton;
     @FXML
+    private MenuItem userButton;
+    @FXML
     private Button createNewTicketButton;
     @FXML
-    private TextField searchTextField;
+    public TextField searchTextField;
     @FXML
     private HBox searchToolBox;
 
 
     TicketListController ticketListController;
+
+
     @FXML
     public void initialize() {
 
@@ -51,18 +65,27 @@ public class MainMenuController {
             stockButton.setDisable(false);
         }else{stockButton.setDisable(true);}
 
+        if(User.USER == User.ADMIN) {
+            userButton.setDisable(false);
+        }else{userButton.setDisable(true);}
 
         searchTextField.textProperty().addListener((observableValue, oldValue, newValue) -> {
         ticketListController.search(newValue);
          });
 
-
         ImageView iconsAdd = new ImageView("sample/View/icons/add.png");
         iconsAdd.setFitHeight(20);
         iconsAdd.setFitWidth(20);
         createNewTicketButton.graphicProperty().setValue(iconsAdd);
+
     }
 
+
+
+
+
+    public void a(){    System.out.println("left");}
+public void b(){    System.out.println("right");}
     @FXML
     void logOff(){
         Stage stage = (Stage) logOffButton.getScene().getWindow();
@@ -93,7 +116,6 @@ public class MainMenuController {
             paneMainContent.setCenter(newPane);
             NewTicketController newTicketController = loader.getController();
             newTicketController.setMainMenuController(this);
-
         } catch (IOException e) {
             e.printStackTrace();
         }

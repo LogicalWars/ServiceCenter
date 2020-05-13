@@ -18,11 +18,6 @@ public class ListOfStock {
         return stockListData;
     }
 
-//    private ObservableList<StockList> stockListSearch = FXCollections.observableArrayList();
-//    public ObservableList<StockList> getStockListSearch() {
-//        return stockListSearch;
-//    }
-
     private ArrayList<Integer> elementIdList = new ArrayList<>();
     public ArrayList<Integer> getElementIdList() {
         return elementIdList;
@@ -55,6 +50,13 @@ public class ListOfStock {
             String query = "CALL sp_getStockList();";
             Statement stmt = conn.createStatement();
             ResultSet res = stmt.executeQuery(query);
+            stockListData.clear();
+            elementIdList.clear();
+            modelList.clear();
+            nameList.clear();
+            amountList.clear();
+            priceList.clear();
+
             while (res.next()) {
                 int elementId = res.getInt("idElement");
                 String model = res.getString("model");

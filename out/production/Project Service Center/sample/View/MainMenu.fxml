@@ -33,7 +33,7 @@
                         <Menu mnemonicParsing="false" text="Настройки">
                             <items>
                                 <MenuItem mnemonicParsing="false" text="Настройки" />
-                                <MenuItem mnemonicParsing="false" onAction="#userList" text="Пользователи" />
+                                <MenuItem fx:id="userButton" mnemonicParsing="false" onAction="#userList" text="Пользователи" />
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Печать">

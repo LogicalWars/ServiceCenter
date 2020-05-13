@@ -26,7 +26,7 @@
    <bottom>
       <ButtonBar BorderPane.alignment="CENTER">
         <buttons>
-            <TextField fx:id="search" promptText="Поиск" />
+            <TextField fx:id="search" promptText="Поиск по модели" />
             <Button layoutX="590.0" layoutY="18.0" mnemonicParsing="false" onAction="#addNewElement" text="Добавить элемент" />
         </buttons>
          <padding>

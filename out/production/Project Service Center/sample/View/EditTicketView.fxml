@@ -201,7 +201,7 @@
                         </VBox>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0">
                            <children>
-                              <TextArea fx:id="commentText" prefHeight="60.0" prefWidth="234.0" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                              <TextArea fx:id="commentText" prefHeight="60.0" prefWidth="234.0" promptText="Для отправки нажми &quot;Shift&quot; + &quot;Enter&quot;" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                               <TextArea fx:id="comment" layoutY="-38.0" prefHeight="160.0" prefWidth="200.0" wrapText="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                            </children>
                         </AnchorPane>

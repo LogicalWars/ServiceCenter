@@ -10,7 +10,7 @@
 
 <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="180.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Button layoutX="176.0" layoutY="129.0" mnemonicParsing="false" onAction="#logInButton" text="Войти" AnchorPane.leftAnchor="176.0" AnchorPane.rightAnchor="175.0" />
+      <Button fx:id="logInButton" layoutX="176.0" layoutY="129.0" mnemonicParsing="false" onAction="#logInButton" text="Войти" AnchorPane.leftAnchor="176.0" AnchorPane.rightAnchor="175.0" />
       <VBox alignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
             <Label fx:id="errorPass" text="Неверное имя пользователя или пароль." textFill="#f03232cd" visible="false">

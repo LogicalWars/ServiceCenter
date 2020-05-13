@@ -3,12 +3,14 @@ package sample.Controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import org.controlsfx.control.textfield.TextFields;
 import sample.Model.DB_Read.ListOfStock;
 import sample.Model.DB_Read.NewTicketData;
 import sample.Model.DataTickets;
+import sample.Model.HotKeys;
 
 import java.sql.SQLException;
 import java.util.LinkedHashSet;
@@ -22,7 +24,8 @@ public class NewTicketController {
     public void setMainMenuController(MainMenuController mainMenuController) {
         this.mainMenuController = mainMenuController;
     }
-
+    @FXML
+    private SplitPane paneNewTicket;
     @FXML
     public TextField textPhone;
     @FXML
@@ -40,22 +43,9 @@ public class NewTicketController {
     @FXML
     private Button buttonSave;
 
-    @FXML
-    public void createNewTicket() throws SQLException {
-        if (textPhone.getLength() > 0) {
-            if (textFullName.getLength() > 0) {
-                new DataTickets().createNewTicketWrite(textPhone.getText(), textFullName.getText(), textDevice.getText(), textModel.getText(), textDefect.getText(), textNote.getText(), textCondition.getText());
-                mainMenuController.ticketList();
-            } else {
-                textFullName.setPromptText("Заполните поле");
-            }
-        } else {
-            textPhone.setPromptText("Заполните поле");
-        }
-
-    }
     ListOfStock listOfStock = new ListOfStock();
     NewTicketData newTicketData = new NewTicketData();
+
     @FXML
     public void initialize() {
 
@@ -80,8 +70,22 @@ public class NewTicketController {
                 }else{textFullName.setText("");}
                 idPhoneNumber++;
             }
-
         });
+
+
+    }
+    @FXML
+    public void createNewTicket(){
+        if (textPhone.getLength() > 0) {
+            if (textFullName.getLength() > 0) {
+                new DataTickets().createNewTicketWrite(textPhone.getText(), textFullName.getText(), textDevice.getText(), textModel.getText(), textDefect.getText(), textNote.getText(), textCondition.getText());
+                mainMenuController.ticketList();
+            } else {
+                textFullName.setPromptText("Заполните поле");
+            }
+        } else {
+            textPhone.setPromptText("Заполните поле");
+        }
 
     }
 
