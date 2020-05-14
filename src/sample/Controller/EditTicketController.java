@@ -29,13 +29,11 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.*;
 
-public class EditTicketController{
-
+public class EditTicketController extends HotKeys{
 
     public static int idLogs;
 
     private MainMenuController mainMenuController;
-
     public void setMainMenuController(MainMenuController mainMenuController) {
         this.mainMenuController = mainMenuController;
     }
@@ -109,11 +107,14 @@ public class EditTicketController{
     ListOfStock listOfStock = new ListOfStock();
     ListOfSpareParts listOfSpareParts = new ListOfSpareParts();
 
-
     @FXML
     public void initialize() {
+        //Работа с слушателем горячих клавиш
 
-        try {
+
+
+
+    try {
             ticketData.editTicketRead(TicketListController.idRow);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -281,6 +282,7 @@ public class EditTicketController{
         calculationPrice(listTextField,repairPrice.getText());
 
         changeModel();
+
     }
 
     /**Метод отрабатывает при нажатии на кнопку Save*/

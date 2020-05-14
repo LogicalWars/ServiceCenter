@@ -33,7 +33,7 @@ import static com.sun.java.accessibility.util.AWTEventMonitor.addKeyListener;
 public class MainMenuController {
 
     @FXML
-    private BorderPane paneMainContent;
+    public BorderPane paneMainContent;
     @FXML
     private Label infoLeft;
     @FXML
@@ -54,10 +54,8 @@ public class MainMenuController {
 
     TicketListController ticketListController;
 
-
     @FXML
     public void initialize() {
-
         ticketList();
         infoLeft.setText(new DBProcessor().resultConnection());
         user.setText(User.loginUser);
@@ -77,6 +75,8 @@ public class MainMenuController {
         iconsAdd.setFitHeight(20);
         iconsAdd.setFitWidth(20);
         createNewTicketButton.graphicProperty().setValue(iconsAdd);
+
+
 
     }
 

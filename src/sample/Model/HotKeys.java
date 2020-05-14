@@ -1,18 +1,31 @@
 package sample.Model;
 
+import javafx.application.Application;
 import javafx.event.EventHandler;
+import javafx.event.EventType;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
 import sample.Controller.EditTicketController;
 import sample.Controller.MainMenuController;
 import sample.Controller.NewTicketController;
 import sample.Controller.TicketListController;
+import sample.Main;
 
 import java.io.IOException;
 import java.sql.SQLException;
 
-public abstract class HotKeys<eventHandler> {
+public class HotKeys   {
+    private int a = 0;
+
+    public void setA(int a) {
+        this.a = a;
+    }
+
     /**Клавиши быстрого доступа:
      * Ctrl + N - создание новой заявки
      * Ctrl + S - сохранить изменения редактируемой заявки
@@ -20,18 +33,18 @@ public abstract class HotKeys<eventHandler> {
      * Ctrl + F - поиск
      *  */
 
-    int checkOpenEditTicket = -1;
-    public int getCheckOpenEditTicket() {
-        return checkOpenEditTicket;
+
+
+
+
+
+    public void addListenerHotKey(EventHandler<KeyEvent> event){
+//        if(mainMenuController !=null){mainMenuController.paneMainContent.addEventFilter(KeyEvent.KEY_PRESSED, event);}
     }
 
-    public void setCheckOpenEditTicket(int checkOpenEditTicket) {
-        this.checkOpenEditTicket = checkOpenEditTicket;
-    }
-
-    public void addListenerHotKey(Node node, EventHandler eventHandler){
-
-       node.addEventFilter(KeyEvent.KEY_PRESSED,eventHandler);
+//       node.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+//
+//       });
 //           public void handle(KeyEvent e) {
 //               if(e.getCode() == KeyCode.N && e.isControlDown()){
 ////                   mainMenuController.newTicket();
@@ -60,7 +73,5 @@ public abstract class HotKeys<eventHandler> {
 ////                   System.out.println("printeed exit");
 //               }
 //           }});
-   }
 
-    public abstract void addListenerHotKey(Node node);
 }
